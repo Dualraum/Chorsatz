@@ -1,0 +1,47 @@
+use crate::notes::NoteName;
+
+const POSITION_TO_HALFTONES: [f32; 12] = [1., 1.5, 2., 2.5, 3., 4., 4.5, 6., 5.5, 6., 6.5, 7.];
+const C_MAJOR: Scale = Scale {
+    notes: [
+        NoteName::C,
+        NoteName::Cis,
+        NoteName::D,
+        NoteName::Dis,
+        NoteName::E,
+        NoteName::F,
+        NoteName::Fis,
+        NoteName::G,
+        NoteName::Gis,
+        NoteName::A,
+        NoteName::Ais,
+        NoteName::H,
+    ],
+};
+
+pub struct Scale {
+    notes: [NoteName; 12],
+}
+
+pub fn generate_scale(name: &str) -> Scale {
+    let mut res = C_MAJOR;
+    res.notes[..].rotate_right(match name {
+        "C" => 0,
+        "G" => 5,
+        "D" => 10,
+        "A" => 3,
+        _ => 0,
+    });
+    res
+}
+
+impl Scale {
+    fn note_to_halftone(&self, note: NoteName) -> f32 {
+        POSITION_TO_HALFTONES[self.notes.binary_search(&note).unwrap_or_default()]
+    }
+
+    fn halftone_to_note(&self, halftone: f32) -> NoteName {
+        self.notes[POSITION_TO_HALFTONES
+            .binary_search_by(|ht| ht.partial_cmp(&halftone).expect("Found NaN in tones."))
+            .unwrap_or_default()]
+    }
+}
