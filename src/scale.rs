@@ -1,6 +1,6 @@
 use crate::notes::NoteName;
 
-const POSITION_TO_HALFTONES: [f32; 12] = [1., 1.5, 2., 2.5, 3., 4., 4.5, 5., 5.5, 6., 6.5, 7.];
+pub const POSITION_TO_HALFTONES: [f32; 12] = [1., 1.5, 2., 2.5, 3., 4., 4.5, 5., 5.5, 6., 6.5, 7.];
 
 pub const C_MAJOR: Scale = Scale {
     notes: [
@@ -20,7 +20,7 @@ pub const C_MAJOR: Scale = Scale {
 };
 
 pub struct Scale {
-    notes: [NoteName; 12],
+    pub notes: [NoteName; 12],
 }
 
 pub fn generate_scale(name: &str) -> Scale {
