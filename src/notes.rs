@@ -1,3 +1,7 @@
+use itertools::Itertools;
+
+use crate::scale;
+
 /// Names of notes that can be compared to each other.
 #[derive(Debug, Clone, Copy, Eq)]
 #[allow(dead_code)]
@@ -64,16 +68,9 @@ impl PartialEq for NoteName {
     }
 }
 
-impl PartialOrd for NoteName {
-    fn partial_cmp(&self, other: &Self) -> Option<std::cmp::Ordering> {
-        self.to_c_dur_position()
-            .partial_cmp(&other.to_c_dur_position())
-    }
-}
-
-impl Ord for NoteName {
-    fn cmp(&self, other: &Self) -> std::cmp::Ordering {
-        self.to_c_dur_position().cmp(&other.to_c_dur_position())
+impl std::hash::Hash for NoteName {
+    fn hash<H: std::hash::Hasher>(&self, state: &mut H) {
+        core::mem::discriminant(self).hash(state);
     }
 }
 
@@ -88,4 +85,104 @@ fn note_compare_test() {
     assert_eq!(NoteName::F, NoteName::Eis);
     assert_eq!(NoteName::Ais, NoteName::B);
     assert_eq!(NoteName::Ces, NoteName::H);
+}
+
+pub struct OctavedNote {
+    note: NoteName,
+    octave: i32,
+}
+
+impl OctavedNote {
+    pub fn true_diff(scale: &scale::Scale, note1: Self, note2: Self) -> f32 {
+        (scale.note_to_halftone(note2.note) + (7 * note2.octave) as f32)
+            - (scale.note_to_halftone(note1.note) + (7 * note1.octave) as f32)
+    }
+
+    pub fn diff(scale: &scale::Scale, note1: Self, note2: Self) -> f32 {
+        let d = Self::true_diff(scale, note1, note2);
+        d + 1_f32.copysign(d)
+    }
+}
+
+#[test]
+fn diff_test() {
+    let scale_g = scale::generate_scale("G");
+    let scale_c = scale::generate_scale("C");
+
+    assert_eq!(
+        OctavedNote::diff(
+            &scale_c,
+            OctavedNote {
+                note: NoteName::C,
+                octave: 0
+            },
+            OctavedNote {
+                note: NoteName::C,
+                octave: 0
+            }
+        ),
+        1.
+    );
+
+    assert_eq!(
+        OctavedNote::diff(
+            &scale_g,
+            OctavedNote {
+                note: NoteName::A,
+                octave: 0
+            },
+            OctavedNote {
+                note: NoteName::H,
+                octave: 0
+            }
+        ),
+        2.
+    );
+
+    assert_eq!(
+        OctavedNote::diff(
+            &scale_c,
+            OctavedNote {
+                note: NoteName::C,
+                octave: 1
+            },
+            OctavedNote {
+                note: NoteName::C,
+                octave: 0
+            }
+        ),
+        -8.
+    )
+}
+
+/// Last Note will be Bass-Note
+pub struct Quatrain(NoteName, NoteName, NoteName, NoteName);
+
+pub struct Triad(NoteName, NoteName, NoteName);
+pub struct SATB_Block(OctavedNote, OctavedNote, OctavedNote, OctavedNote);
+
+pub fn permute(triad: Triad) -> Vec<SATB_Block> {
+    let mut base = Vec::new();
+    for perm in [triad.0, triad.1, triad.2].iter().permutations(3).unique() {
+        base.push(SATB_Block(
+            OctavedNote {
+                note: *perm[0],
+                octave: 1,
+            },
+            OctavedNote {
+                note: *perm[1],
+                octave: 1,
+            },
+            OctavedNote {
+                note: *perm[2],
+                octave: 0,
+            },
+            OctavedNote {
+                note: triad.0,
+                octave: 0,
+            },
+        ))
+    }
+
+    base
 }
