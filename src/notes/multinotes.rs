@@ -19,14 +19,7 @@ pub fn permute(notes: MultiNote) -> Vec<SatbBlock> {
         .iter()
         .permutations(3)
         .unique()
-        .map(|permutation| {
-            (
-                *permutation[0],
-                *permutation[1],
-                *permutation[2],
-                *permutation[3],
-            )
-        })
+        .map(|permutation| (*permutation[0], *permutation[1], *permutation[2], notes.0))
         .flat_map(|(s, a, t, b)| {
             let mut sopran_res = Vec::with_capacity(3);
 
@@ -109,4 +102,12 @@ pub fn permute(notes: MultiNote) -> Vec<SatbBlock> {
         })
         .map(|(s, a, t, b)| SatbBlock(s, a, t, b))
         .collect_vec()
+}
+
+#[test]
+fn test_permutes() {
+    assert_eq!(
+        permute(MultiNote::Triad(NoteName::Cis, NoteName::D, NoteName::F)).len(),
+        24,
+    );
 }
