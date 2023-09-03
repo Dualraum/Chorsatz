@@ -7,3 +7,5 @@ edition = "2021"
 
 [dependencies]
 itertools = "0.11"
+log = "0.4"
+simple_logger = "4.2"

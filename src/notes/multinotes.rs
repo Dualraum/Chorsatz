@@ -1,8 +1,11 @@
+use std::fmt::Display;
+
 use itertools::Itertools;
 
 use super::NoteName;
 use super::OctavedNote;
 
+#[derive(Debug, Clone, Copy)]
 pub enum MultiNote {
     Triad(NoteName, NoteName, NoteName),
     Quatrain(NoteName, NoteName, NoteName, NoteName),
@@ -15,6 +18,12 @@ pub struct SatbBlock(
     pub OctavedNote,
     pub OctavedNote,
 );
+
+impl Display for SatbBlock {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "({}, {}, {}, {})", self.0, self.1, self.2, self.3)
+    }
+}
 
 pub fn permute(notes: &MultiNote) -> Vec<SatbBlock> {
     let notes = match *notes {

@@ -1,3 +1,5 @@
+use std::fmt::Display;
+
 use super::NoteName;
 use crate::scale;
 
@@ -19,6 +21,12 @@ impl OctavedNote {
         scale::C_MAJOR.note_to_halftone(self.note)
         // add octave
          + (7 * self.octave) as f32
+    }
+}
+
+impl Display for OctavedNote {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "{:?}{}", self.note, self.octave)
     }
 }
 

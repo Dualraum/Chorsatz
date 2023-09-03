@@ -10,3 +10,4 @@ mod octaved_notes;
 pub use octaved_notes::OctavedNote;
 
 mod triads;
+pub use triads::create_triad;
