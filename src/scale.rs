@@ -30,6 +30,8 @@ pub fn generate_scale(name: &str) -> Scale {
         "G" => 5,
         "D" => 10,
         "A" => 3,
+        "E" => 8,
+        
         _ => 0,
     });
     res
