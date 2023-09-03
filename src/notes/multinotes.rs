@@ -7,10 +7,17 @@ pub enum MultiNote {
     Triad(NoteName, NoteName, NoteName),
     Quatrain(NoteName, NoteName, NoteName, NoteName),
 }
-pub struct SatbBlock(OctavedNote, OctavedNote, OctavedNote, OctavedNote);
 
-pub fn permute(notes: MultiNote) -> Vec<SatbBlock> {
-    let notes = match notes {
+#[derive(Debug, Clone, Copy)]
+pub struct SatbBlock(
+    pub OctavedNote,
+    pub OctavedNote,
+    pub OctavedNote,
+    pub OctavedNote,
+);
+
+pub fn permute(notes: &MultiNote) -> Vec<SatbBlock> {
+    let notes = match *notes {
         MultiNote::Triad(n1, n2, n3) => (n1, n2, n3, n1),
         MultiNote::Quatrain(n1, n2, n3, n4) => (n1, n2, n3, n4),
     };
@@ -107,7 +114,7 @@ pub fn permute(notes: MultiNote) -> Vec<SatbBlock> {
 #[test]
 fn test_permutes() {
     assert_eq!(
-        permute(MultiNote::Triad(NoteName::Cis, NoteName::D, NoteName::F)).len(),
+        permute(&MultiNote::Triad(NoteName::Cis, NoteName::D, NoteName::F)).len(),
         24,
     );
 }

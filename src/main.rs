@@ -1,4 +1,5 @@
 #![allow(dead_code)]
+mod generator;
 mod notes;
 mod scale;
 

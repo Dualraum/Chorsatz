@@ -8,3 +8,5 @@ pub use multinotes::SatbBlock;
 
 mod octaved_notes;
 pub use octaved_notes::OctavedNote;
+
+mod triads;
