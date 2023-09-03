@@ -42,8 +42,13 @@ fn main() {
     for solution in solutions {
         log::info!("Found valid solution: ");
         for block in solution {
-            print!("{}", block);
+            print!("{} -> ", block);
         }
         println!()
     }
+
+    log::info!("Press Enter to exit the program.");
+    if std::io::stdin().read_line(&mut line).is_err() {
+        log::error!("That was not a nice input.")
+    };
 }
