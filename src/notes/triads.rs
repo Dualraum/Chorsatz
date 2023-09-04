@@ -35,7 +35,11 @@ pub fn create_triad(key: &str) -> Result<MultiNote, String> {
         "Hdim" => Ok(MultiNote::Triad(NoteName::H, NoteName::D, NoteName::F)),
         "Haug" => Ok(MultiNote::Triad(NoteName::H, NoteName::Dis, NoteName::G)), //Fisis
         // Fis
-        "Fis" => Ok(MultiNote::Triad(NoteName::Fis, NoteName::Ais, NoteName::Cis)),
+        "Fis" => Ok(MultiNote::Triad(
+            NoteName::Fis,
+            NoteName::Ais,
+            NoteName::Cis,
+        )),
         "Fism" => Ok(MultiNote::Triad(NoteName::Fis, NoteName::A, NoteName::Cis)),
         "Fisdim" => Ok(MultiNote::Triad(NoteName::Fis, NoteName::A, NoteName::C)),
         "Fisaug" => Ok(MultiNote::Triad(NoteName::Fis, NoteName::Ais, NoteName::D)), //Cisis
@@ -103,6 +107,6 @@ pub fn create_triad(key: &str) -> Result<MultiNote, String> {
         "Aisdim" => Ok(MultiNote::Triad(NoteName::Ais, NoteName::Cis, NoteName::E)),
         "Aisaug" => Ok(MultiNote::Triad(NoteName::Ais, NoteName::D, NoteName::Fis)),
 
-        other => Err(format!("Could not find note <{other}>")),
+        other => Err(format!("Could not find note <{other}>.")),
     }
 }

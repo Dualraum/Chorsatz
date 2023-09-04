@@ -1,10 +1,14 @@
+use itertools::Itertools;
+
 use crate::notes::SatbBlock;
 
 use super::notes;
 
 /// Generates a number of valid, unsorted SATB-progression from the passed triads or quadrains.
 pub fn generate_satb(accords: &[notes::MultiNote]) -> Vec<Vec<SatbBlock>> {
-    generate_satb_helper(accords, &[])
+    let mut res = generate_satb_helper(accords, &[]);
+    res.sort_by(|s1, s2| satb_score(s1).partial_cmp(&satb_score(s2)).unwrap());
+    res
 }
 
 /// Recursive helper function
@@ -31,7 +35,7 @@ fn generate_satb_helper(
                 continue;
             }
             // Sopran-Bass-Difference
-            if (b - s) > 21. {
+            if (b - s).abs() > 21. {
                 continue;
             }
             if let Some(SatbBlock(s_pre, a_pre, t_pre, b_pre)) = prefix.last().copied() {
@@ -86,4 +90,35 @@ fn generate_satb_helper(
 
         res
     }
+}
+
+fn satb_score(solution: &Vec<SatbBlock>) -> f32 {
+    let mut score = 0.;
+
+    for (SatbBlock(s_pre, a_pre, t_pre, b_pre), SatbBlock(s, a, t, b)) in
+        solution.iter().copied().tuple_windows()
+    {
+        let mut sum_abs = 0.;
+        let mut sum = 0.;
+        sum += s - s_pre;
+        sum_abs += (s - s_pre).abs();
+        sum += a - a_pre;
+        sum_abs += (a - a_pre).abs();
+        sum += t - t_pre;
+        sum_abs += (t - t_pre).abs();
+        sum += b - b_pre;
+        sum_abs += (b - b_pre).abs();
+
+        score += sum_abs + 0.8 * sum.abs() + 0.4 * (s - b).abs();
+    }
+
+    if notes::OctavedNote::new(notes::NoteName::Cis, 2) - solution[0].0 < 0. {
+        score += 1.2 * (solution.len() as f32 - 1.);
+    }
+
+    if notes::OctavedNote::new(notes::NoteName::Gis, -1) - solution[0].3 > 0. {
+        score += 1.2 * (solution.len() as f32 - 1.);
+    }
+
+    score
 }

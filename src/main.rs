@@ -49,6 +49,6 @@ fn main() {
 
     log::info!("Press Enter to exit the program.");
     if std::io::stdin().read_line(&mut line).is_err() {
-        log::error!("That was not a nice input.")
+        log::error!("That was not a nice input.");
     };
 }
