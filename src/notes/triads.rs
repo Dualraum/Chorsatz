@@ -6,33 +6,33 @@ pub fn create_triad(key: &str) -> Result<MultiNote, String> {
         // Kreuztonarten
         // C
         "C" => Ok(MultiNote::Triad(NoteName::C, NoteName::E, NoteName::G)),
-        "Cm" => Ok(MultiNote::Triad(NoteName::C, NoteName::Dis, NoteName::G)),
-        "Cdim" => Ok(MultiNote::Triad(NoteName::C, NoteName::Dis, NoteName::Fis)),
+        "Cm" => Ok(MultiNote::Triad(NoteName::C, NoteName::Es, NoteName::G)),
+        "Cdim" => Ok(MultiNote::Triad(NoteName::C, NoteName::Es, NoteName::Ges)),
         "Caug" => Ok(MultiNote::Triad(NoteName::C, NoteName::E, NoteName::Gis)),
         // G
         "G" => Ok(MultiNote::Triad(NoteName::G, NoteName::H, NoteName::D)),
-        "Gm" => Ok(MultiNote::Triad(NoteName::G, NoteName::Ais, NoteName::D)),
-        "Gdim" => Ok(MultiNote::Triad(NoteName::G, NoteName::Ais, NoteName::Cis)),
+        "Gm" => Ok(MultiNote::Triad(NoteName::G, NoteName::B, NoteName::D)),
+        "Gdim" => Ok(MultiNote::Triad(NoteName::G, NoteName::B, NoteName::Des)),
         "Gaug" => Ok(MultiNote::Triad(NoteName::G, NoteName::H, NoteName::Dis)),
         // D
         "D" => Ok(MultiNote::Triad(NoteName::D, NoteName::Fis, NoteName::A)),
         "Dm" => Ok(MultiNote::Triad(NoteName::D, NoteName::F, NoteName::A)),
-        "Ddim" => Ok(MultiNote::Triad(NoteName::D, NoteName::F, NoteName::Gis)),
+        "Ddim" => Ok(MultiNote::Triad(NoteName::D, NoteName::F, NoteName::As)),
         "Daug" => Ok(MultiNote::Triad(NoteName::D, NoteName::Fis, NoteName::Ais)),
         // A
         "A" => Ok(MultiNote::Triad(NoteName::A, NoteName::Cis, NoteName::E)),
         "Am" => Ok(MultiNote::Triad(NoteName::A, NoteName::C, NoteName::E)),
-        "Adim" => Ok(MultiNote::Triad(NoteName::A, NoteName::C, NoteName::Dis)),
-        "Aaug" => Ok(MultiNote::Triad(NoteName::A, NoteName::Cis, NoteName::F)),
+        "Adim" => Ok(MultiNote::Triad(NoteName::A, NoteName::C, NoteName::Es)),
+        "Aaug" => Ok(MultiNote::Triad(NoteName::A, NoteName::Cis, NoteName::Eis)),
         // E
         "E" => Ok(MultiNote::Triad(NoteName::E, NoteName::Gis, NoteName::H)),
         "Em" => Ok(MultiNote::Triad(NoteName::E, NoteName::G, NoteName::H)),
-        "Edim" => Ok(MultiNote::Triad(NoteName::E, NoteName::G, NoteName::Ais)),
-        "Eaug" => Ok(MultiNote::Triad(NoteName::E, NoteName::Gis, NoteName::C)),
+        "Edim" => Ok(MultiNote::Triad(NoteName::E, NoteName::G, NoteName::B)),
+        "Eaug" => Ok(MultiNote::Triad(NoteName::E, NoteName::Gis, NoteName::His)),
         // H
         "H" => Ok(MultiNote::Triad(NoteName::H, NoteName::Dis, NoteName::Fis)),
         "Hm" => Ok(MultiNote::Triad(NoteName::H, NoteName::D, NoteName::Fis)),
-        "Hdim" => Ok(MultiNote::Triad(NoteName::H, NoteName::D, NoteName::Eis)),
+        "Hdim" => Ok(MultiNote::Triad(NoteName::H, NoteName::D, NoteName::F)),
         "Haug" => Ok(MultiNote::Triad(NoteName::H, NoteName::Dis, NoteName::G)),
         // Fis
         "Fis" => Ok(MultiNote::Triad(
