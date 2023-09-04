@@ -97,15 +97,15 @@ pub fn create_triad(key: &str) -> Result<MultiNote, String> {
         "Disdim" => Ok(MultiNote::Triad(NoteName::Dis, NoteName::Fis, NoteName::A)),
         "Disaug" => Ok(MultiNote::Triad(NoteName::Dis, NoteName::G, NoteName::H)), //Fisis //Aisis
         // Gis
-        "Gis" => Ok(MultiNote::Triad(NoteName::Gis, NoteName::C, NoteName::Dis)),
+        "Gis" => Ok(MultiNote::Triad(NoteName::Gis, NoteName::C, NoteName::Dis)), //His
         "Gism" => Ok(MultiNote::Triad(NoteName::Gis, NoteName::H, NoteName::Dis)),
         "Gisdim" => Ok(MultiNote::Triad(NoteName::Gis, NoteName::H, NoteName::D)),
-        "Gisaug" => Ok(MultiNote::Triad(NoteName::Gis, NoteName::C, NoteName::E)),
+        "Gisaug" => Ok(MultiNote::Triad(NoteName::Gis, NoteName::C, NoteName::E)), //His //Disis
         // Ais
-        "Ais" => Ok(MultiNote::Triad(NoteName::Ais, NoteName::D, NoteName::F)),
-        "Aism" => Ok(MultiNote::Triad(NoteName::Ais, NoteName::Cis, NoteName::F)),
+        "Ais" => Ok(MultiNote::Triad(NoteName::Ais, NoteName::D, NoteName::F)), //Cisis //Eis
+        "Aism" => Ok(MultiNote::Triad(NoteName::Ais, NoteName::Cis, NoteName::F)), //Eis
         "Aisdim" => Ok(MultiNote::Triad(NoteName::Ais, NoteName::Cis, NoteName::E)),
-        "Aisaug" => Ok(MultiNote::Triad(NoteName::Ais, NoteName::D, NoteName::Fis)),
+        "Aisaug" => Ok(MultiNote::Triad(NoteName::Ais, NoteName::D, NoteName::Fis)), //Cisis //Eisis
 
         other => Err(format!("Could not find note <{other}>.")),
     }
