@@ -37,10 +37,12 @@ fn main() {
 
     if solutions.is_empty() {
         log::warn!("No solutions found!");
+    } else {
+        log::info!("Found {} valid solutions.", solutions.len());
     }
 
-    for solution in solutions {
-        log::info!("Found valid solution: ");
+    for (index, solution) in solutions.iter().take(10).enumerate() {
+        log::info!("Solution {}:", index + 1);
         for block in solution {
             print!("{} -> ", block);
         }
