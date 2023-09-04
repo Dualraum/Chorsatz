@@ -28,7 +28,7 @@ pub fn create_triad(key: &str) -> Result<MultiNote, String> {
         "E" => Ok(MultiNote::Triad(NoteName::E, NoteName::Gis, NoteName::H)),
         "Em" => Ok(MultiNote::Triad(NoteName::E, NoteName::G, NoteName::H)),
         "Edim" => Ok(MultiNote::Triad(NoteName::E, NoteName::G, NoteName::B)),
-        "Eaug" => Ok(MultiNote::Triad(NoteName::E, NoteName::Gis, NoteName::His)),
+        "Eaug" => Ok(MultiNote::Triad(NoteName::E, NoteName::Gis, NoteName::C)), //His
         // H
         "H" => Ok(MultiNote::Triad(NoteName::H, NoteName::Dis, NoteName::Fis)),
         "Hm" => Ok(MultiNote::Triad(NoteName::H, NoteName::D, NoteName::Fis)),
