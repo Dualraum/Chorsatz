@@ -41,8 +41,8 @@ fn main() {
         log::info!("Found {} valid solutions.", solutions.len());
     }
 
-    for (index, solution) in solutions.iter().take(10).enumerate() {
-        log::info!("Solution {}:", index + 1);
+    for (index, (solution, score)) in solutions.iter().take(10).enumerate() {
+        log::info!("Solution {} with score {:.2}:", index + 1, score);
         for block in solution {
             print!("{} -> ", block);
         }

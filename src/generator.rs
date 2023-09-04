@@ -5,10 +5,15 @@ use crate::notes::SatbBlock;
 use super::notes;
 
 /// Generates a number of valid, unsorted SATB-progression from the passed triads or quadrains.
-pub fn generate_satb(accords: &[notes::MultiNote]) -> Vec<Vec<SatbBlock>> {
-    let mut res = generate_satb_helper(accords, &[]);
-    res.sort_by(|s1, s2| satb_score(s1).partial_cmp(&satb_score(s2)).unwrap());
-    res
+pub fn generate_satb(accords: &[notes::MultiNote]) -> Vec<(Vec<SatbBlock>, f32)> {
+    generate_satb_helper(accords, &[])
+        .into_iter()
+        .map(|solution| {
+            let score = satb_score(&solution);
+            (solution, score)
+        })
+        .sorted_by(|(_, score1), (_, score2)| score1.partial_cmp(score2).unwrap())
+        .collect()
 }
 
 /// Recursive helper function
