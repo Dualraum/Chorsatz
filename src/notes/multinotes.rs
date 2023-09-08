@@ -178,6 +178,8 @@ pub fn create_multinote(key: &str) -> Result<MultiNote, String> {
         // --------------------------------
         //            Quadrains
         // --------------------------------
+        // Kreuztonarten
+        //C
         "Cmaj7" => Ok(MultiNote::Quatrain(
             NoteName::C,
             NoteName::E,
@@ -213,6 +215,247 @@ pub fn create_multinote(key: &str) -> Result<MultiNote, String> {
             NoteName::E,
             NoteName::Gis,
             NoteName::H,
+        )),
+        // G
+        "G7" => Ok(MultiNote::Quatrain(NoteName::G, NoteName::H, NoteName::D,NoteName::F,)),
+        "Gmaj7" => Ok(MultiNote::Quatrain(NoteName::G, NoteName::H, NoteName::D,NoteName::Fis,)),
+        "Gm" => Ok(MultiNote::Quatrain(NoteName::G, NoteName::B, NoteName::D,NoteName::F,)),
+        "Gmmaj7" => Ok(MultiNote::Quatrain(NoteName::G, NoteName::B, NoteName::D,NoteName::Fis,)),
+        "Gdim7" => Ok(MultiNote::Quatrain(NoteName::G, NoteName::B, NoteName::Des,NoteName::Fes,)),
+        "Gaug7" => Ok(MultiNote::Quatrain(NoteName::G, NoteName::H, NoteName::Dis,NoteName::Fis,)),
+        // D
+        "D7" => Ok(MultiNote::Quatrain(NoteName::D, NoteName::Fis, NoteName::A, NoteName::C,)),
+        "Dmaj7" => Ok(MultiNote::Quatrain(NoteName::D, NoteName::Fis, NoteName::A, NoteName::Cis,)),
+        "Dm7" => Ok(MultiNote::Quatrain(NoteName::D, NoteName::F, NoteName::A, NoteName::C,)),
+        "Dmmaj7" => Ok(MultiNote::Quatrain(NoteName::D, NoteName::F, NoteName::A, NoteName::Cis,)),
+        "Ddim7" => Ok(MultiNote::Quatrain(NoteName::D, NoteName::F, NoteName::As, NoteName::Ces,)),
+        "Daug7" => Ok(MultiNote::Quatrain(NoteName::D, NoteName::Fis, NoteName::Ais, NoteName::Cis,)),
+        // A
+        "A7" => Ok(MultiNote::Quatrain(NoteName::A, NoteName::Cis, NoteName::E, NoteName::G,)),
+        "Amaj7" => Ok(MultiNote::Quatrain(NoteName::A, NoteName::Cis, NoteName::E, NoteName::Gis,)),
+        "Am7" => Ok(MultiNote::Quatrain(NoteName::A, NoteName::C, NoteName::E, NoteName::G,)),
+        "Ammaj7" => Ok(MultiNote::Quatrain(NoteName::A, NoteName::C, NoteName::E, NoteName::Gis,)),
+        "Adim7" => Ok(MultiNote::Quatrain(NoteName::A, NoteName::C, NoteName::Es, NoteName::Ges,)),
+        "Aaug7" => Ok(MultiNote::Quatrain(NoteName::A, NoteName::Cis, NoteName::Eis, NoteName::Gis,)),
+        // E
+        "E7" => Ok(MultiNote::Quatrain(NoteName::E, NoteName::Gis, NoteName::H, NoteName::D,)),
+        "Emaj7" => Ok(MultiNote::Quatrain(NoteName::E, NoteName::Gis, NoteName::H, NoteName::Dis,)),
+        "Em" => Ok(MultiNote::Quatrain(NoteName::E, NoteName::G, NoteName::H, NoteName::D,)),
+        "Emmaj7" => Ok(MultiNote::Quatrain(NoteName::E, NoteName::G, NoteName::H, NoteName::Dis,)),
+        "Edim7" => Ok(MultiNote::Quatrain(NoteName::E, NoteName::G, NoteName::B, NoteName::Des,)),
+        "Eaug7" => Ok(MultiNote::Quatrain(NoteName::E, NoteName::Gis, NoteName::His, NoteName::Dis,)),
+        // H
+        "H7" => Ok(MultiNote::Quatrain(NoteName::H, NoteName::Dis, NoteName::Fis, NoteName::A,)),
+        "Hmaj7" => Ok(MultiNote::Quatrain(NoteName::H, NoteName::Dis, NoteName::Fis, NoteName::Ais,)),
+        "Hm7" => Ok(MultiNote::QuatrainTriad(NoteName::H, NoteName::D, NoteName::Fis, NoteName::A,)),
+        "Hmmaj7" => Ok(MultiNote::QuatrainTriad(NoteName::H, NoteName::D, NoteName::Fis, NoteName::Ais,)),
+        "Hdim7" => Ok(MultiNote::Quatrain(NoteName::H, NoteName::D, NoteName::F, NoteName::As,)),
+        "Haug7" => Ok(MultiNote::Quatrain(NoteName::H, NoteName::Dis,NoteName::Fisis, NoteName::Ais,)),
+        // Fis
+        "Fis7" => Ok(MultiNote::Quatrain(
+            NoteName::Fis,
+            NoteName::Ais,
+            NoteName::Cis,
+            NoteName::E,
+        )),
+         "Fismaj7" => Ok(MultiNote::Quatrain(
+            NoteName::Fis,
+            NoteName::Ais,
+            NoteName::Cis,
+            NoteName::Eis,
+        )),
+        "Fism" => Ok(MultiNote::Quatrain(NoteName::Fis, NoteName::A, NoteName::Cis, NoteName::E,)),
+        "Fismmaj7" => Ok(MultiNote::Quatrain(NoteName::Fis, NoteName::A, NoteName::Cis, NoteName::Eis,)),
+        "Fisdim7" => Ok(MultiNote::Quatrain(NoteName::Fis, NoteName::A, NoteName::C, NoteName::Es,)),
+        "Fisaug7" => Ok(MultiNote::Quatrain(
+            NoteName::Fis,
+            NoteName::Ais,
+            NoteName::Cisis,
+            NoteName::Eis,
+        )),
+
+        //b-Tonarten
+
+    // F
+        "F7" => Ok(MultiNote::Quatrain(NoteName::F, NoteName::A, NoteName::C, NoteName::Es)),
+        "Fmaj7" => Ok(MultiNote::Quatrain(NoteName::F, NoteName::A, NoteName::C, NoteName::E)),
+        "Fm7" => Ok(MultiNote::Quatrain(NoteName::F, NoteName::As, NoteName::C, NoteName::Es)),
+        "Fmmaj7" => Ok(MultiNote::Quatrain(NoteName::F, NoteName::As, NoteName::C, NoteName::E)),
+        "Fdim7" => Ok(MultiNote::Quatrain(NoteName::F, NoteName::As, NoteName::Ces, NoteName::Eses)),
+        "Faug7" => Ok(MultiNote::Quatrain(NoteName::F, NoteName::A, NoteName::Cis, NoteName::E)),
+        // B
+        "B7" => Ok(MultiNote::Quatrain(NoteName::B, NoteName::D, NoteName::F, NoteName:: As)),
+        "Bmaj7" => Ok(MultiNote::Quatrain(NoteName::B, NoteName::D, NoteName::F, NoteName:: A)),
+        "Bm7" => Ok(MultiNote::Quatrain(NoteName::B, NoteName::Des, NoteName::F, NoteName:: As)),
+        "Bmmaj7" => Ok(MultiNote::Quatrain(NoteName::B, NoteName::Des, NoteName::F, NoteName:: A)),
+        "Bdim7" => Ok(MultiNote::Quatrain(NoteName::B, NoteName::Des, NoteName::Fes, NoteName:: Asas)),
+        "Baug7" => Ok(MultiNote::Quatrain(NoteName::B, NoteName::D, NoteName::Fis, NoteName:: A)),
+        // Es
+        "Es7" => Ok(MultiNote::Quatrain(NoteName::Es, NoteName::G, NoteName::B, NoteName::Des)),
+        "Esmaj7" => Ok(MultiNote::Quatrain(NoteName::Es, NoteName::G, NoteName::B, NoteName::D)),
+        "Esm7" => Ok(MultiNote::Quatrain(NoteName::Es, NoteName::Ges, NoteName::B, NoteName::Des)),
+        "Esmmaj7" => Ok(MultiNote::Quatrain(NoteName::Es, NoteName::Ges, NoteName::B, NoteName::D)),
+        "Esdim7" => Ok(MultiNote::Quatrain(
+            NoteName::Es,
+            NoteName::Ges,
+            NoteName::Heses,
+            NoteName::Deses
+        )),
+        "Esaug7" => Ok(MultiNote::Quatrain(NoteName::Es, NoteName::G, NoteName::H, NoteName::D)),
+        // As
+        "As7" => Ok(MultiNote::Quatrain(NoteName::As, NoteName::C, NoteName::Es, NoteName::Ges)),
+        "Asmaj7" => Ok(MultiNote::Quatrain(NoteName::As, NoteName::C, NoteName::Es, NoteName::G)),
+        "Asm7" => Ok(MultiNote::Quatrain(NoteName::As, NoteName::Ces, NoteName::Es, NoteName::Ges)),
+        "Asmmaj7" => Ok(MultiNote::Quatrain(NoteName::As, NoteName::Ces, NoteName::Es, NoteName::G)),
+        "Asdim7" => Ok(MultiNote::Quatrain(
+            NoteName::As,
+            NoteName::Ces,
+            NoteName::Eses,
+            NoteName::Geses
+        )),
+        "Asaug7" => Ok(MultiNote::Quatrain(NoteName::As, NoteName::C, NoteName::E, NoteName::G)),
+        // Des
+        "Des7" => Ok(MultiNote::Quatrain(NoteName::Des, NoteName::F, NoteName::As, NoteName::Ces)),
+        "Desmaj7" => Ok(MultiNote::Quatrain(NoteName::Des, NoteName::F, NoteName::As, NoteName::C)),
+        "Desm7" => Ok(MultiNote::Quatrain(NoteName::Des, NoteName::Fes, NoteName::As, NoteName::Ces)),
+        "Desmmaj7" => Ok(MultiNote::Quatrain(NoteName::Des, NoteName::Fes, NoteName::As, NoteName::C)),
+        "Desdim7" => Ok(MultiNote::Quatrain(
+            NoteName::Des,
+            NoteName::Fes,
+            NoteName::Asas,
+            NoteName::Ceses
+        )),
+        "Desaug7" => Ok(MultiNote::Quatrain(NoteName::Des, NoteName::F, NoteName::A, NoteName::C)),
+        // Ges
+        "Ges7" => Ok(MultiNote::Quatrain(NoteName::Ges, NoteName::B, NoteName::Des, NoteName::Fes)),
+        "Gesmaj7" => Ok(MultiNote::Quatrain(NoteName::Ges, NoteName::B, NoteName::Des, NoteName::F)),
+        "Gesm7" => Ok(MultiNote::Quatrain(
+            NoteName::Ges,
+            NoteName::Heses,
+            NoteName::Des,
+            NoteName::Fes
+        )),
+        "Gesmmaj7" => Ok(MultiNote::Quatrain(
+            NoteName::Ges,
+            NoteName::Heses,
+            NoteName::Des,
+            NoteName::F
+        )),
+        "Gesdim7" => Ok(MultiNote::Quatrain(
+            NoteName::Ges,
+            NoteName::Heses,
+            NoteName::Deses,
+            NoteName::Feses
+        )),
+        "Gesaug7" => Ok(MultiNote::Quatrain(NoteName::Ges, NoteName::B, NoteName::D, NoteName::F)),
+
+         // enharmonisch gleiche sinnvolle Tonarten
+        // Cis
+        "Cis7" => Ok(MultiNote::Quatrain(
+            NoteName::Cis,
+            NoteName::Eis,
+            NoteName::Gis,
+            NoteName::H,
+        )),
+         "Cismaj7" => Ok(MultiNote::Quatrain(
+            NoteName::Cis,
+            NoteName::Eis,
+            NoteName::Gis,
+            NoteName::His,
+        )),
+        "Cism7" => Ok(MultiNote::Quatrain(NoteName::Cis, NoteName::E, NoteName::Gis, NoteName::H,)),
+        "Cismmaj7" => Ok(MultiNote::Quatrain(NoteName::Cis, NoteName::E, NoteName::Gis, NoteName::His,)),
+        "Cisdim7" => Ok(MultiNote::Quatrain(NoteName::Cis, NoteName::E, NoteName::G, NoteName::Hes,)),
+        "Cisaug7" => Ok(MultiNote::Quatrain(
+            NoteName::Cis,
+            NoteName::Eis,
+            NoteName::Gisis,
+            NoteName::His,
+        )),
+        // Dis
+        "Dis7" => Ok(MultiNote::Quatrain(
+            NoteName::Dis,
+            NoteName::Fisis,
+            NoteName::Ais,
+            NoteName::Cis,
+        )),
+        "Dismaj7" => Ok(MultiNote::Quatrain(
+            NoteName::Dis,
+            NoteName::Fisis,
+            NoteName::Ais,
+            NoteName::Cisis,
+        )),
+        "Dism7" => Ok(MultiNote::Quatrain(
+            NoteName::Dis,
+            NoteName::Fis,
+            NoteName::Ais,
+            NoteName::Cis,
+        )),
+         "Dismmaj7" => Ok(MultiNote::Quatrain(
+            NoteName::Dis,
+            NoteName::Fis,
+            NoteName::Ais,
+            NoteName::Cisis,
+        )),
+        "Disdim7" => Ok(MultiNote::Quatrain(NoteName::Dis, NoteName::Fis, NoteName::A, NoteName::C, )),
+        "Disaug7" => Ok(MultiNote::Quatrain(
+            NoteName::Dis,
+            NoteName::Fisis,
+            NoteName::Aisis,
+            NoteName::Cisis,
+        )),
+        "Gis7" => Ok(MultiNote::Quatrain(
+            NoteName::Gis,
+            NoteName::His,
+            NoteName::Dis,
+            NoteName::Fis,
+        )),
+        "Gismaj7" => Ok(MultiNote::Quatrain(
+            NoteName::Gis,
+            NoteName::His,
+            NoteName::Dis,
+            NoteName::Fisis,
+        )),
+        "Gism7" => Ok(MultiNote::Quatrain(NoteName::Gis, NoteName::H, NoteName::Dis, NoteName::Fis,)),
+        "Gismmaj7" => Ok(MultiNote::Quatrain(NoteName::Gis, NoteName::H, NoteName::Dis, NoteName::Fisis,)),
+        "Gisdim7" => Ok(MultiNote::Quatrain(NoteName::Gis, NoteName::H, NoteName::D, NoteName::F)),
+        "Gisaug" => Ok(MultiNote::Quatrain(
+            NoteName::Gis,
+            NoteName::His,
+            NoteName::Disis,
+            NoteName::Fisis,
+        )),
+        // Ais
+        "Ais7" => Ok(MultiNote::Quatrain(
+            NoteName::Ais,
+            NoteName::Cisis,
+            NoteName::Eis,
+            NoteName::Gis,
+        )),
+        "Aismaj7" => Ok(MultiNote::Quatrain(
+            NoteName::Ais,
+            NoteName::Cisis,
+            NoteName::Eis,
+            NoteName::Gisis,
+        )),
+        "Aism7" => Ok(MultiNote::Quatrain(
+            NoteName::Ais,
+            NoteName::Cis,
+            NoteName::Eis,
+            NoteName::Gis,
+        )),
+        "Aismmaj7" => Ok(MultiNote::Quatrain(
+            NoteName::Ais,
+            NoteName::Cis,
+            NoteName::Eis,
+            NoteName::Gisis,
+        )),
+        "Aisdim7" => Ok(MultiNote::Quatrain(NoteName::Ais, NoteName::Cis, NoteName::E, NoteName::G,)),
+        "Aisaug7" => Ok(MultiNote::Quatrain(
+            NoteName::Ais,
+            NoteName::Cisis,
+            NoteName::Eisis,
+            NoteName::Gisis,
         )),
         
 
