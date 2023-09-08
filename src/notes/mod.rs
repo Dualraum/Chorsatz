@@ -2,12 +2,12 @@ mod note_names;
 pub use note_names::NoteName;
 
 mod multinotes;
-pub use multinotes::permute;
+pub use multinotes::create_multinote;
 pub use multinotes::MultiNote;
-pub use multinotes::SatbBlock;
+
+mod satb_block;
+pub use satb_block::permute;
+pub use satb_block::SatbBlock;
 
 mod octaved_notes;
 pub use octaved_notes::OctavedNote;
-
-mod triads;
-pub use triads::create_triad;

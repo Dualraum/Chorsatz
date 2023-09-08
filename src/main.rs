@@ -18,7 +18,7 @@ fn main() {
         line = line.replace(['\n', '\r'], "");
         !line.is_empty()
     } {
-        match notes::create_triad(&line) {
+        match notes::create_multinote(&line) {
             Ok(accord) => {
                 accords.push(accord);
                 log::info!("Added accord {line}. Enter the next accord key:");
