@@ -1,0 +1,66 @@
+\documentclass[11.5pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{geometry}
+
+\geometry{
+	left=2.5cm,
+	right=2.5cm,
+	top=2cm,
+	bottom=3cm}
+\title{How to Guideliner}
+\author{Minona Schäfer}
+
+\date{ }
+
+\begin{document}
+
+\maketitle
+
+
+	
+\section{Das Programm}
+Ziel des Programms ist es, einen vierstimmigen SATB-Stimmsatz aus vorgegebenen Akkorden zu erzeugen. Dabei sollen die klassischen Stimmführungsregeln beachtet werden. Die erste Version wurde in Python geschrieben, die zweite (und aktuelle) in Rust. Aus dieser soll voraussichtlich noch eine Web App entwickelt werden.
+
+\section{Eingabemöglichkeiten}
+	Aktuell können folgende Akkordtypen eingegeben werden: 
+	
+	\begin{itemize}
+		\item Dreiklänge 
+		\begin{itemize}
+			\item Dur z.B. durch die Eingabe \glqq D\grqq \ oder \glqq Dis\grqq
+			\item Moll z.B. durch die Eingabe \glqq Dm\grqq \ oder \glqq Dism\grqq
+			\item vermindert z.B. durch die Eingabe \glqq Ddim\grqq \ oder \glqq Disdim\grqq
+			\item übermäßig z.B. durch die Eingabe \glqq Daug\grqq \ oder \glqq Disaug\grqq
+			\item sus2 z.B. durch die Eingabe \glqq Dsus2\grqq \ oder \glqq Dissus2\grqq
+			\item sus4 z.B. durch die Eingabe \glqq Dsus4\grqq \ oder \glqq Dissus4\grqq
+		\end{itemize}
+		\item Vierklänge
+		\begin{itemize}
+			\item Dominantseptakkord z.B. durch die Eingabe \glqq D7\grqq \ oder \glqq Dis7\grqq
+			\item Major Septakkord z.B. durch die Eingabe \glqq Dmaj7\grqq \ oder \glqq Dismaj7\grqq
+			\item Mollseptakkord z.B. durch die Eingabe \glqq Dm7\grqq \ oder \glqq Dism7\grqq
+			\item Mollseptakkord mit gr. Septime z.B. durch die Eingabe \glqq Dmmaj7\grqq \ oder "Dismmaj7\grqq
+			\item verminderter Septakkord z.B. durch die Eingabe \glqq Ddim7\grqq oder \glqq Disdim7\grqq
+			\item übermäßiger Septakkord z.B. durch die Eingabe \glqq Daug7 \grqq oder \glqq Disaug7\grqq
+		\end{itemize}
+	\end{itemize}
+
+\section{Ausgabe}
+Das Programm gibt mehrere Quadrupel aus (so viele wie Akkorde eingegeben wurden). Der erste Eintrag ist der Sopran, der zweite der Alt, der dritte der Tenor und der vierte der Bass, d.h. (S,A,T,B). Jeder Eintrag besteht aus einem Tonnamen und einer Zahl zwischen $-1$ und $2$, z.B. \glqq a0\grqq \ oder \glqq g-1\grqq. \\
+Die Zahlen stehen für die jeweilige Oktave, in der der Ton liegt, aufgeteilt wie folgt:
+
+\begin{itemize}
+	\item $-1$: Große Oktave
+	\item $0$: Kleine Oktave
+	\item $1$: Eingestrichene Oktave
+	\item $2$: Zweigestrichene Oktave
+\end{itemize}
+
+	
+% \section{Verwendete Regeln für den Stimmsatz}
+
+
+\end{document}
