@@ -190,6 +190,32 @@ pub fn create_multinote(key: &str) -> Result<MultiNote, String> {
             NoteName::G,
             NoteName::B,
         )),
+        "Cm7" => Ok(MultiNote::Quatrain(
+            NoteName::C,
+            NoteName::Es,
+            NoteName::G,
+            NoteName::B,
+        )),
+         "Cmmaj7" => Ok(MultiNote::Quatrain(
+            NoteName::C,
+            NoteName::Es,
+            NoteName::G,
+            NoteName::H,
+        )),
+         "Cdim7" => Ok(MultiNote::Quatrain(
+            NoteName::C,
+            NoteName::Es,
+            NoteName::Ges,
+            NoteName::Heses,
+        )),
+        "Caug7" => Ok(MultiNote::Quatrain(
+            NoteName::C,
+            NoteName::E,
+            NoteName::Gis,
+            NoteName::H,
+        )),
+        
+
 
         // --------------------------------
         //              Other
