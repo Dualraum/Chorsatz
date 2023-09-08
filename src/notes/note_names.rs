@@ -15,6 +15,7 @@ pub enum NoteName {
     E,
     Eis,
     Eisis,
+    Feses,
     Fes,
     F,
     Fis,
@@ -33,6 +34,7 @@ pub enum NoteName {
     B,
     H,
     His,
+    Ceses,
     Ces,
 }
 
@@ -53,6 +55,7 @@ impl NoteName {
             NoteName::F => 5,
             NoteName::Eisis => 6,
             NoteName::Eis => 5,
+            NoteName::Feses => 3,
             NoteName::Fes => 4,
             NoteName::Fis => 6,
             NoteName::Fisis => 7,
@@ -70,6 +73,7 @@ impl NoteName {
             NoteName::Heses => 9,
             NoteName::H => 11,
             NoteName::His => 0,
+            NoteName::Ceses => 10,
             NoteName::Ces => 11,
         }
     }
