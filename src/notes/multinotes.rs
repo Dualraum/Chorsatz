@@ -28,14 +28,14 @@ impl Display for SatbBlock {
 pub fn permute(notes: &MultiNote) -> Vec<SatbBlock> {
     let notes = match *notes {
         MultiNote::Triad(n1, n2, n3) => (n1, n2, n3, n1),
-        MultiNote::Quatrain(n1, n2, n3, n4) => (n1, n2, n3, n4),
+        MultiNote::Quatrain(n1, n2, n3, n4) => (n2, n3, n4, n1),
     };
 
     [notes.0, notes.1, notes.2]
         .iter()
         .permutations(3)
         .unique()
-        .map(|permutation| (*permutation[0], *permutation[1], *permutation[2], notes.0))
+        .map(|permutation| (*permutation[0], *permutation[1], *permutation[2], notes.3))
         .flat_map(|(s, a, t, b)| {
             let mut sopran_res = Vec::with_capacity(3);
 
