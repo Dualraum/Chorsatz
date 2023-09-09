@@ -76,7 +76,7 @@ fn generate_satb_helper(
                 if (s_pre - s).abs() > 6.
                     || (a_pre - a).abs() > 6.
                     || (t_pre - t).abs() > 6.
-                    || (b_pre - b).abs() > 7.
+                    || (b_pre - b).abs() > 8.
                 {
                     continue;
                 }
@@ -120,8 +120,7 @@ fn satb_score(solution: &Vec<SatbBlock>) -> f32 {
     if notes::OctavedNote::new(notes::NoteName::Cis, 2) - solution[0].0 < 0. {
         score += 1.2 * (solution.len() as f32 - 1.);
     }
-
-    if notes::OctavedNote::new(notes::NoteName::Gis, -1) - solution[0].3 > 0. {
+     if notes::OctavedNote::new(notes::NoteName::Ais, 1) - solution[0].3 < 0. {
         score += 1.2 * (solution.len() as f32 - 1.);
     }
 
