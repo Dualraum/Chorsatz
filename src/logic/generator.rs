@@ -1,6 +1,6 @@
 use itertools::Itertools;
 
-use crate::notes::SatbBlock;
+use super::notes::SatbBlock;
 
 use super::notes;
 
@@ -120,7 +120,7 @@ fn satb_score(solution: &Vec<SatbBlock>) -> f32 {
     if notes::OctavedNote::new(notes::NoteName::Cis, 2) - solution[0].0 < 0. {
         score += 1.2 * (solution.len() as f32 - 1.);
     }
-     if notes::OctavedNote::new(notes::NoteName::Ais, 1) - solution[0].3 < 0. {
+    if notes::OctavedNote::new(notes::NoteName::Ais, 1) - solution[0].3 < 0. {
         score += 1.2 * (solution.len() as f32 - 1.);
     }
 

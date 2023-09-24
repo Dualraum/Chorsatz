@@ -1,7 +1,6 @@
 use std::fmt::Display;
 
 use super::NoteName;
-use crate::scale;
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub struct OctavedNote {
@@ -18,7 +17,7 @@ impl OctavedNote {
         // faster but not as clean
         //scale::POSITION_TO_HALFTONES[self.note.to_c_dur_position()]
         // slower but cleaner
-        scale::C_MAJOR.note_to_halftone(self.note)
+        super::scale::C_MAJOR.note_to_halftone(self.note)
         // add octave
          + (7 * self.octave) as f32
     }

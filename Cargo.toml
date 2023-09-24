@@ -1,6 +1,6 @@
 [package]
-name = "guideliner"
-version = "0.1.0"
+name = "chorsatz"
+version = "0.2.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -9,3 +9,8 @@ edition = "2021"
 itertools = "0.11"
 log = "0.4"
 simple_logger = "4.2"
+
+# Web
+
+leptos = { version = "0.5.0-rc3", features = ["csr", "nightly"] }
+stylers = "0.3"

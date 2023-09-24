@@ -11,3 +11,5 @@ pub use satb_block::SatbBlock;
 
 mod octaved_notes;
 pub use octaved_notes::OctavedNote;
+
+use super::scale;
