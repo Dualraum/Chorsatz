@@ -1,0 +1,12 @@
+div {
+    border: 1px solid black;
+    margin: 5px;
+    padding: 20px;
+    background-color: lightblue;
+}
+h1 {
+    color: greenyellow;
+    font-size: 64px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    align-content: center;
+}
