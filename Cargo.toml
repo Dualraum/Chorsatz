@@ -13,4 +13,3 @@ simple_logger = "4.2"
 # Web
 
 leptos = { version = "0.5.0-rc3", features = ["csr", "nightly"] }
-stylers = "0.3"
