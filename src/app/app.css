@@ -17,7 +17,7 @@ div {
 h1 {
     color: #13712B;
     font-size: 80px;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: Verdana;
     text-align: center;
 }
 h2 {
@@ -27,7 +27,7 @@ h3{
     color: #BF7021;
 }
 p{
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: Tahoma;
 }
 input{
     padding: 5px;
