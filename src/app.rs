@@ -2,13 +2,23 @@ use leptos::*;
 
 #[component]
 pub fn App() -> impl IntoView {
-    let styler_class = stylers::style_sheet! {"./src/app/app.css"};
+    //let styler_class = stylers::style_sheet! {"./src/app/app.css"};
 
-    view! { class = styler_class,
+    //t
+
+    view! { //class = styler_class,
         <h1>"Chorsatz"</h1>
-        <div>
-            <p>"Chorsatz has arrived! - Chorsatz"</p>
+        <div class = "visible">
+            <div>
+                <p> "Chorsatz ist eine Webapplikation zur automatischen Erstellung von vierstimmigen SATB-Stimmsätzen aus einer Reihenfolge von vorgegebenen Akkorden unter Beachtung der klassischen Stimmführungsregeln." </p>
+            </div>
         </div>
-        <input type="text"></input>
+
+        <div class="visible">
+            <div>
+                <h2>Eingabe:</h2>
+                <input type="text" placeholder="Akkorde hier eingeben..."></input>
+            </div>
+        </div>
     }
 }

@@ -1,12 +1,54 @@
 div {
-    border: 1px solid black;
-    margin: 5px;
-    padding: 20px;
-    background-color: lightblue;
+    margin: auto;
+    width: fit-content;
 }
+
+.visible{
+    padding: 24px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: #8BCE6E;
+    width: 50%;
+    display: flex;
+}
+
 h1 {
-    color: greenyellow;
-    font-size: 64px;
+    color: #13712B;
+    font-size: 80px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    align-content: center;
+    text-align: center;
+}
+h2 {
+    color: #13712B;   
+}
+h3{
+    color: #BF7021;
+}
+p{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+input{
+    padding: 5px;
+    padding-left: 25px;
+    background-image: url('musical-note.png');
+    background-position: 4px 4px;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    border-radius: 4px;
+    background-color: #8BCE6E;
+    border-color: #13712B;
+    border-style: solid;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+input :focus{
+    border-color: #BF7021;
+}
+
+body{
+    background-image: url('piano.png');
+    background-repeat: no-repeat;
+    background-blend-mode: lighten;
 }
