@@ -14,6 +14,29 @@ div {
     display: flex;
 }
 
+div {
+    margin: auto;
+    width: fit-content;
+}
+
+.satbr{
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: #8BCE6E;
+    border: #13712B;
+}
+
+div {
+    margin: auto;
+    width: fit-content;
+}
+
+.satbb{
+    border: 1px solid black;
+    border-radius: 15px;
+    background-color: #8BCE6E;
+    border: #13712B;
+}
 h1 {
     color: #13712B;
     font-size: 80px;

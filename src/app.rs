@@ -3,13 +3,13 @@ use leptos::*;
 
 use crate::logic;
 
+mod result_view;
+
 #[component]
 pub fn App() -> impl IntoView {
     //let styler_class = stylers::style_sheet! {"./src/app/app.css"};
 
-    let (_result, set_result) = create_signal(Vec::<logic::notes::SatbBlock>::new());
-
-    let (text_result, set_text_result) = create_signal("".to_string());
+    let (result, set_result) = create_signal(Vec::<(Vec<logic::notes::SatbBlock>, f32)>::new());
 
     view! { //class = styler_class,
         <h1>"Chorsatz"</h1>
@@ -32,17 +32,8 @@ pub fn App() -> impl IntoView {
                                 .split(' ')
                                 .filter_map(|note| logic::notes::create_multinote(note).ok())
                                 .collect_vec()
-                            ).first().unwrap().0.clone()
+                            )
                         });
-
-                        set_text_result(
-                            crate::logic::generate_satb(
-                                &event_target_value(&ev)
-                                .split(' ')
-                                .filter_map(|note| logic::notes::create_multinote(note).ok())
-                                .collect_vec()
-                            ).first().unwrap().0.iter().map(|block| block.to_string()).join(" - ")
-                        );
                     }
                     prop:value=""
                 ></input>
@@ -52,7 +43,13 @@ pub fn App() -> impl IntoView {
         <div class="visible">
             <div>
                 <h2>Ausgabe:</h2>
-                <p>{text_result}</p>
+                <For
+                    each=result
+                    key=|(_res,score)| score.clone() as i32
+                    view=move |(res, _score)| {
+                        result_view::satb_result_view(&res)
+                    }
+                />
             </div>
         </div>
     }
