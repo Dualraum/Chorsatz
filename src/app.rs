@@ -8,8 +8,6 @@ mod result_view;
 use result_view::SatbResultView;
 #[component]
 pub fn App() -> impl IntoView {
-    //let styler_class = stylers::style_sheet! {"./src/app/app.css"};
-
     let (result, set_result) = create_signal(Vec::<(Vec<logic::notes::SatbBlock>, f32)>::new());
 
     view! { //class = styler_class,
