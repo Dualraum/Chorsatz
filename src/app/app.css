@@ -54,6 +54,10 @@ div.satbb{
     display: block;
 }
 
+div.hor{
+    display: flex;
+}
+
 h1 {
     color: var(--pri-color);
     font-size: 80px;
@@ -88,16 +92,19 @@ p{
 input{
     padding: 5px;
     padding-left: 25px;
+    margin: 4px;
+
     background-image: url('musical-note.png');
     background-position: 4px 4px;
     background-size: 18px;
     background-repeat: no-repeat;
-    border-radius: 15px;
     background-color: var(--sec-color);
+
     border: 1px solid var(--pri-color);
+    border-radius: 15px;
+
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 
-    margin: auto;
     float: none;
     width: 90%;
 }
@@ -105,6 +112,26 @@ input{
 input:focus{
     outline: var(--acc-color);
     border: 1px solid var(--acc-color);
+}
+
+button{
+    padding: 5px;
+    padding-left: 25px;
+    margin: 2px;
+
+    background-position: 4px 4px;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-color: var(--sec-color);
+
+    border: 1px solid var(--pri-color);
+    border-radius: 15px;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button:hover{
+    background-color: var(--acc-color);
 }
 
 body{

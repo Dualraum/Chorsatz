@@ -20,6 +20,7 @@ pub fn App() -> impl IntoView {
 
         <div class="outer_block">
             <div>
+            <div class="hor">
                 <input
                     type="text"
                     placeholder="Akkorde hier eingeben..."
@@ -35,11 +36,14 @@ pub fn App() -> impl IntoView {
                     }
                     prop:value=""
                 ></input>
-                <p class="deemph">
-                    "Verfügbar sind sämtliche Dur- und Moll-Dreiklänge sowie verminderte, übermäßie, sus2 und sus4  Versionen dieser.
-                    Außerdem stehen Dominantseptakkorde, Majorseptakkorde, Mollseptakkorde, Mollseptakkorde mit großer Septime sowie verminderte und übermäßige Septakkorde zur Verfügung.
-                    Verschiedene Akkorde sind durch Leerzeichen zu trennen, hierbei werden ungültige Eingaben ignoriert."
-                </p>
+                <button>"Optionen"</button>
+                <button>"Akkorde"</button>
+            </div>
+            <p class="deemph">
+                "Verfügbar sind sämtliche Dur- und Moll-Dreiklänge sowie verminderte, übermäßie, sus2 und sus4  Versionen dieser.
+                Außerdem stehen Dominantseptakkorde, Majorseptakkorde, Mollseptakkorde, Mollseptakkorde mit großer Septime sowie verminderte und übermäßige Septakkorde zur Verfügung.
+                Verschiedene Akkorde sind durch Leerzeichen zu trennen, hierbei werden ungültige Eingaben ignoriert."
+            </p>
             </div>
         </div>
 
