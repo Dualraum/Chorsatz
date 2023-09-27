@@ -22,7 +22,6 @@ pub fn App() -> impl IntoView {
 
         <div class="outer_block">
             <div>
-                <p class="deemph">"Akkorde durch Leerzeichen trennen."</p>
                 <input
                     type="text"
                     placeholder="Akkorde hier eingeben..."
@@ -38,6 +37,11 @@ pub fn App() -> impl IntoView {
                     }
                     prop:value=""
                 ></input>
+                <p class="deemph">
+                    "Verfügbar sind sämtliche Dur- und Moll-Dreiklänge sowie verminderte, übermäßie, sus2 und sus4  Versionen dieser.
+                    Außerdem stehen Dominantseptakkorde, Majorseptakkorde, Mollseptakkorde, Mollseptakkorde mit großer Septime sowie verminderte und übermäßige Septakkorde zur Verfügung.
+                    Verschiedene Akkorde sind durch Leerzeichen zu trennen, hierbei werden ungültige Eingaben ignoriert."
+                </p>
             </div>
         </div>
 
@@ -45,6 +49,7 @@ pub fn App() -> impl IntoView {
         <div class="outer_block">
             <div>
                 <h2>"Ergebnisse:"</h2>
+                <p class="deemph">"Eine kleinere Bewertung kennzeichnet eine optimalere Lösung. Da eine rein algorithmische Bewertung nicht perfekt ist, werden mehrere Ergebnisse zur Auswahl angezeigt."</p>
                 <For
                     each=result
                     key=|(_res,score)| *score as i32
@@ -59,6 +64,8 @@ pub fn App() -> impl IntoView {
             <div>
             <p>
                 <b class="header">"Autoren:"</b> " Minona Schäfer & Linus Mußmächer"
+                " - " <b class="header"><a href="https://github.com/Linus-Mussmaecher/Chorsatz">Github</a></b>
+                " - " <b class="header"><a class="header" href="https://github.com/Linus-Mussmaecher/Chorsatz/blob/main/howto/Akkordsatzprogramm.pdf">Anleitung</a></b>
             </p>
             </div>
         </div>
