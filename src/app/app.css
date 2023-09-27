@@ -60,6 +60,14 @@ div.hor{
     align-items: center;
 }
 
+div.col_open{
+    display: block;
+}
+
+div.col_closed{
+    display: none;
+}
+
 h1 {
     color: var(--pri-color);
     font-size: 80px;
@@ -131,6 +139,10 @@ button{
     border-radius: 15px;
 
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+button.active{
+    background-color: var(--acc-color);
 }
 
 button:hover{
