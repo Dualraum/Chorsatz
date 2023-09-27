@@ -5,6 +5,7 @@ use crate::logic;
 
 mod result_view;
 
+use result_view::SatbResultView;
 #[component]
 pub fn App() -> impl IntoView {
     //let styler_class = stylers::style_sheet! {"./src/app/app.css"};
@@ -13,15 +14,15 @@ pub fn App() -> impl IntoView {
 
     view! { //class = styler_class,
         <h1>"Chorsatz"</h1>
-        <div class = "visible">
+        <div class = "outer_block">
             <div>
                 <p> "Chorsatz ist eine Webapplikation zur automatischen Erstellung von vierstimmigen SATB-Stimmsätzen aus einer Reihenfolge von vorgegebenen Akkorden unter Beachtung der klassischen Stimmführungsregeln." </p>
             </div>
         </div>
 
-        <div class="visible">
+        <div class="outer_block">
             <div>
-                <h2>Eingabe:</h2>
+                <p class="deemph">"Akkorde durch Leerzeichen trennen."</p>
                 <input
                     type="text"
                     placeholder="Akkorde hier eingeben..."
@@ -32,7 +33,7 @@ pub fn App() -> impl IntoView {
                                 .split(' ')
                                 .filter_map(|note| logic::notes::create_multinote(note).ok())
                                 .collect_vec()
-                            )
+                            ).into_iter().take(5).collect_vec()
                         });
                     }
                     prop:value=""
@@ -40,16 +41,25 @@ pub fn App() -> impl IntoView {
             </div>
         </div>
 
-        <div class="visible">
+
+        <div class="outer_block">
             <div>
-                <h2>Ausgabe:</h2>
+                <h2>"Ergebnisse:"</h2>
                 <For
                     each=result
-                    key=|(_res,score)| score.clone() as i32
-                    view=move |(res, _score)| {
-                        result_view::satb_result_view(&res)
+                    key=|(_res,score)| *score as i32
+                    view=move |(res, score)| {
+                        view!{<SatbResultView result=res res_score=score/>}
                     }
                 />
+            </div>
+        </div>
+
+        <div class="outer_block">
+            <div>
+            <p>
+                <b class="header">"Autoren:"</b> " Minona Schäfer & Linus Mußmächer"
+            </p>
             </div>
         </div>
     }

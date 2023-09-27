@@ -2,11 +2,21 @@ use leptos::*;
 
 use crate::logic::notes::SatbBlock;
 
-//#[component]
-pub fn satb_result_view(result: &[SatbBlock]) -> impl IntoView {
+#[component]
+pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32) -> impl IntoView {
     view! {
-        <div class = "satbr">
-            {result.iter().map(satb_block_view).collect_view()}
+        <div class = "satbr_outer">
+            <h3>"Ergebnis"</h3>
+            <p>"Bewertung: "{res_score as i32}</p>
+            <div class = "satbr_inner">
+                <div class = "satbb">
+                    <p class="header">"Sopran"</p>
+                    <p class="header">"Alt"</p>
+                    <p class="header">"Tenor"</p>
+                    <p class="header">"Bass"</p>
+                </div>
+                {result.iter().map(satb_block_view).collect_view()}
+            </div>
         </div>
     }
 }

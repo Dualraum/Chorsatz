@@ -1,42 +1,51 @@
 div {
     margin: auto;
-    width: fit-content;
+    align-items: stretch;
+    align-content: center;
 }
 
-.visible{
+.outer_block{
     padding: 24px;
     margin-top: 10px;
     margin-bottom: 10px;
     border: 1px solid black;
     border-radius: 15px;
-    background-color: #8BCE6E;
+    background-color: #FFFFFF;
     width: 50%;
+    min-width: min-content;
     display: flex;
 }
 
-div {
-    margin: auto;
-    width: fit-content;
-}
-
-.satbr{
-    border: 1px solid black;
+div.satbr_outer{
+    border: 4px solid #8BCE6E;
     border-radius: 15px;
-    background-color: #8BCE6E;
-    border: #13712B;
-}
+    background-color: #FFFFFF;
 
-div {
+    padding: 16px;
+
+    width: 90%;
+    display: block;
     margin: auto;
-    width: fit-content;
+    margin-top: 8px;
+    margin-bottom: 8px;
 }
 
-.satbb{
-    border: 1px solid black;
-    border-radius: 15px;
-    background-color: #8BCE6E;
-    border: #13712B;
+div.satbr_inner{
+
+    width: min-content;
+    display: flex;
+    margin: auto;
 }
+
+div.satbb{
+    padding: 4px;
+    margin: 8px;
+
+    width: 30px;
+    min-width: min-content;
+    display: block;
+}
+
 h1 {
     color: #13712B;
     font-size: 80px;
@@ -45,12 +54,20 @@ h1 {
 }
 h2 {
     color: #13712B;   
+    font-family: Verdana;
 }
 h3{
-    color: #BF7021;
+    color: #13712B;
+    font-family: Verdana;
 }
 p{
     font-family: Tahoma;
+}
+b p.header{
+    color: #13712B;
+}
+b p.deemph{
+    color: gainsboro;
 }
 input{
     padding: 5px;
@@ -64,14 +81,20 @@ input{
     border-color: #13712B;
     border-style: solid;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+    margin: auto;
+    align-self: center;
+    width: 90%;
 }
 
-input :focus{
-    border-color: #BF7021;
+input:focus{
+    background-color: #c2e9b1;
+    outline: #BF7021;
 }
 
 body{
     background-image: url('piano.png');
     background-repeat: no-repeat;
     background-blend-mode: lighten;
+    background-attachment: fixed;
 }
