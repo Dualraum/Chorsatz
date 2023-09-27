@@ -10,6 +10,8 @@ use result_view::SatbResultView;
 pub fn App() -> impl IntoView {
     let (result, set_result) = create_signal(Vec::<(Vec<logic::notes::SatbBlock>, f32)>::new());
 
+    let (input, set_input) = create_signal(String::new());
+
     view! { //class = styler_class,
         <h1>"Chorsatz"</h1>
         <div class = "outer_block">
@@ -24,6 +26,9 @@ pub fn App() -> impl IntoView {
                 <input
                     type="text"
                     placeholder="Akkorde hier eingeben..."
+                    on:input=move |ev| {
+                        set_input(event_target_value(&ev));
+                    }
                     on:change=move |ev| {
                         set_result({
                             crate::logic::generate_satb(
@@ -36,11 +41,22 @@ pub fn App() -> impl IntoView {
                     }
                     prop:value=""
                 ></input>
+                <button id="generate"
+                    on:click=move |_| {
+                        crate::logic::generate_satb(
+                            &input
+                            .get()
+                            .split(' ')
+                            .filter_map(|note| logic::notes::create_multinote(note).ok())
+                            .collect_vec()
+                        ).into_iter().take(5).collect_vec();
+                    }
+                >"Generieren"</button>
                 <button id="options">"Optionen"</button>
                 <button id="accords">"Akkorde"</button>
             </div>
             <p class="deemph">
-                "Verfügbar sind sämtliche Dur- und Moll-Dreiklänge sowie verminderte, übermäßie, sus2 und sus4  Versionen dieser.
+                "Verfügbar sind sämtliche Dur- und Moll-Dreiklänge sowie verminderte, übermäßige, sus2 und sus4  Versionen dieser Akkorde.
                 Außerdem stehen Dominantseptakkorde, Majorseptakkorde, Mollseptakkorde, Mollseptakkorde mit großer Septime sowie verminderte und übermäßige Septakkorde zur Verfügung.
                 Verschiedene Akkorde sind durch Leerzeichen zu trennen, hierbei werden ungültige Eingaben ignoriert."
             </p>
@@ -66,8 +82,8 @@ pub fn App() -> impl IntoView {
             <div>
             <p>
                 <b class="header">"Autoren:"</b> " Minona Schäfer & Linus Mußmächer"
-                " - " <b class="header"><a href="https://github.com/Linus-Mussmaecher/Chorsatz">Github</a></b>
-                " - " <b class="header"><a class="header" href="https://github.com/Linus-Mussmaecher/Chorsatz/blob/main/howto/Akkordsatzprogramm.pdf">Anleitung</a></b>
+                " - " <b class="header"><a href="https://github.com/Dualraum/Chorsatz">Github</a></b>
+                " - " <b class="header"><a class="header" href="https://github.com/Dualraum/Chorsatz/blob/main/howto/Akkordsatzprogramm.pdf">Anleitung</a></b>
             </p>
             </div>
         </div>

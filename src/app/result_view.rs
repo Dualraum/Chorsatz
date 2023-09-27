@@ -10,7 +10,7 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32) -> impl IntoView {
             <p>"Bewertung: "<b class="marked">{res_score as i32}</b></p>
             <div class = "satbr_inner">
                 <div class = "satbb">
-                    <p class="header2">"Takt"</p>
+                    <p class="header2">"Akkord"</p>
                     <p class="header">"Sopran"</p>
                     <p class="header">"Alt"</p>
                     <p class="header">"Tenor"</p>

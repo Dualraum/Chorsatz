@@ -119,7 +119,7 @@ input:focus{
 button{
     padding: 5px;
     padding-left: 25px;
-    margin: 2px;
+    margin: 4px;
     height: min-content;
 
     background-position: 4px 4px;
@@ -135,6 +135,10 @@ button{
 
 button:hover{
     background-color: var(--acc-color);
+}
+
+button#generate{
+    background-image: url('musical-note.png');
 }
 
 button#options{
