@@ -36,8 +36,8 @@ pub fn App() -> impl IntoView {
                     }
                     prop:value=""
                 ></input>
-                <button>"Optionen"</button>
-                <button>"Akkorde"</button>
+                <button id="options">"Optionen"</button>
+                <button id="accords">"Akkorde"</button>
             </div>
             <p class="deemph">
                 "Verfügbar sind sämtliche Dur- und Moll-Dreiklänge sowie verminderte, übermäßie, sus2 und sus4  Versionen dieser.

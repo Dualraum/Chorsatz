@@ -118,9 +118,10 @@ button{
     padding: 5px;
     padding-left: 25px;
     margin: 2px;
+    height: min-content;
 
     background-position: 4px 4px;
-    background-size: 18px;
+    background-size: 18px 18px;
     background-repeat: no-repeat;
     background-color: var(--sec-color);
 
@@ -132,6 +133,14 @@ button{
 
 button:hover{
     background-color: var(--acc-color);
+}
+
+button#options{
+    background-image: url('cog.png');
+}
+
+button#accords{
+    background-image: url('accords.png');
 }
 
 body{
