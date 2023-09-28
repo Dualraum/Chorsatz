@@ -3,9 +3,12 @@ use leptos::*;
 
 use crate::logic;
 
-mod result_view;
+mod note_info;
+mod options;
 
+mod result_view;
 use result_view::SatbResultView;
+
 #[component]
 pub fn App() -> impl IntoView {
     let (result, set_result) = create_signal(Vec::<(Vec<logic::notes::SatbBlock>, f32)>::new());
@@ -76,14 +79,10 @@ pub fn App() -> impl IntoView {
                 >"Akkorde"</button>
             </div>
             <div class={options_class}>
-                    <p>
-                        "Hier werden in Zukunft mögliche Optionen zur Generierung stehen."
-                    </p>
+                    <options::Options/>
             </div>
             <div class={accords_class}>
-                    <p>
-                        "Hier wird in Zukunft eine Tabelle der Akkordabkürzungen stehen."
-                    </p>
+                    <note_info::Info/>
             </div>
             <p class="deemph">
                 "Verfügbar sind sämtliche Dur- und Moll-Dreiklänge sowie verminderte, übermäßige, sus2 und sus4  Versionen dieser Akkorde.

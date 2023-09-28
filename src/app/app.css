@@ -84,6 +84,23 @@ h3{
     color: var(--pri-color);
     font-family: Verdana;
 }
+
+th{
+    font-family: Verdana;
+    color: var(--pri-color);
+    text-align: left;
+}
+td{
+    font-family: Tahoma;
+}
+td.first{
+    color: var(--acc-color);
+}
+table{
+    margin: auto;
+    border-spacing: 16px;
+}
+
 p{
     font-family: Tahoma;
 }
