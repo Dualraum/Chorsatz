@@ -104,7 +104,7 @@ input{
     padding-left: 25px;
     margin: 4px;
 
-    background-image: url('musical-note.png');
+    background-image: url('assets/musical-note.png');
     background-position: 4px 4px;
     background-size: 18px;
     background-repeat: no-repeat;
@@ -150,19 +150,19 @@ button:hover{
 }
 
 button#generate{
-    background-image: url('musical-note.png');
+    background-image: url('assets/musical-note.png');
 }
 
 button#options{
-    background-image: url('cog.png');
+    background-image: url('assets/cog.png');
 }
 
 button#accords{
-    background-image: url('accords.png');
+    background-image: url('assets/accords.png');
 }
 
 body{
-    background-image: url('piano.png');
+    background-image: url('assets/piano.png');
     background-repeat: no-repeat;
     background-blend-mode: lighten;
     background-attachment: fixed;

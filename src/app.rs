@@ -60,7 +60,7 @@ pub fn App() -> impl IntoView {
                 >"Generieren"</button>
                 <button id="options" class={options_active}
                     on:click=move |_|{
-                        set_options(!options());
+                        set_options.update(|opt| *opt = !*opt);
                         if options() {
                             set_accords(false);
                         }
@@ -68,7 +68,7 @@ pub fn App() -> impl IntoView {
                 >"Optionen"</button>
                 <button id="accords" class={accords_active}
                     on:click=move|_|{
-                        set_accords(!accords());
+                        set_accords.update(|acc| *acc = !*acc);
                         if accords() {
                             set_options(false);
                         }
