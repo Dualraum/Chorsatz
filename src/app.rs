@@ -31,7 +31,7 @@ pub fn App() -> impl IntoView {
         </div>
 
         <div class="outer_block">
-            <div>
+            <div class="ver">
             <div class="hor">
                 <input
                     type="text"
@@ -76,7 +76,7 @@ pub fn App() -> impl IntoView {
                             set_options(false);
                         }
                     }
-                >"Akkorde"</button>
+                >"Eingabehilfe"</button>
             </div>
             <div class={options_class}>
                     <options::Options/>
@@ -84,11 +84,6 @@ pub fn App() -> impl IntoView {
             <div class={accords_class}>
                     <note_info::Info/>
             </div>
-            <p class="deemph">
-                "Verfügbar sind sämtliche Dur- und Moll-Dreiklänge sowie verminderte, übermäßige, sus2 und sus4  Versionen dieser Akkorde.
-                Außerdem stehen Dominantseptakkorde, Majorseptakkorde, Mollseptakkorde, Mollseptakkorde mit großer Septime sowie verminderte und übermäßige Septakkorde zur Verfügung.
-                Verschiedene Akkorde sind durch Leerzeichen zu trennen, hierbei werden ungültige Eingaben ignoriert."
-            </p>
             </div>
         </div>
 

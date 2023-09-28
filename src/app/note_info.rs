@@ -72,5 +72,8 @@ pub fn Info() -> impl IntoView {
             </tr>
         </table>
         <p>"Als Starttöne stehen hierbei " <b class="header">"C, G, D, A, E, H, Fis, Cis, Gis, Dis, Ais, F, B, Es, As, Des, Ges"</b> " zur Verfügung."</p>
+        <p>
+            "Verschiedene Akkorde sind durch Leerzeichen zu trennen, hierbei werden ungültige Eingaben ignoriert."
+        </p>
     }
 }

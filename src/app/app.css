@@ -54,10 +54,16 @@ div.satbb{
     display: block;
 }
 
+div.ver{
+    width: 100%;
+    margin: 0;
+}
+
 div.hor{
     display: flex;
     align-content: center;
     align-items: center;
+    width: 100%;
 }
 
 div.col_open{
@@ -131,9 +137,7 @@ input{
     border-radius: 15px;
 
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-
-    float: none;
-    width: 90%;
+    flex-grow: 1;
 }
 
 input:focus{
@@ -175,7 +179,7 @@ button#options{
 }
 
 button#accords{
-    background-image: url('assets/accords.png');
+    background-image: url('assets/help.png');
 }
 
 body{
