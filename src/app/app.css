@@ -187,4 +187,5 @@ body{
     background-repeat: no-repeat;
     background-blend-mode: lighten;
     background-attachment: fixed;
+    overflow: scroll;
 }
