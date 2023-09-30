@@ -41,16 +41,20 @@ pub fn App() -> impl IntoView {
                     on:input=move |ev| {
                         set_input(event_target_value(&ev));
                     }
-                    on:change=move |ev| {
-                        set_result({
-                            crate::logic::generate_satb(
-                                &event_target_value(&ev)
-                                .split(' ')
-                                .filter_map(|note| logic::notes::create_multinote(note).ok())
-                                .collect_vec(),
-                                &config(),
-                            ).into_iter().take(5).collect_vec()
-                        });
+                    on:keypress=move |ev| {
+                        // trigger only if enter is pressed
+                        if ev.key_code() == 13{
+                            set_result({
+                                crate::logic::generate_satb(
+                                    &event_target_value(&ev)
+                                    .split(' ')
+                                    .filter_map(|note| logic::notes::create_multinote(note).ok())
+                                    .collect_vec(),
+                                    &config(),
+                                ).into_iter().take(5).collect_vec()
+                            });
+                        }
+
                     }
                     prop:value=""
                 ></input>
