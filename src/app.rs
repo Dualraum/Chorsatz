@@ -56,7 +56,7 @@ pub fn App() -> impl IntoView {
                         }
 
                     }
-                    prop:value=""
+                    prop:value=input
                 ></input>
                 <button id="generate"
                     on:click=move |_| {
