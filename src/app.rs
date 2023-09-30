@@ -11,6 +11,8 @@ use result_view::SatbResultView;
 
 #[component]
 pub fn App() -> impl IntoView {
+    let (config, _set_config) = create_signal(logic::Config::default());
+
     let (result, set_result) = create_signal(Vec::<(Vec<logic::notes::SatbBlock>, f32)>::new());
 
     let (input, set_input) = create_signal(String::new());
@@ -45,7 +47,8 @@ pub fn App() -> impl IntoView {
                                 &event_target_value(&ev)
                                 .split(' ')
                                 .filter_map(|note| logic::notes::create_multinote(note).ok())
-                                .collect_vec()
+                                .collect_vec(),
+                                &config(),
                             ).into_iter().take(5).collect_vec()
                         });
                     }
@@ -53,12 +56,14 @@ pub fn App() -> impl IntoView {
                 ></input>
                 <button id="generate"
                     on:click=move |_| {
+                        set_result(
                         crate::logic::generate_satb(
                             &input()
                             .split(' ')
                             .filter_map(|note| logic::notes::create_multinote(note).ok())
-                            .collect_vec()
-                        ).into_iter().take(5).collect_vec();
+                            .collect_vec(),
+                            &config(),
+                        ).into_iter().take(5).collect_vec());
                     }
                 >"Generieren"</button>
                 <button id="options" class={options_active}

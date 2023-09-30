@@ -1,5 +1,7 @@
 mod generator;
 pub use generator::generate_satb;
+mod config;
+pub use config::Config;
 pub mod notes;
 pub(super) mod scale;
 
@@ -34,7 +36,7 @@ fn run_in_terminal() {
         accords
     );
 
-    let solutions = generate_satb(&accords);
+    let solutions = generate_satb(&accords, &Config::default());
 
     if solutions.is_empty() {
         log::warn!("No solutions found!");
