@@ -122,16 +122,11 @@ p{
 .marked{
     color: var(--acc-color);
 }
+
+
 input{
     padding: 5px;
-    padding-left: 25px;
     margin: 4px;
-
-    background-image: url('assets/musical-note.png');
-    background-position: 4px 4px;
-    background-size: 18px;
-    background-repeat: no-repeat;
-    background-color: var(--sec-color);
 
     border: 1px solid var(--pri-color);
     border-radius: 15px;
@@ -143,6 +138,20 @@ input{
 input:focus{
     outline: var(--acc-color);
     border: 1px solid var(--acc-color);
+}
+
+input.main_input{
+    padding-left: 25px;
+    
+    background-image: url('assets/musical-note.png');
+    background-position: 4px 4px;
+    background-size: 18px;
+    background-repeat: no-repeat;
+    background-color: var(--sec-color);
+}
+
+input.number{
+    width: 48px;
 }
 
 button{

@@ -37,6 +37,7 @@ pub fn App() -> impl IntoView {
             <div class="hor">
                 <input
                     type="text"
+                    class = "main_input"
                     placeholder="Akkorde hier eingeben..."
                     on:input=move |ev| {
                         set_input(event_target_value(&ev));

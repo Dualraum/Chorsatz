@@ -1,5 +1,5 @@
 use super::notes;
-
+//
 /// A configuration struct that contains details on what pathes to discard during the tree search for a solution.
 #[derive(Clone, Debug)]
 pub struct Config {
