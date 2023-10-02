@@ -45,8 +45,8 @@ fn generate_satb_helper(
             }
             // No crossings
             if !conf.allow_crossings
-                && ((a - s) >= 0.
-                    || (t - a) >= 0.
+                && ((a - s) > 0.
+                    || (t - a) > 0.
                     || (b - t) > 0.
                     || (!conf.allow_bass_tenor_equal && (b - t) >= 0.))
             {

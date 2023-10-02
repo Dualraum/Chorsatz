@@ -127,14 +127,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
             </tr>
             <tr>
                 // Sum of Absolutes weight
-                <td> <input class="number" type="number" step="0.1" prop:value={move || config().sub_of_abs_weight}
+                <td> <input class="number" type="number" step="0.1" prop:value={move || format!("{:.1}", config().sub_of_abs_weight)}
                 on:change=move |ev|{
                     set_config.update(|config| config.sub_of_abs_weight = event_target_value(&ev).parse::<f32>().unwrap_or(0.));
                 }
                 /> </td>
                 <td>"Relatives Gewicht Betragssumme"</td>
                 // Absolute of Sums weight
-                <td> <input class="number" type="number" step="0.1" prop:value={move || config().abs_of_sum_weight}
+                <td> <input class="number" type="number" step="0.1" prop:value={move || format!("{:.1}", config().abs_of_sum_weight)}
                 on:change=move |ev|{
                     set_config.update(|config| config.abs_of_sum_weight = event_target_value(&ev).parse::<f32>().unwrap_or(0.));
                 }
@@ -143,7 +143,7 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
             </tr>
             <tr>
                 // Soprano-Alt-Weigth
-                <td> <input class="number" type="number" step="0.1" prop:value={move || config().soprano_alt_diff_weight}
+                <td> <input class="number" type="number" step="0.1" prop:value={move || format!("{:.1}", config().soprano_alt_diff_weight)}
                 on:change=move |ev|{
                     set_config.update(|config| config.soprano_alt_diff_weight = event_target_value(&ev).parse::<f32>().unwrap_or(0.));
                 }
@@ -151,7 +151,7 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                 <td>"Relatives Gewicht geschlossene Lage"</td>
             </tr>
             <tr>
-                <td> <input class="number" type="number" min="0" step="0.1" prop:value={move || config().exposure_penalty_sopran}
+                <td> <input class="number" type="number" min="0" step="0.1" prop:value={move || format!("{:.1}", config().exposure_penalty_sopran)}
                 on:change=move |ev|{
                     set_config.update(|config| config.exposure_penalty_sopran = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
@@ -166,7 +166,7 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                 <td>"Grenzton für hohen Startsopran"</td>
             </tr>
             <tr>
-                <td> <input class="number" type="number" min="0" step="0.1" prop:value={move || config().exposure_penalty_bass}
+                <td> <input class="number" type="number" min="0" step="0.1" prop:value={move || format!("{:.1}", config().exposure_penalty_bass)}
                 on:change=move |ev|{
                     set_config.update(|config| config.exposure_penalty_bass = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
