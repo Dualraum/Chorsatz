@@ -1,8 +1,8 @@
-use std::fmt::Display;
+use std::{fmt::Display, str::FromStr};
 
 use super::NoteName;
 
-#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Default)]
 pub struct OctavedNote {
     pub note: NoteName,
     pub octave: i32,
@@ -20,6 +20,27 @@ impl OctavedNote {
         super::scale::C_MAJOR.note_to_halftone(self.note)
         // add octave
          + (7 * self.octave) as f32
+    }
+}
+
+impl FromStr for OctavedNote {
+    type Err = super::ChorError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        Ok(match s.find(|c: char| c.is_numeric() || c == '-') {
+            Some(index) => OctavedNote {
+                note: s[0..index]
+                    .parse()
+                    .map_err(super::ChorError::NoteNameParseError)?,
+                octave: s[index..]
+                    .parse()
+                    .map_err(super::ChorError::NoteOctaveParseError)?,
+            },
+            None => OctavedNote {
+                note: s.parse().map_err(super::ChorError::NoteNameParseError)?,
+                octave: 0,
+            },
+        })
     }
 }
 
@@ -59,4 +80,15 @@ fn diff_test() {
         OctavedNote::new(NoteName::Ais, 1) - OctavedNote::new(NoteName::Gis, 1),
         2.
     );
+
+    assert_eq!(OctavedNote::new(NoteName::C, 0), "C0".parse().unwrap(),);
+
+    assert_eq!(OctavedNote::new(NoteName::A, 0), "A0".parse().unwrap());
+    assert_eq!(OctavedNote::new(NoteName::A, 0), "A".parse().unwrap());
+
+    assert_eq!(OctavedNote::new(NoteName::C, 1), "C1".parse().unwrap());
+
+    assert_eq!(OctavedNote::new(NoteName::As, -1), "As-1".parse().unwrap());
+    assert!("Abc1".parse::<OctavedNote>().is_err());
+    assert!("gde".parse::<OctavedNote>().is_err());
 }

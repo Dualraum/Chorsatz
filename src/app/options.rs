@@ -142,7 +142,11 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                 /> </td>
                 <td>"Malus für hohen Startsopran"</td>
 
-                <td> <input class="number" type="text" prop:value={move || config().exposure_threshold_sopran.to_string()}/> </td>
+                <td> <input class="number" type="text" prop:value={move || config().exposure_threshold_sopran.to_string()}
+                on:change=move |ev|{
+                    set_config.update(|config| config.exposure_threshold_sopran = event_target_value(&ev).parse::<crate::logic::notes::OctavedNote>().unwrap_or_default());
+                }
+                /> </td>
                 <td>"Grenzton für hohen Startsopran"</td>
             </tr>
             <tr>
@@ -153,7 +157,11 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                 /> </td>
                 <td>"Malus für hohen Startbass"</td>
 
-                <td> <input class="number" type="text" prop:value={move || config().exposure_threshold_bass.to_string()}/> </td>
+                <td> <input class="number" type="text" prop:value={move || config().exposure_threshold_bass.to_string()}
+                on:change=move |ev|{
+                    set_config.update(|config| config.exposure_threshold_bass = event_target_value(&ev).parse::<crate::logic::notes::OctavedNote>().unwrap_or_default());
+                }
+                /> </td>
                 <td>"Grenzton für hohen Startbass"</td>
             </tr>
 

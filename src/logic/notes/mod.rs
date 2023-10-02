@@ -12,4 +12,7 @@ pub use satb_block::SatbBlock;
 mod octaved_notes;
 pub use octaved_notes::OctavedNote;
 
+mod chor_error;
+pub use chor_error::ChorError;
+
 use super::scale;
