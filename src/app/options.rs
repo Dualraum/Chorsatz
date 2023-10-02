@@ -1,3 +1,4 @@
+use itertools::Itertools;
 use leptos::*;
 
 use crate::logic::Config;
@@ -66,7 +67,11 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                 <td>"Bass-Gegenbewegung Erzwingen"</td>
             </tr>
             <tr>
-                <td colspan=2> <input type="text" prop:value="5 8"/> </td>
+                <td colspan=2> <input type="text" prop:value="5 8"
+                    on:change=move |ev|{
+                        set_config.update(|config| config.forbidden_parallels = event_target_value(&ev).split(' ').flat_map(str::parse::<f32>).collect_vec());
+                    }
+                /> </td>
                 <td colspan=2> <p>"Verbotene Parallelen"</p> </td>
             </tr>
             <tr>
