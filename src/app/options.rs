@@ -50,6 +50,23 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                 }
                 /> </td>
                 <td>"Tonkreuzungen erlauben"</td>
+                // Allow Equality in Bass/Tenor
+                <Show
+                    when=move ||{!config().allow_crossings}
+                    fallback=|| view!{
+                        <td></td> <td></td>
+                    }>
+                    <td>
+                        <input type="checkbox" prop:checked={move || config().allow_bass_tenor_equal}
+                            on:change=move |ev|{
+                                set_config.update(|config| config.allow_bass_tenor_equal = event_target_checked(&ev));
+                            }
+                        />
+                    </td>
+                    <td>"Bass/Tenor-Gleichheit erlauben"</td>
+                </Show>
+            </tr>
+            <tr>
                 // Letting lie
                 <td> <input type="checkbox" prop:checked={move || config().force_letting_lie}
                 on:change=move |ev|{
@@ -57,8 +74,7 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                 }
                 /> </td>
                 <td>"Liegenlassen erzwingen"</td>
-            </tr>
-            <tr>
+                // Force counter movement
                 <td> <input type="checkbox" prop:checked={move || config().force_base_countermovement}
                 on:change=move |ev|{
                     set_config.update(|config| config.force_base_countermovement = event_target_checked(&ev));

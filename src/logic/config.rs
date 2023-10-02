@@ -11,8 +11,10 @@ pub struct Config {
     pub max_diff_tenor_bass: f32,
     /// The tone difference of sopran and bass is enforced to be no larger than this value.
     pub max_diff_sopran_bass: f32,
-    /// If set to true, the notes must always fulfil sopran >= alt >= tenor >= bass.
+    /// If set to true, the notes must always fulfil sopran > alt > tenor > bass.
     pub allow_crossings: bool,
+    /// If set to true, bass and tenor may be the same note even if allow_crossings is set to false.
+    pub allow_bass_tenor_equal: bool,
     /// If there is any movement where two voices (e.g. sopran and tenor) have a difference of x both before and after the movement,
     /// and x is contained in this vector, the solution path is discarded.
     pub forbidden_parallels: Vec<f32>,
@@ -52,6 +54,7 @@ impl Default for Config {
             max_diff_tenor_bass: 10.,
             max_diff_sopran_bass: 21.,
             allow_crossings: false,
+            allow_bass_tenor_equal: true,
             forbidden_parallels: vec![5., 8.],
             force_letting_lie: true,
             force_base_countermovement: true,
