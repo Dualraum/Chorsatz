@@ -49,7 +49,7 @@ pub fn App() -> impl IntoView {
                                 crate::logic::generate_satb(
                                     &event_target_value(&ev)
                                     .split(' ')
-                                    .filter_map(|note| logic::notes::create_multinote(note).ok())
+                                    .filter_map(|note_str| note_str.parse().ok())
                                     .collect_vec(),
                                     &config(),
                                 ).into_iter().take(5).collect_vec()
@@ -65,7 +65,7 @@ pub fn App() -> impl IntoView {
                         crate::logic::generate_satb(
                             &input()
                             .split(' ')
-                            .filter_map(|note| logic::notes::create_multinote(note).ok())
+                            .filter_map(|note_str| note_str.parse().ok())
                             .collect_vec(),
                             &config(),
                         ).into_iter().take(5).collect_vec());

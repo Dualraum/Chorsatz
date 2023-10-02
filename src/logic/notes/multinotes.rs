@@ -1,4 +1,50 @@
-use super::NoteName;
+use std::str::FromStr;
+
+use itertools::Itertools;
+
+use super::{ChorError, NoteName};
+
+/// A template to create an SATB-Block from, containing either a Triad or Quatrain as well as a bass note.
+#[derive(Debug, Clone, Copy)]
+pub struct SatbTemplate {
+    /// The Triad/Quatrain to base the harmony of the accord on.
+    pub accord: MultiNote,
+    /// The note to be sung in the bass voice.
+    pub bass: NoteName,
+}
+
+impl From<MultiNote> for SatbTemplate {
+    fn from(value: MultiNote) -> Self {
+        match value {
+            MultiNote::Triad(n1, n2, n3) => SatbTemplate {
+                accord: MultiNote::Triad(n1, n2, n3),
+                bass: n1,
+            },
+            MultiNote::Quatrain(n1, n2, n3, n4) => SatbTemplate {
+                accord: MultiNote::Quatrain(n1, n2, n3, n4),
+                bass: n1,
+            },
+        }
+    }
+}
+
+impl FromStr for SatbTemplate {
+    type Err = ChorError;
+
+    fn from_str(s: &str) -> Result<Self, Self::Err> {
+        let parts = s.split('/').collect_vec();
+        if parts.len() == 1 {
+            Ok(create_multinote(s)?.into())
+        } else {
+            Ok(SatbTemplate {
+                accord: create_multinote(parts[0])?,
+                bass: parts[1]
+                    .parse::<NoteName>()
+                    .map_err(ChorError::NoteNameParse)?,
+            })
+        }
+    }
+}
 
 #[derive(Debug, Clone, Copy)]
 pub enum MultiNote {
@@ -6,7 +52,7 @@ pub enum MultiNote {
     Quatrain(NoteName, NoteName, NoteName, NoteName),
 }
 
-pub fn create_multinote(key: &str) -> Result<MultiNote, String> {
+pub fn create_multinote(key: &str) -> Result<MultiNote, ChorError> {
     match key {
         // --------------------------------
         //              Triads
@@ -910,6 +956,6 @@ pub fn create_multinote(key: &str) -> Result<MultiNote, String> {
         // --------------------------------
         //              Other
         // --------------------------------
-        other => Err(format!("Could not find note <{other}>.")),
+        _ => Err(ChorError::NotAValidMultinote(key.to_string())),
     }
 }

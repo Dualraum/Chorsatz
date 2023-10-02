@@ -16,10 +16,10 @@ impl std::fmt::Display for SatbBlock {
     }
 }
 
-pub fn permute(notes: &MultiNote) -> Vec<SatbBlock> {
-    let notes = match *notes {
-        MultiNote::Triad(n1, n2, n3) => (n1, n2, n3, n1),
-        MultiNote::Quatrain(n1, n2, n3, n4) => (n2, n3, n4, n1),
+pub fn permute(notes: &super::SatbTemplate) -> Vec<SatbBlock> {
+    let notes = match notes.accord {
+        MultiNote::Triad(n1, n2, n3) => (n1, n2, n3, notes.bass),
+        MultiNote::Quatrain(_, n2, n3, n4) => (n2, n3, n4, notes.bass),
     };
 
     [notes.0, notes.1, notes.2]
@@ -114,7 +114,11 @@ pub fn permute(notes: &MultiNote) -> Vec<SatbBlock> {
 #[test]
 fn test_permutes() {
     assert_eq!(
-        permute(&MultiNote::Triad(NoteName::Cis, NoteName::D, NoteName::F)).len(),
+        permute(&crate::logic::notes::SatbTemplate {
+            accord: MultiNote::Triad(NoteName::Cis, NoteName::D, NoteName::F),
+            bass: NoteName::Cis
+        })
+        .len(),
         24,
     );
 }

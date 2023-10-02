@@ -31,13 +31,13 @@ impl FromStr for OctavedNote {
             Some(index) => OctavedNote {
                 note: s[0..index]
                     .parse()
-                    .map_err(super::ChorError::NoteNameParseError)?,
+                    .map_err(super::ChorError::NoteNameParse)?,
                 octave: s[index..]
                     .parse()
-                    .map_err(super::ChorError::NoteOctaveParseError)?,
+                    .map_err(super::ChorError::NoteOctaveParse)?,
             },
             None => OctavedNote {
-                note: s.parse().map_err(super::ChorError::NoteNameParseError)?,
+                note: s.parse().map_err(super::ChorError::NoteNameParse)?,
                 octave: 0,
             },
         })

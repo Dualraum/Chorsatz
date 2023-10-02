@@ -21,7 +21,7 @@ fn run_in_terminal() {
         line = line.replace(['\n', '\r'], "");
         !line.is_empty()
     } {
-        match notes::create_multinote(&line) {
+        match line.parse::<crate::logic::notes::SatbTemplate>() {
             Ok(accord) => {
                 accords.push(accord);
                 log::info!("Added accord {line}. Enter the next accord key:");
