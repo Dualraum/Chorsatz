@@ -75,5 +75,9 @@ pub fn Info() -> impl IntoView {
         <p>
             "Verschiedene Akkorde sind durch Leerzeichen zu trennen, hierbei werden ungültige Eingaben ignoriert."
         </p>
+        <p>
+            "Weiterhin ist es möglich, den Basston eines Akkordes durch Anhängen von '/Basston' manuell festzusetzen, z.B. 'C/E'."
+        </p>
+
     }
 }
