@@ -82,10 +82,10 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
             </tr>
             <tr>
                 <td> <input class="number" type="number" min="0" step="0.1" prop:value={move || config().exposure_penalty_bass}/> </td>
-                <td>"Malus für tiefen Startbass"</td>
+                <td>"Malus für hohen Startbass"</td>
 
                 <td> <input class="number" type="text" prop:value={move || config().exposure_threshold_bass.to_string()}/> </td>
-                <td>"Grenzton für tiefen Startbass"</td>
+                <td>"Grenzton für hohen Startbass"</td>
             </tr>
 
         </table>

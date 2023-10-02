@@ -38,9 +38,9 @@ pub struct Config {
     pub exposure_penalty_sopran: f32,
     /// The highest note possible for the initial soprano note without being penalized.
     pub exposure_threshold_sopran: notes::OctavedNote,
-    /// Describes the relative penalty to the score if the initial bass note is below the threshold.
+    /// Describes the relative penalty to the score if the initial bass note is above the threshold.
     pub exposure_penalty_bass: f32,
-    /// The lowest note possible for the initial bass note without being penalized.
+    /// The highest note possible for the initial bass note without being penalized.
     pub exposure_threshold_bass: notes::OctavedNote,
 }
 
