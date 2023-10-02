@@ -34,7 +34,7 @@ impl std::str::FromStr for SatbTemplate {
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let parts = s.split('/').collect_vec();
         if parts.len() == 1 {
-            Ok(s.parse()?)
+            Ok(s.parse::<MultiNote>()?.into())
         } else {
             Ok(SatbTemplate {
                 accord: parts[0].parse()?,
