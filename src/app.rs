@@ -11,7 +11,7 @@ use result_view::SatbResultView;
 
 #[component]
 pub fn App() -> impl IntoView {
-    let (config, _set_config) = create_signal(logic::Config::default());
+    let (config, set_config) = create_signal(logic::Config::default());
 
     let (result, set_result) = create_signal(Vec::<(Vec<logic::notes::SatbBlock>, f32)>::new());
 
@@ -89,7 +89,7 @@ pub fn App() -> impl IntoView {
                 >"Eingabehilfe"</button>
             </div>
             <div class={options_class}>
-                    <options::Options/>
+                    <options::Options config=config set_config=set_config/>
             </div>
             <div class={accords_class}>
                     <note_info::Info/>
