@@ -69,6 +69,8 @@ pub fn App() -> impl IntoView {
                             .collect_vec(),
                             &config(),
                         ).into_iter().take(5).collect_vec());
+                        set_options(false);
+                        set_accords(false);
                     }
                 >"Generieren"</button>
                 <button id="options" class={options_active}
