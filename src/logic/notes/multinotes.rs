@@ -1100,7 +1100,7 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Ais,
                 NoteName::His,
             )),
-            Dism6" => Ok(MultiNote::Quatrain(
+            "Dism6" => Ok(MultiNote::Quatrain(
                 NoteName::Dis,
                 NoteName::Fis,
                 NoteName::Ais,
