@@ -537,7 +537,7 @@ impl std::str::FromStr for MultiNote {
             "Em7b5" => Ok(MultiNote::Quatrain(
                 NoteName::E,
                 NoteName::G,
-                NoteName::Hes,
+                NoteName::B,
                 NoteName::D,
             )),
             "E6" => Ok(MultiNote::Quatrain(
@@ -763,7 +763,7 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Fes,
                 NoteName::As,
             )),
-            "B6 => Ok(MultiNote::Quatrain(
+            "B6" => Ok(MultiNote::Quatrain(
                 NoteName::B,
                 NoteName::D,
                 NoteName::F,
