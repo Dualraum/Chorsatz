@@ -313,6 +313,25 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Gis,
                 NoteName::H,
             )),
+             "Cm7b5" => Ok(MultiNote::Quatrain(
+                NoteName::C,
+                NoteName::Es,
+                NoteName::Ges,
+                NoteName::B,
+            )),
+             "C6" => Ok(MultiNote::Quatrain(
+                NoteName::C,
+                NoteName::E,
+                NoteName::G,
+                NoteName::A,
+            )),
+            "Cm6" => Ok(MultiNote::Quatrain(
+                NoteName::C,
+                NoteName::Es,
+                NoteName::G,
+                NoteName::A,
+            )),
+            
             // G
             "G7" => Ok(MultiNote::Quatrain(
                 NoteName::G,
@@ -349,6 +368,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::H,
                 NoteName::Dis,
                 NoteName::Fis,
+            )),
+            "Gm7b5" => Ok(MultiNote::Quatrain(
+                NoteName::G,
+                NoteName::B,
+                NoteName::Des,
+                NoteName::F,
+            )),
+            "G6" => Ok(MultiNote::Quatrain(
+                NoteName::G,
+                NoteName::H,
+                NoteName::D,
+                NoteName::E,
+            )),
+            "Gm6" => Ok(MultiNote::Quatrain(
+                NoteName::G,
+                NoteName::B,
+                NoteName::D,
+                NoteName::E,
             )),
             // D
             "D7" => Ok(MultiNote::Quatrain(
@@ -387,6 +424,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Ais,
                 NoteName::Cis,
             )),
+            "Dm7b5" => Ok(MultiNote::Quatrain(
+                NoteName::D,
+                NoteName::F,
+                NoteName::As,
+                NoteName::C,
+            )),
+            "D6" => Ok(MultiNote::Quatrain(
+                NoteName::D,
+                NoteName::Fis,
+                NoteName::A,
+                NoteName::H,
+            )),
+            "Dm6" => Ok(MultiNote::Quatrain(
+                NoteName::D,
+                NoteName::F,
+                NoteName::A,
+                NoteName::H,
+            )),
             // A
             "A7" => Ok(MultiNote::Quatrain(
                 NoteName::A,
@@ -423,6 +478,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Cis,
                 NoteName::Eis,
                 NoteName::Gis,
+            )),
+            "Am7b5" => Ok(MultiNote::Quatrain(
+                NoteName::A,
+                NoteName::C,
+                NoteName::Es,
+                NoteName::G,
+            )),
+            "A6" => Ok(MultiNote::Quatrain(
+                NoteName::A,
+                NoteName::Cis,
+                NoteName::E,
+                NoteName::Fis,
+            )),
+            "Am6" => Ok(MultiNote::Quatrain(
+                NoteName::A,
+                NoteName::C,
+                NoteName::E,
+                NoteName::Fis,
             )),
             // E
             "E7" => Ok(MultiNote::Quatrain(
@@ -461,6 +534,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::His,
                 NoteName::Dis,
             )),
+            "Em7b5" => Ok(MultiNote::Quatrain(
+                NoteName::E,
+                NoteName::G,
+                NoteName::Hes,
+                NoteName::D,
+            )),
+            "E6" => Ok(MultiNote::Quatrain(
+                NoteName::E,
+                NoteName::Gis,
+                NoteName::H,
+                NoteName::Cis,
+            )),
+            "Em6" => Ok(MultiNote::Quatrain(
+                NoteName::E,
+                NoteName::G,
+                NoteName::H,
+                NoteName::Cis,
+            )),
             // H
             "H7" => Ok(MultiNote::Quatrain(
                 NoteName::H,
@@ -498,6 +589,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Fisis,
                 NoteName::Ais,
             )),
+            "Hm7b5" => Ok(MultiNote::Quatrain(
+                NoteName::H,
+                NoteName::D,
+                NoteName::F,
+                NoteName::A,
+            )),
+            "H6" => Ok(MultiNote::Quatrain(
+                NoteName::H,
+                NoteName::Dis,
+                NoteName::Fis,
+                NoteName::Gis,
+            )),
+            "Hm6" => Ok(MultiNote::Quatrain(
+                NoteName::H,
+                NoteName::D,
+                NoteName::Fis,
+                NoteName::Gis,
+            )),
             // Fis
             "Fis7" => Ok(MultiNote::Quatrain(
                 NoteName::Fis,
@@ -534,6 +643,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Ais,
                 NoteName::Cisis,
                 NoteName::Eis,
+            )),
+             "Fism7b5" => Ok(MultiNote::Quatrain(
+                NoteName::Fis,
+                NoteName::A,
+                NoteName::C,
+                NoteName::E,
+            )),
+             "Fis6" => Ok(MultiNote::Quatrain(
+                NoteName::Fis,
+                NoteName::Ais,
+                NoteName::Cis,
+                NoteName::Dis,
+            )),
+             "Fism6" => Ok(MultiNote::Quatrain(
+                NoteName::Fis,
+                NoteName::A,
+                NoteName::Cis,
+                NoteName::Dis,
             )),
 
             //b-Tonarten
@@ -575,6 +702,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Cis,
                 NoteName::E,
             )),
+            "Fm7b5" => Ok(MultiNote::Quatrain(
+                NoteName::F,
+                NoteName::As,
+                NoteName::Ces,
+                NoteName::Es,
+            )),
+            "F6" => Ok(MultiNote::Quatrain(
+                NoteName::F,
+                NoteName::A,
+                NoteName::C,
+                NoteName::D,
+            )),
+            "Fm6" => Ok(MultiNote::Quatrain(
+                NoteName::F,
+                NoteName::As,
+                NoteName::C,
+                NoteName::D,
+            )),
             // B
             "B7" => Ok(MultiNote::Quatrain(
                 NoteName::B,
@@ -611,6 +756,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::D,
                 NoteName::Fis,
                 NoteName::A,
+            )),
+            "Bm7b5" => Ok(MultiNote::Quatrain(
+                NoteName::B,
+                NoteName::Des,
+                NoteName::Fes,
+                NoteName::As,
+            )),
+            "B6 => Ok(MultiNote::Quatrain(
+                NoteName::B,
+                NoteName::D,
+                NoteName::F,
+                NoteName::G,
+            )),
+            "Bm7" => Ok(MultiNote::Quatrain(
+                NoteName::B,
+                NoteName::Des,
+                NoteName::F,
+                NoteName::G,
             )),
             // Es
             "Es7" => Ok(MultiNote::Quatrain(
@@ -649,6 +812,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::H,
                 NoteName::D,
             )),
+             "Esm7b5" => Ok(MultiNote::Quatrain(
+                NoteName::Es,
+                NoteName::Ges,
+                NoteName::Heses,
+                NoteName::Des,
+            )),
+             "Es6" => Ok(MultiNote::Quatrain(
+                NoteName::Es,
+                NoteName::G,
+                NoteName::B,
+                NoteName::C,
+            )),
+             "Esm6" => Ok(MultiNote::Quatrain(
+                NoteName::Es,
+                NoteName::Ges,
+                NoteName::B,
+                NoteName::C,
+            )),
             // As
             "As7" => Ok(MultiNote::Quatrain(
                 NoteName::As,
@@ -685,6 +866,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::C,
                 NoteName::E,
                 NoteName::G,
+            )),
+            "Asm7b5" => Ok(MultiNote::Quatrain(
+                NoteName::As,
+                NoteName::Ces,
+                NoteName::Eses,
+                NoteName::Ges,
+            )),
+            "As6" => Ok(MultiNote::Quatrain(
+                NoteName::As,
+                NoteName::C,
+                NoteName::Es,
+                NoteName::F,
+            )),
+            "Asm6" => Ok(MultiNote::Quatrain(
+                NoteName::As,
+                NoteName::Ces,
+                NoteName::Es,
+                NoteName::F,
             )),
             // Des
             "Des7" => Ok(MultiNote::Quatrain(
@@ -723,6 +922,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::A,
                 NoteName::C,
             )),
+            "Desm7b5" => Ok(MultiNote::Quatrain(
+                NoteName::Des,
+                NoteName::Fes,
+                NoteName::Asas,
+                NoteName::Ces,
+            )),
+             "Des6" => Ok(MultiNote::Quatrain(
+                NoteName::Des,
+                NoteName::F,
+                NoteName::As,
+                NoteName::B,
+            )),
+             "Desaug7" => Ok(MultiNote::Quatrain(
+                NoteName::Des,
+                NoteName::Fes,
+                NoteName::As,
+                NoteName::B,
+            )),
             // Ges
             "Ges7" => Ok(MultiNote::Quatrain(
                 NoteName::Ges,
@@ -760,7 +977,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::D,
                 NoteName::F,
             )),
-
+             "Gesm7b5" => Ok(MultiNote::Quatrain(
+                NoteName::Ges,
+                NoteName::Heses,
+                NoteName::Deses,
+                NoteName::Fes,
+            )),
+            "Ges6" => Ok(MultiNote::Quatrain(
+                NoteName::Ges,
+                NoteName::B,
+                NoteName::Des,
+                NoteName::Es,
+            )),
+            "Gesm6" => Ok(MultiNote::Quatrain(
+                NoteName::Ges,
+                NoteName::Heses,
+                NoteName::Des,
+                NoteName::Es,
+            )),
             // enharmonisch gleiche sinnvolle Tonarten
             // Cis
             "Cis7" => Ok(MultiNote::Quatrain(
@@ -799,6 +1033,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Gisis,
                 NoteName::His,
             )),
+             "Cism7b5" => Ok(MultiNote::Quatrain(
+                NoteName::Cis,
+                NoteName::E,
+                NoteName::G,
+                NoteName::H,
+            )),
+            "Cis6" => Ok(MultiNote::Quatrain(
+                NoteName::Cis,
+                NoteName::Eis,
+                NoteName::Gis,
+                NoteName::Ais,
+            )),
+             "Cisaug7" => Ok(MultiNote::Quatrain(
+                NoteName::Cis,
+                NoteName::E,
+                NoteName::Gis,
+                NoteName::Ais,
+            )),
             // Dis
             "Dis7" => Ok(MultiNote::Quatrain(
                 NoteName::Dis,
@@ -836,6 +1088,25 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Aisis,
                 NoteName::Cisis,
             )),
+            "Dism7b5" => Ok(MultiNote::Quatrain(
+                NoteName::Dis,
+                NoteName::Fis,
+                NoteName::A,
+                NoteName::Cis,
+            )),
+            "Dis6" => Ok(MultiNote::Quatrain(
+                NoteName::Dis,
+                NoteName::Fisis,
+                NoteName::Ais,
+                NoteName::His,
+            )),
+            Dism6" => Ok(MultiNote::Quatrain(
+                NoteName::Dis,
+                NoteName::Fis,
+                NoteName::Ais,
+                NoteName::His,
+            )),
+            //Gis
             "Gis7" => Ok(MultiNote::Quatrain(
                 NoteName::Gis,
                 NoteName::His,
@@ -871,6 +1142,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::His,
                 NoteName::Disis,
                 NoteName::Fisis,
+            )),
+            "Gism7b5" => Ok(MultiNote::Quatrain(
+                NoteName::Gis,
+                NoteName::H,
+                NoteName::D,
+                NoteName::Fis,
+            )),
+            "Gis6" => Ok(MultiNote::Quatrain(
+                NoteName::Gis,
+                NoteName::His,
+                NoteName::Dis,
+                NoteName::Eis,
+            )),
+            "Gism6" => Ok(MultiNote::Quatrain(
+                NoteName::Gis,
+                NoteName::H,
+                NoteName::Dis,
+                NoteName::Eis,
             )),
             // Ais
             "Ais7" => Ok(MultiNote::Quatrain(
@@ -908,6 +1197,24 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Cisis,
                 NoteName::Eisis,
                 NoteName::Gisis,
+            )),
+             "Aism7b5" => Ok(MultiNote::Quatrain(
+                NoteName::Ais,
+                NoteName::Cis,
+                NoteName::E,
+                NoteName::Gis,
+            )),
+            "Ais6" => Ok(MultiNote::Quatrain(
+                NoteName::Ais,
+                NoteName::Cisis,
+                NoteName::Eis,
+                NoteName::Fisis,
+            )),
+            "Aism6" => Ok(MultiNote::Quatrain(
+                NoteName::Ais,
+                NoteName::Cis,
+                NoteName::Eis,
+                NoteName::Fisis,
             )),
 
             // --------------------------------
