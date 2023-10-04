@@ -769,7 +769,7 @@ impl std::str::FromStr for MultiNote {
                 NoteName::F,
                 NoteName::G,
             )),
-            "Bm7" => Ok(MultiNote::Quatrain(
+            "Bm6" => Ok(MultiNote::Quatrain(
                 NoteName::B,
                 NoteName::Des,
                 NoteName::F,
@@ -934,7 +934,7 @@ impl std::str::FromStr for MultiNote {
                 NoteName::As,
                 NoteName::B,
             )),
-             "Desaug7" => Ok(MultiNote::Quatrain(
+             "Desm6" => Ok(MultiNote::Quatrain(
                 NoteName::Des,
                 NoteName::Fes,
                 NoteName::As,
@@ -1045,7 +1045,7 @@ impl std::str::FromStr for MultiNote {
                 NoteName::Gis,
                 NoteName::Ais,
             )),
-             "Cisaug7" => Ok(MultiNote::Quatrain(
+             "Cism6" => Ok(MultiNote::Quatrain(
                 NoteName::Cis,
                 NoteName::E,
                 NoteName::Gis,
