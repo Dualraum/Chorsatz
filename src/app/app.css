@@ -72,10 +72,16 @@ div.hor{
 
 div.col_open{
     display: block;
+    /* transform: scaleY(1);
+    max-height: 700px;    
+    transition: 120ms transform ease-in-out, 120ms max-height ease-in-out; */
 }
 
 div.col_closed{
     display: none;
+    /* transform: scaleY(0);
+    max-height: 0;
+    transition: 120ms transform ease-in-out, 120ms max-height ease-in-out; */
 }
 
 h1 {
@@ -137,6 +143,7 @@ input{
 
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     flex-grow: 1;
+    background-color: var(--sec-color);
 }
 
 input:focus{
@@ -151,11 +158,34 @@ input.main_input{
     background-position: 4px 4px;
     background-size: 18px;
     background-repeat: no-repeat;
-    background-color: var(--sec-color);
 }
 
-input.number{
+input[type="number"]{
     width: 48px;
+}
+
+input[type="checkbox"] {
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 1px solid var(--pri-color);
+    border-radius: 15px;
+    display: grid;
+    place-content: center;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    width: 12px;
+    height: 12px;
+    border-radius: 6px;
+    transform: scale(0);
+    /* transition: 120ms transform ease-in-out; */
+    box-shadow: inset 1em 1em var(--acc-color);
+}
+  
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
 }
 
 button{

@@ -12,14 +12,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
             </tr>
             <tr>
                 // Soprano-Alt tone difference
-                <td> <input class="number" type="number" min="0" step="0.5" prop:value={move || config().max_diff_sopran_alt}
+                <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_diff_sopran_alt}
                     on:change=move |ev|{
                         set_config.update(|config| config.max_diff_sopran_alt = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                     }
                 /> </td>
                 <td>"Maximale Differenz Sopran/Alt"</td>
                 // Alt-Tenor tone Difference
-                <td> <input class="number" type="number" min="0" step="0.5" prop:value={move || config().max_diff_alt_tenor}
+                <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_diff_alt_tenor}
                 on:change=move |ev|{
                     set_config.update(|config| config.max_diff_alt_tenor = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
@@ -28,14 +28,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
             </tr>
             <tr>
                 // Tenor-Bass tone difference
-                <td> <input class="number" type="number" min="0" step="0.5" prop:value={move || config().max_diff_tenor_bass}
+                <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_diff_tenor_bass}
                 on:change=move |ev|{
                     set_config.update(|config| config.max_diff_tenor_bass = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
                 <td>"Maximale Differenz Tenor/Bass"</td>
                 // Soprano-Bass tone Difference
-                <td> <input class="number" type="number" min="0" step="0.5" prop:value={move || config().max_diff_sopran_bass}
+                <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_diff_sopran_bass}
                 on:change=move |ev|{
                     set_config.update(|config| config.max_diff_sopran_bass = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
@@ -93,14 +93,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
             </tr>
             <tr>
                 // Soprano jump
-                <td> <input class="number" type="number" min="0" step="0.5" prop:value={move || config().max_jump_sopran}
+                <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_jump_sopran}
                 on:change=move |ev|{
                     set_config.update(|config| config.max_jump_sopran = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
                 <td>"Maximaler Sopransprung"</td>
                 // Alto jump
-                <td> <input class="number" type="number" min="0" step="0.5" prop:value={move || config().max_jump_alt}
+                <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_jump_alt}
                 on:change=move |ev|{
                     set_config.update(|config| config.max_jump_alt = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
@@ -109,14 +109,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
             </tr>
             <tr>
                 // Tenor Jump
-                <td> <input class="number" type="number" min="0" step="0.5" prop:value={move || config().max_jump_tenor}
+                <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_jump_tenor}
                 on:change=move |ev|{
                     set_config.update(|config| config.max_jump_tenor = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
                 <td>"Maximaler Tenorsprung"</td>
                 // Bass Jump
-                <td> <input class="number" type="number" min="0" step="0.5" prop:value={move || config().max_jump_bass}
+                <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_jump_bass}
                 on:change=move |ev|{
                     set_config.update(|config| config.max_jump_bass = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
@@ -128,14 +128,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
             </tr>
             <tr>
                 // Sum of Absolutes weight
-                <td> <input class="number" type="number" step="0.1" prop:value={move || format!("{:.1}", config().sub_of_abs_weight)}
+                <td> <input type="number" step="0.1" prop:value={move || format!("{:.1}", config().sub_of_abs_weight)}
                 on:change=move |ev|{
                     set_config.update(|config| config.sub_of_abs_weight = event_target_value(&ev).parse::<f32>().unwrap_or(0.));
                 }
                 /> </td>
                 <td>"Relatives Gewicht Betragssumme"</td>
                 // Absolute of Sums weight
-                <td> <input class="number" type="number" step="0.1" prop:value={move || format!("{:.1}", config().abs_of_sum_weight)}
+                <td> <input type="number" step="0.1" prop:value={move || format!("{:.1}", config().abs_of_sum_weight)}
                 on:change=move |ev|{
                     set_config.update(|config| config.abs_of_sum_weight = event_target_value(&ev).parse::<f32>().unwrap_or(0.));
                 }
@@ -144,7 +144,7 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
             </tr>
             <tr>
                 // Soprano-Alt-Weigth
-                <td> <input class="number" type="number" step="0.1" prop:value={move || format!("{:.1}", config().soprano_alt_diff_weight)}
+                <td> <input type="number" step="0.1" prop:value={move || format!("{:.1}", config().soprano_alt_diff_weight)}
                 on:change=move |ev|{
                     set_config.update(|config| config.soprano_alt_diff_weight = event_target_value(&ev).parse::<f32>().unwrap_or(0.));
                 }
@@ -152,14 +152,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                 <td>"Relatives Gewicht geschlossene Lage"</td>
             </tr>
             <tr>
-                <td> <input class="number" type="number" min="0" step="0.1" prop:value={move || format!("{:.1}", config().exposure_penalty_sopran)}
+                <td> <input type="number" min="0" step="0.1" prop:value={move || format!("{:.1}", config().exposure_penalty_sopran)}
                 on:change=move |ev|{
                     set_config.update(|config| config.exposure_penalty_sopran = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
                 <td>"Malus für hohen Startsopran"</td>
 
-                <td> <input class="number" type="text" prop:value={move || config().exposure_threshold_sopran.to_string()}
+                <td> <input type="text" prop:value={move || config().exposure_threshold_sopran.to_string()}
                 on:change=move |ev|{
                     set_config.update(|config| config.exposure_threshold_sopran = event_target_value(&ev).parse::<crate::logic::notes::OctavedNote>().unwrap_or_default());
                 }
@@ -167,14 +167,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                 <td>"Grenzton für hohen Startsopran"</td>
             </tr>
             <tr>
-                <td> <input class="number" type="number" min="0" step="0.1" prop:value={move || format!("{:.1}", config().exposure_penalty_bass)}
+                <td> <input type="number" min="0" step="0.1" prop:value={move || format!("{:.1}", config().exposure_penalty_bass)}
                 on:change=move |ev|{
                     set_config.update(|config| config.exposure_penalty_bass = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
                 <td>"Malus für hohen Startbass"</td>
 
-                <td> <input class="number" type="text" prop:value={move || config().exposure_threshold_bass.to_string()}
+                <td> <input type="text" prop:value={move || config().exposure_threshold_bass.to_string()}
                 on:change=move |ev|{
                     set_config.update(|config| config.exposure_threshold_bass = event_target_value(&ev).parse::<crate::logic::notes::OctavedNote>().unwrap_or_default());
                 }
