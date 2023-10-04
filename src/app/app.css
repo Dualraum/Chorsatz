@@ -204,6 +204,7 @@ button#show_more{
 body{
     background-image: url('assets/piano.png');
     background-repeat: no-repeat;
+    background-size: cover;
     background-blend-mode: lighten;
     background-attachment: fixed;
     overflow-y: scroll;
