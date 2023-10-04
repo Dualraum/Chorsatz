@@ -52,6 +52,9 @@ pub fn App() -> impl IntoView {
                                     &config(),
                                 ).into_iter().enumerate().collect_vec()
                             });
+                            set_result_amount(5);
+                            set_options(false);
+                            set_accords(false);
                         }
 
                     }
@@ -70,6 +73,7 @@ pub fn App() -> impl IntoView {
                         .enumerate().collect_vec());
                         set_options(false);
                         set_accords(false);
+                        set_result_amount(5);
                     }
                 >"Generieren"</button>
                 <button id="options" class=move || if options() { "active" } else { "" }
