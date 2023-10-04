@@ -9,7 +9,7 @@ pub fn generate_satb(
     accords: &[notes::SatbTemplate],
     conf: &super::Config,
 ) -> Vec<(Vec<SatbBlock>, f32)> {
-    generate_satb_helper(accords, &[], conf)
+    generate_satb_helper(&accords.iter().map(notes::permute).collect_vec(), &[], conf)
         .into_iter()
         .map(|solution| {
             let score = satb_score(&solution, conf);
@@ -22,19 +22,19 @@ pub fn generate_satb(
 /// Recursive helper function
 fn generate_satb_helper(
     // The accords not yet used
-    remaining_accords: &[notes::SatbTemplate],
+    remaining_accords_permutations: &[Vec<SatbBlock>],
     // The SATB notes resulting from the already-used accords in this branch.
     prefix: &[notes::SatbBlock],
     // The Config file describing how to discard pathes
     conf: &super::Config,
 ) -> Vec<Vec<SatbBlock>> {
     // No accors remaining -> Just return the (finished) prefix
-    if remaining_accords.is_empty() {
+    if remaining_accords_permutations.is_empty() {
         vec![prefix.to_vec()]
     } else {
         let mut res = Vec::new();
         // Go through all allowed permutations of the notes of the accord.
-        'outer: for SatbBlock(s, a, t, b) in notes::permute(&remaining_accords[0]) {
+        'outer: for &SatbBlock(s, a, t, b) in remaining_accords_permutations[0].iter() {
             // Check numerous conditions
             // Not differences larger than sixth
             if (s - a).abs() > conf.max_diff_sopran_alt
@@ -109,7 +109,7 @@ fn generate_satb_helper(
 
             // If we have not yet continued, this continuation is okay, so recursively create all possible extensions with this prefix.
             res.extend(generate_satb_helper(
-                &remaining_accords[1..],
+                &remaining_accords_permutations[1..],
                 &[prefix, &[SatbBlock(s, a, t, b)]].concat(),
                 conf,
             ))

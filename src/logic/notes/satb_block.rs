@@ -17,24 +17,36 @@ impl std::fmt::Display for SatbBlock {
 }
 
 pub fn permute(notes: &super::SatbTemplate) -> Vec<SatbBlock> {
-    let notes = match notes.accord {
-        MultiNote::Triad(n1, n2, n3) => (n1, n2, n3, notes.bass),
+    // generate the notes to be permuted for s/a/t
+    let permuted_notes = match notes.accord {
+        // Triad: Just the three notes in the triad.
+        MultiNote::Triad(n1, n2, n3) => [n1, n2, n3],
+        // Quatrain: If the forced base-tone is contained in the quatrain, permute the others. Otherwise,ignore the base of the quatrain and permute the rest.
         MultiNote::Quatrain(n1, n2, n3, n4) => {
-            if [n1, n2, n3, n4].contains(&notes.bass) {
-                let mut rest = vec![n1, n2, n3, n4];
-                rest.retain(|n| *n != notes.bass);
-                (rest[0], rest[1], rest[2], notes.bass)
-            } else {
-                (n2, n3, n4, notes.bass)
+            // create a vec of the notes
+            let mut rest = vec![n1, n2, n3, n4];
+            // remove the bass note if it is in there (by name)
+            rest.retain(|n| n.to_string() != notes.bass.to_string());
+            // if nothing was removed, remove the first element so we are left with only 3 notes
+            if rest.len() == 4 {
+                rest.remove(0);
             }
+            [rest[0], rest[1], rest[2]]
         }
     };
 
-    [notes.0, notes.1, notes.2]
+    permuted_notes
         .iter()
         .permutations(3)
         .unique()
-        .map(|permutation| (*permutation[0], *permutation[1], *permutation[2], notes.3))
+        .map(|permutation| {
+            (
+                *permutation[0],
+                *permutation[1],
+                *permutation[2],
+                notes.bass,
+            )
+        })
         .flat_map(|(s, a, t, b)| {
             let mut sopran_res = Vec::with_capacity(3);
 
