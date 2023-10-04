@@ -3,10 +3,10 @@ use leptos::*;
 use crate::logic::notes::SatbBlock;
 
 #[component]
-pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32) -> impl IntoView {
+pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> impl IntoView {
     view! {
         <div class = "satbr_outer">
-            <h3>"Ergebnis"</h3>
+            <h3>"Ergebnis " {index+1}</h3>
             <p>"Bewertung: "<b class="marked">{res_score as i32}</b></p>
             <div class = "satbr_inner">
                 <div class = "satbb">

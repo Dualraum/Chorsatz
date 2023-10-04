@@ -55,7 +55,8 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                     when=move ||{!config().allow_crossings}
                     fallback=|| view!{
                         <td></td> <td></td>
-                    }>
+                    }
+                >
                     <td>
                         <input type="checkbox" prop:checked={move || config().allow_bass_tenor_equal}
                             on:change=move |ev|{

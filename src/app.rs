@@ -13,7 +13,9 @@ use result_view::SatbResultView;
 pub fn App() -> impl IntoView {
     let (config, set_config) = create_signal(logic::Config::default());
 
-    let (result, set_result) = create_signal(Vec::<(Vec<logic::notes::SatbBlock>, f32)>::new());
+    let (result, set_result) = create_signal(Vec::new());
+
+    let (result_amount, set_result_amount) = create_signal(5);
 
     let (input, set_input) = create_signal(String::new());
 
@@ -52,7 +54,7 @@ pub fn App() -> impl IntoView {
                                     .filter_map(|note_str| note_str.parse().ok())
                                     .collect_vec(),
                                     &config(),
-                                ).into_iter().take(5).collect_vec()
+                                ).into_iter().enumerate().collect_vec()
                             });
                         }
 
@@ -68,7 +70,8 @@ pub fn App() -> impl IntoView {
                             .filter_map(|note_str| note_str.parse().ok())
                             .collect_vec(),
                             &config(),
-                        ).into_iter().take(5).collect_vec());
+                        ).into_iter()
+                        .enumerate().collect_vec());
                         set_options(false);
                         set_accords(false);
                     }
@@ -104,13 +107,25 @@ pub fn App() -> impl IntoView {
             <div>
                 <h2>"Ergebnisse:"</h2>
                 <p class="deemph">"Eine kleinere Bewertung kennzeichnet eine optimalere Lösung. Da eine rein algorithmische Bewertung nicht perfekt ist, werden mehrere Ergebnisse zur Auswahl angezeigt."</p>
-                <For
-                    each=result
-                    key=|(_res,score)| *score as i32
-                    view=move |(res, score)| {
-                        view!{<SatbResultView result=res res_score=score/>}
-                    }
-                />
+                <p>"Es werden die besten " {result_amount} " Ergebnisse aus " {move || result().len()} " berechneten Lösungen angezeigt."</p>
+                {
+                    move || result().into_iter().map(|(index, (res, score))| view!{
+                        <div class=move || if index < result_amount() { "col_open" } else { "col_closed" }>
+                            <SatbResultView result=res res_score=score index=index/>
+                        </div>
+                    }).collect_view()
+                }
+                // <For
+                //     each=result
+                //     key=|(_index,(_res, score))| *score as i32
+                //     view=move |(index, (res, score))| {
+                //         view!{
+                //             <div class=move || if index < result_amount() { "col_open" } else { "col_closed" }>
+                //             <SatbResultView result=res res_score=score index=index/>
+                //             </div>
+                //         }
+                //     }
+                // />
             </div>
         </div>
 
