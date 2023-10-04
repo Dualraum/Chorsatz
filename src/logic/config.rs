@@ -54,7 +54,7 @@ impl Default for Config {
             max_diff_tenor_bass: 10.,
             max_diff_sopran_bass: 21.,
             allow_crossings: false,
-            allow_bass_tenor_equal: true,
+            allow_bass_tenor_equal: false,
             forbidden_parallels: vec![5., 8.],
             force_letting_lie: true,
             force_base_countermovement: true,
