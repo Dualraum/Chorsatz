@@ -45,6 +45,10 @@ div.satbr_inner{
     margin-bottom: 4px;
 }
 
+div.show_more_outer{
+    display: flex;
+}
+
 div.satbb{
     margin-left: 8px;
     margin-right: 8px;
@@ -156,6 +160,7 @@ input.number{
 
 button{
     padding: 5px;
+    padding-right: 8px;
     padding-left: 25px;
     margin: 4px;
     height: min-content;
@@ -189,6 +194,11 @@ button#options{
 
 button#accords{
     background-image: url('assets/help.png');
+}
+
+button#show_more{
+    padding-left: 8px;
+    margin: auto;
 }
 
 body{

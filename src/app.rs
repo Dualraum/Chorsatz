@@ -103,12 +103,20 @@ pub fn App() -> impl IntoView {
             <div>
                 <h2>"Ergebnisse:"</h2>
                 <p class="deemph">"Eine kleinere Bewertung kennzeichnet eine optimalere Lösung. Da eine rein algorithmische Bewertung nicht perfekt ist, werden mehrere Ergebnisse zur Auswahl angezeigt."</p>
-                <p>"Es werden die besten " {result_amount} " Ergebnisse aus " {move || result().len()} " berechneten Lösungen angezeigt."</p>
+                <Show
+                    when={move || !result().is_empty()}
+                    fallback=|| view!{}
+                >
+                    <p>"Es werden die besten " {move || result_amount().min(result().len())} " Ergebnisse aus " {move || result().len()} " berechneten Lösungen angezeigt."</p>
+                </Show>
                 {
+                    // Alternative: Remove inner Show and add take(result_amount()) in the iter chain. Will work!
+                    // Pros: Less <--DynChild> in HTML
+                    // Cons: Needs to recalculate entire vector on every "show-more"-click, and scrolls down to bottom instead of staying.
                     move || result().into_iter().map(|(index, (res, score))| view!{
-                        <div class=move || if index < result_amount() { "col_open" } else { "col_closed" }>
-                            <SatbResultView result=res res_score=score index=index/>
-                        </div>
+                        <Show when=move || {index < result_amount()} fallback=|| view!{}>
+                            <SatbResultView result=res.clone() res_score=score index=index/>
+                        </Show>
                     }).collect_view()
                 }
                 // <For
@@ -122,15 +130,34 @@ pub fn App() -> impl IntoView {
                 //         }
                 //     }
                 // />
+                <Show
+                    when=move || {result_amount() < result().len()}
+                    fallback=|| view!{}
+                >
+                    <div class = "satbr_outer show_more_outer">
+                        <button
+                            id="show_more"
+                            on:click=move |_| {
+                                set_result_amount.update(|ra| *ra+=5);
+                            }
+                        >
+                            "Mehr Ergebnisse anzeigen..."
+                        </button>
+                    </div>
+                </Show>
             </div>
+
         </div>
 
         <div class="outer_block">
             <div>
             <p>
-                <b class="header">"Autoren:"</b> " Minona Schäfer & Linus Mußmächer"
-                " - " <b class="header"><a href="https://github.com/Dualraum/Chorsatz">Github</a></b>
-                " - " <b class="header"><a class="header" href="https://github.com/Dualraum/Chorsatz/blob/main/howto/Akkordsatzprogramm.pdf">Anleitung</a></b>
+                <b class="header">"Autoren:"</b> " Minona Schäfer & Linus Mußmächer"// mit freundlicher Unterstützung von Biljana <Nachname>"
+            </p>
+            <p>
+                <b class="header"><a href="https://github.com/Dualraum/Chorsatz">"Github-Repository"</a></b>
+                " - "
+                <b class="header"><a class="header" href="https://github.com/Dualraum/Chorsatz/blob/main/howto/Akkordsatzprogramm.pdf">"Bedienungshinweise"</a></b>
             </p>
             </div>
         </div>
