@@ -21,6 +21,10 @@ impl OctavedNote {
         // add octave
          + (7 * self.octave) as f32
     }
+
+    pub fn to_hum_note(self) -> String {
+        self.note.to_hum_note() + &(self.octave + 2).to_string()
+    }
 }
 
 impl FromStr for OctavedNote {

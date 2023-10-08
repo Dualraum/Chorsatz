@@ -161,10 +161,22 @@ fn generate_hum_file(solution: &Vec<SatbBlock>) -> String {
         s.push_str("************************************\n\n% sine\n");
 
         //TODO: Proper conversion
-        s.push_str(&format!("| ({} 1/4) (Rest 1/4) (Rest 1/4) ;", block.0));
-        s.push_str(&format!("| ({} 1/4) (Rest 1/4) (Rest 1/4) ;", block.1));
-        s.push_str(&format!("| ({} 1/4) (Rest 1/4) (Rest 1/4) ;", block.2));
-        s.push_str(&format!("| ({} 1/4) (Rest 1/4) (Rest 1/4) ;", block.3));
+        s.push_str(&format!(
+            "| ({} 1/4) (Rest 1/4) (Rest 1/4) ;",
+            block.0.to_hum_note()
+        ));
+        s.push_str(&format!(
+            "| ({} 1/4) (Rest 1/4) (Rest 1/4) ;",
+            block.1.to_hum_note()
+        ));
+        s.push_str(&format!(
+            "| ({} 1/4) (Rest 1/4) (Rest 1/4) ;",
+            block.2.to_hum_note()
+        ));
+        s.push_str(&format!(
+            "| ({} 1/4) (Rest 1/4) (Rest 1/4) ;",
+            block.3.to_hum_note()
+        ));
     }
 
     s
