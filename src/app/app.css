@@ -133,6 +133,10 @@ p{
     color: var(--acc-color);
 }
 
+a.dl{
+    font-size: small;
+}
+
 
 input{
     padding: 5px;

@@ -1,3 +1,4 @@
+use js_sys::encode_uri_component;
 use leptos::*;
 
 use crate::logic::notes::SatbBlock;
@@ -7,7 +8,27 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
     view! {
         <div class = "satbr_outer">
             <h3>"Ergebnis " {index+1}</h3>
-            <p>"Bewertung: "<b class="marked">{res_score as i32}</b></p>
+            <p>
+                "Bewertung: "
+                <b class="marked">{res_score as i32}</b>
+                <br/>
+                "Downloads:  "
+                <a
+                    class="dl"
+                    href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&crate::logic::generate_hum_file(&result)))}
+                    download={format!("SATB-Result{}.txt", index)}
+                >
+                    ".hum"
+                </a>
+                "  "
+                <a
+                    class="dl"
+                    href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&crate::logic::generate_hum_file(&result)))}
+                    download={format!("SATB-Result{}.txt", index)}
+                >
+                    ".ly (WIP)"
+                </a>
+            </p>
             <div class = "satbr_inner">
                 <div class = "satbb">
                     <p class="header2">"Akkord"</p>
