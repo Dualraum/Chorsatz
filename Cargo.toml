@@ -6,14 +6,22 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+# basic rust
 itertools = "0.11"
 log = "0.4"
-simple_logger = "4.2"
 strum = "0.25"
 strum_macros = "0.25"
 thiserror = "1.0"
 hum = "0.6"
-
-# Web
-
+# web stuff
 leptos = { version = "0.5.0-rc3", features = ["csr", "nightly"] }
+js-sys = "0.3.64"
+wasm-bindgen = "0.2.87"
+web-sys = {version = "0.3.4", features = [
+  'CanvasRenderingContext2d',
+  'Document',
+  'Element',
+  'HtmlCanvasElement',
+  'Window',
+]}
+

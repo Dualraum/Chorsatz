@@ -7,11 +7,6 @@ pub(super) mod scale;
 
 #[allow(dead_code)]
 fn run_in_terminal() {
-    simple_logger::SimpleLogger::new()
-        .with_level(log::LevelFilter::Info)
-        .init()
-        .expect("Could not initialize logger.");
-
     let mut line = String::new();
     let mut accords = Vec::new();
 

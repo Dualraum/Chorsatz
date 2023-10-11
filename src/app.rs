@@ -9,6 +9,8 @@ mod options;
 mod result_view;
 use result_view::SatbResultView;
 
+type ScoredResult = (Vec<logic::notes::SatbBlock>, f32);
+
 #[component]
 pub fn App() -> impl IntoView {
     let (config, set_config) = create_signal(logic::Config::default());
@@ -52,9 +54,10 @@ pub fn App() -> impl IntoView {
                                     &config(),
                                 ).into_iter().enumerate().collect_vec()
                             });
-                            set_result_amount(5);
                             set_options(false);
                             set_accords(false);
+                            set_result_amount(5);
+                            draw_stuff(result);
                         }
 
                     }
@@ -74,6 +77,7 @@ pub fn App() -> impl IntoView {
                         set_options(false);
                         set_accords(false);
                         set_result_amount(5);
+                        draw_stuff(result);
                     }
                 >"Generieren"</button>
                 <button id="options" class=move || if options() { "active" } else { "" }
@@ -101,7 +105,6 @@ pub fn App() -> impl IntoView {
             </div>
             </div>
         </div>
-
 
         <div class="outer_block">
             <div>
@@ -143,6 +146,7 @@ pub fn App() -> impl IntoView {
                             id="show_more"
                             on:click=move |_| {
                                 set_result_amount.update(|ra| *ra+=5);
+                                draw_stuff(result);
                             }
                         >
                             "Mehr Ergebnisse anzeigen..."
@@ -165,5 +169,57 @@ pub fn App() -> impl IntoView {
             </p>
             </div>
         </div>
+    }
+}
+
+use wasm_bindgen::prelude::*;
+
+fn draw_stuff(result: ReadSignal<Vec<(usize, ScoredResult)>>) {
+    let document = web_sys::window().unwrap().document().unwrap();
+
+    for (index, _blocks) in result() {
+        let canvas = document
+            .get_element_by_id(&format!("canvas{}", index))
+            .unwrap();
+        let canvas: web_sys::HtmlCanvasElement = canvas
+            .dyn_into::<web_sys::HtmlCanvasElement>()
+            .map_err(|_| ())
+            .unwrap();
+
+        let context = canvas
+            .get_context("2d")
+            .unwrap()
+            .unwrap()
+            .dyn_into::<web_sys::CanvasRenderingContext2d>()
+            .unwrap();
+
+        // ----------- DRAW SMILEY -------------
+
+        context.begin_path();
+
+        // Draw the outer circle.
+        context
+            .arc(75.0, 75.0, 50.0, 0.0, std::f64::consts::PI * 2.0)
+            .unwrap();
+
+        // Draw the mouth.
+        context.move_to(110.0, 75.0);
+        context
+            .arc(75.0, 75.0, 35.0, 0.0, std::f64::consts::PI)
+            .unwrap();
+
+        // Draw the left eye.
+        context.move_to(65.0, 65.0);
+        context
+            .arc(60.0, 65.0, 5.0, 0.0, std::f64::consts::PI * 2.0)
+            .unwrap();
+
+        // Draw the right eye.
+        context.move_to(95.0, 65.0);
+        context
+            .arc(90.0, 65.0, 5.0, 0.0, std::f64::consts::PI * 2.0)
+            .unwrap();
+
+        context.stroke();
     }
 }

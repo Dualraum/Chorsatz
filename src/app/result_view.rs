@@ -17,6 +17,7 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
                     <p class="header">"Bass"</p>
                 </div>
                 {result.iter().enumerate().map(satb_block_view).collect_view()}
+                <canvas id={format!("canvas{}", index)} width=300 height=200/>
             </div>
         </div>
     }
