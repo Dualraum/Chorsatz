@@ -1,5 +1,6 @@
 use itertools::Itertools;
-use leptos::*;
+use leptos::{svg::Image, *};
+use web_sys::SvgImageElement;
 
 use crate::logic;
 
