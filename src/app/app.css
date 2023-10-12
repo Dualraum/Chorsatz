@@ -84,6 +84,10 @@ div.col_closed{
     transition: 120ms transform ease-in-out, 120ms max-height ease-in-out; */
 }
 
+div.storage{
+    display: none;
+}
+
 h1 {
     color: var(--pri-color);
     font-size: 80px;

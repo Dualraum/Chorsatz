@@ -1,6 +1,6 @@
 use itertools::Itertools;
-use leptos::{svg::Image, *};
-use web_sys::SvgImageElement;
+use leptos::*;
+use web_sys::HtmlImageElement;
 
 use crate::logic;
 
@@ -173,6 +173,10 @@ pub fn App() -> impl IntoView {
             </p>
             </div>
         </div>
+
+        <div class="storage">
+            <img src="assets/full_staff.svg" id="staff"/>
+        </div>
     }
 }
 
@@ -184,46 +188,33 @@ fn draw_stuff(result: ReadSignal<Vec<(usize, ScoredResult)>>) {
     for (index, _blocks) in result() {
         let canvas = document
             .get_element_by_id(&format!("canvas{}", index))
-            .unwrap();
-        let canvas: web_sys::HtmlCanvasElement = canvas
+            .expect("Could not find canvas.")
             .dyn_into::<web_sys::HtmlCanvasElement>()
-            .map_err(|_| ())
-            .unwrap();
+            .expect("Could not cast canvas.");
 
         let context = canvas
             .get_context("2d")
-            .unwrap()
-            .unwrap()
+            .expect("Could not unwrap 2d context.")
+            .expect("Could not unwrap 2d context.")
             .dyn_into::<web_sys::CanvasRenderingContext2d>()
+            .expect("Could not cast 2d context.");
+
+        // ----------- DRAW STAFF --------------
+
+        let staff = document
+            .get_element_by_id("staff")
+            .unwrap()
+            .dyn_into::<web_sys::HtmlImageElement>()
             .unwrap();
 
-        // ----------- DRAW SMILEY -------------
-
-        context.begin_path();
-
-        // Draw the outer circle.
         context
-            .arc(75.0, 75.0, 50.0, 0.0, std::f64::consts::PI * 2.0)
+            .draw_image_with_html_image_element_and_dw_and_dh(
+                &staff,
+                10.,
+                10.,
+                600. / 400. * 180.,
+                180.,
+            )
             .unwrap();
-
-        // Draw the mouth.
-        context.move_to(110.0, 75.0);
-        context
-            .arc(75.0, 75.0, 35.0, 0.0, std::f64::consts::PI)
-            .unwrap();
-
-        // Draw the left eye.
-        context.move_to(65.0, 65.0);
-        context
-            .arc(60.0, 65.0, 5.0, 0.0, std::f64::consts::PI * 2.0)
-            .unwrap();
-
-        // Draw the right eye.
-        context.move_to(95.0, 65.0);
-        context
-            .arc(90.0, 65.0, 5.0, 0.0, std::f64::consts::PI * 2.0)
-            .unwrap();
-
-        context.stroke();
     }
 }
