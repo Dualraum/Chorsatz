@@ -168,7 +168,7 @@ pub fn App() -> impl IntoView {
             <p>
                 <b class="header"><a href="https://github.com/Dualraum/Chorsatz">"Github-Repository"</a></b>
                 " - "
-                <b class="header"><a class="header" href="https://github.com/Dualraum/Chorsatz/blob/main/howto/Akkordsatzprogramm.pdf">"Bedienungshinweise"</a></b>
+                <b class="header"><a class="header" href="https://github.com/Dualraum/Chorsatz/blob/main/howto/Chorsatz.pdf">"Bedienungshinweise"</a></b>
             </p>
             </div>
         </div>
