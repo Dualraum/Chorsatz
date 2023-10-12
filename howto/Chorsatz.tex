@@ -1,0 +1,129 @@
+\documentclass[11.5pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{hyperref}
+\usepackage{geometry}
+
+\geometry{
+	left=2.5cm,
+	right=2.5cm,
+	top=2cm,
+	bottom=3cm}
+\title{Bedienungsanleitung Chorsatz-Programm}
+\author{Minona Schäfer}
+
+
+\date{ }
+
+\begin{document}
+
+\maketitle
+
+\tableofcontents
+	
+\section{Das Programm}
+Ziel des Programms ist es, einen vierstimmigen SATB-Stimmsatz aus vorgegebenen Akkorden zu erzeugen. Dabei sollen die klassischen Stimmführungsregeln beachtet werden.\\
+\\
+\textbf{Auf der Website \url{https://dualraum.github.io/Chorsatz/} ist das Programm zu finden. }
+
+\section{Benutzung}
+Die Akkorde werden durch Leerzeichen getrennt in die Eingabezeile eingegeben. Unter Eingabehilfe sind die verschiedenen Akkordmöglichkeiten einsehbar. Unter Optionen kann man die Stimmführungsregeln modifizieren und nach eigenen Wünschen anpassen.
+
+\section{Eingabemöglichkeiten}\label{Eingabe}
+	Aktuell können folgende Akkordtypen eingegeben werden: 
+	
+	\begin{itemize}
+		\item Dreiklänge 
+		\begin{itemize}
+			\item Dur z.B. durch die Eingabe \glqq D\grqq \ oder \glqq Dis\grqq
+			\item Moll z.B. durch die Eingabe \glqq Dm\grqq \ oder \glqq Dism\grqq
+			\item vermindert z.B. durch die Eingabe \glqq Ddim\grqq \ oder \glqq Disdim\grqq
+			\item übermäßig z.B. durch die Eingabe \glqq Daug\grqq \ oder \glqq Disaug\grqq
+			\item sus2 z.B. durch die Eingabe \glqq Dsus2\grqq \ oder \glqq Dissus2\grqq
+			\item sus4 z.B. durch die Eingabe \glqq Dsus4\grqq \ oder \glqq Dissus4\grqq
+		\end{itemize}
+		\item Vierklänge
+		\begin{itemize}
+			\item Dominantseptakkord z.B. durch die Eingabe \glqq D7\grqq \ oder \glqq Dis7\grqq
+			\item Major Septakkord z.B. durch die Eingabe \glqq Dmaj7\grqq \ oder \glqq Dismaj7\grqq
+			\item Mollseptakkord z.B. durch die Eingabe \glqq Dm7\grqq \ oder \glqq Dism7\grqq
+			\item Mollseptakkord mit gr. Septime z.B. durch die Eingabe \glqq Dmmaj7\grqq \ oder "Dismmaj7\grqq
+			\item verminderter Septakkord z.B. durch die Eingabe \glqq Ddim7\grqq oder \glqq Disdim7\grqq
+			\item halbverminderter Septakkord z.B. durch die Eingabe \glqq Dm7b5\grqq oder \glqq Dism7b5\grqq
+			\item übermäßiger Septakkord z.B. durch die Eingabe \glqq Daug7 \grqq oder \glqq Disaug7\grqq
+			\item Dur-Dreiklang mit Sixte ajoutée z.B. durch die Eingabe \glqq D6 \grqq oder \glqq Dis6\grqq
+			\item Moll-Dreiklang mit Sixte ajoutée z.B. durch die Eingabe \glqq Dm6 \grqq oder \glqq Dism6\grqq
+		\end{itemize}
+	\end{itemize}
+ Dabei können Akkorde beginnend auf den folgenden Tönen eingegeben werden:  \\
+  C, G, D, A, E, H, Fis, Cis, Gis, Dis, Ais, F, B, Es, As, Des, Ges \\
+ Weiterhin ist es möglich, den Basston eines Akkordes durch Anhängen von \glqq /Basston \grqq manuell festzusetzen, z.B. \glqq C/E \grqq oder \glqq Dis/Fis \grqq.
+  
+
+
+\section{Ausgabe}\label{Ausgabe}
+Das Programm gibt fünf Möglichkeiten aus, denen jeweils auch ein Score zugeordnet ist (zur Berechnung des Scores siehe \ref{RegelnScore}). Jede Möglichkeit besteht aus
+einer Tabelle mit den entsprechenden Tönen für Sopran, Alt, Tenor und Bass. Jeder Ton wird durch einen Tonnamen und eine Zahl zwischen $-1$ und $2$, z.B. \glqq a0\grqq \ oder \glqq g-1\grqq beschrieben. \\
+Die Zahlen stehen für die jeweilige Oktave, in der der Ton liegt, aufgeteilt wie folgt:
+
+\begin{itemize}
+	\item $-1$: Große Oktave
+	\item $0$: Kleine Oktave
+	\item $1$: Eingestrichene Oktave
+	\item $2$: Zweigestrichene Oktave
+\end{itemize}
+Es bietet sich an, die erste Lösung mit dem niedrigsten Score zu wählen, da diese die am besten optimierte Möglichkeit sein sollte. 
+Bei der Eingabe einer genügend pathologischen Akkordfolge (z.B. Cisaug7-Fissus2-Dm-Fdim-A-Em) kann es sein, dass es auch keine \glqq Lösungen\grqq, also Ausgaben, gibt, da die Restriktionen zu stark sind. In diesem Falle ist es hilfreich die Folge der eingegebenen Akkorden in mehrere kleinere Folgen zu unterteilen. Im Allgemeinen hofft man aber doch, dass derartige Akkordfolgen in der Realität nicht auftreten. 
+
+	
+\section{Verwendete Regeln}
+Die Funktionsweise des Programms besteht darin, dass der Grundton eines Akkords stets dem Bass zugeordnet wird. Bei Vierklängen werden die restlichen Töne auf Sopran, Alt und Tenor verteilt, bei Dreiklängen wird der Grundton auch noch einmal in Sopran, Alt oder Tenor vergeben. Somit berechnet das Programm alle möglichen Permutationen der Töne eines Akkords auf die Stimmen verteilt sukzessive für alle Akkorde hintereinander, wodurch ein großes Baumdiagramm entsteht. Bei Verstoß gegen die Regeln in \ref{Abbruchkriterien} werden Äste abgeschnitten, wodurch sich der Suchbaum verkleinert. Am Ende werden die übrigen Äste noch nach Qualität durch die Scorefunktion (siehe \ref{RegelnScore}) absteigend sortiert. Der Ast, bzw. die Möglichkeit mit dem kleinsten Score wird als Erstes ausgegeben und sollte der Beste sein. 
+\subsection{NoGos}\label{Abbruchkriterien}
+Folgende Regeln wurden verwendet und dienen als \glqq NoGos\grqq \ bzw. Abbruchkriterien im Suchbaum (d.h. falls ein Ast gegen eine dieser Regeln verstößt, wird er sofort abgeschnitten und die Möglichkeit entfernt):
+\begin{itemize}
+	\item Die für die jeweiligen Stimmen festgelegten Stimmumfänge müssen eingehalten werden: 
+	\begin{itemize}
+		\item Sopran: c'-g'' (c1-g2)
+		\item Alt: g-c'' (g0-c2)
+		\item Tenor: c-g' (c0-g1)
+		\item Bass: G-c (g-1-c1)
+	\end{itemize}
+	\item Die Differenz innerhalb eines Akkords zwischen Sopran und Alt und Alt und Tenor ist jeweils nicht mehr als eine Sexte. Die Differenz zwischen Tenor und Bass ist nicht mehr als eine Dezime. 
+	\item Es gibt keine Stimmkreuzungen. Demnach liegen auch je zwei Stimmen immer um mindestens eine kleine Sekunde auseinander. 
+	\item Der Abstand von Sopran und Bass innerhalb eines Akkords beträgt nie mehr als eine Oktave plus eine Quinte.
+	\item Gleiche Töne zwischen zwei Akkorden bleiben in der jeweiligen Stimme liegen. 
+	\item Keine Quint- und Oktavparallelen.
+	\item Falls bei zwei aufeinanderfolgenden Akkorden kein Ton gleich ist, erfolgt im Sopran, Alt und Tenor eine Gegenbewegung zum Bass.
+	\item In Sopran, Alt und Tenor werden Sprünge, die größer als eine Sexte sind, verboten. Im Bass werden Sprünge, die größer als eine Oktave sind, verboten.
+\end{itemize}
+Die obigen Regeln und No-Gos können auch unter \grqq Optionen \glqq eigens durch den Nutzer modifiziert werden.
+
+\subsection{Score} \label{RegelnScore}
+Folgende Aspekte gehen in die Scorefunktion ein: 
+\begin{itemize}
+	\item Gegenbewegungen werden bevorzugt. Dazu werden die Differenzen aufeinanderfolgender Soprantöne, Alttöne, Tenortöne und Basstöne addiert. Von diesem Wert wird der Betrag genommen, welcher möglichst klein sein sollte. Dies geht mit einer gewichteten Wertung von 1 in die Scorefunktion ein.
+	\item Insgesamt sollte möglichst wenig Bewegung vorherrschen. Dazu werden die Beträge der Differenzen der aufeinanderfolgenden Soprantöne, Alttöne, Tenortöne und Basstöne einzeln gebildet und addiert. (Aufgrund der Dreiecksungleichung ist dieser Wert dann größer als der obige Wert, mit dem die Gegenbewegungen errechnet werden. Beispielsweise kann bei obigem Wert zur Berechnung der Gegenbewegungen der Sopran eine Quarte nach oben und der Tenor eine Quarte nach unten gehen, was sich im Wert subtrahiert. Der hier berechnete Wert versucht solche Fälle zu vermeiden.) Dieser Wert geht mit einer gewichteten Wertung von 0,8 in die Scorefunktion ein.
+	\item Um eine möglichst enge Lage zu bekommen, soll der Abstand von Sopran und Bass möglichst klein sein. Dafür wird dieser für jeden Akkord berechnet und anschließend das Minimum davon genommen. Dieser Wert geht mit 0,4 in die Scorefunktion ein. 
+	\item Falls es Möglichkeiten gibt, in denen Sopran und Bass mit zu hohen Tönen einsetzen, werden diese abgewertet. Ist der Sopran im ersten Akkord höher als ein c'' (c2) oder der Bass höher als ein a (a0), wird dies in der Scorefunktion mit einem Wert von 1,2 verrechnet, wodurch der Score steigt. 
+\end{itemize}
+Der Score ist die Summe aller obigen Werte mit ihren jeweiligen Gewichtungen und wird zur Überprüfung mit ausgegeben. Klar ist, dass der Score größer wird, je mehr Akkorde man eingibt.  \\
+Die Scorefunktion kann auch unter \grqq Optionen \glqq eigens durch den Nutzer modifiziert werden.
+
+\section{Erweiterungen und neue Versionen}
+Die nächste und vierte Version soll um folgende Features erweitert werden: 
+\begin{itemize}
+\item Akkorde beginnend auf den Tönen Ces, Fes
+\item Start ab bestimmter Akkordverteilung
+\item Ausgabe der Akkorde in Notenzeilen und als Audio
+\end{itemize}
+
+\section{Disclaimer}
+Das Programm erhebt in keinster Weise den Anspruch einen guten oder kreativen SATB-Satz zu schreiben. Durch das Einhalten der obigen Regeln entsteht lediglich ein zulässiger und regelkonformer Satz. Insbesondere ist die Wertung der Summanden für die Scorefunktion nicht absolut und kann den persönlichen Präferenzen des Users widersprechen. Zu einem gewissen Grad kann der User diese deshalb auch anpassen. Feedback zu der Scorefunktion, weiteren Regeln oder Akkorden, die noch inkludiert werden sollen, ist gerne gesehen. Da alle Akkorde per Hand eingetragen wurden, kann es sein, dass sich Fehler bei Akkordtönen eingeschlichen haben, diese bitte melden. 
+
+\section{Autoren}
+Dies ist ein gemeinsames Projekt von Linus Mußmächer und Minona Schäfer. Wir danken Biljana Wittstock für die freundliche Unterstützung bei musikalischen Fragen. 
+
+
+
+\end{document}
