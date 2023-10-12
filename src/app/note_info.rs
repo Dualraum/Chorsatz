@@ -61,6 +61,11 @@ pub fn Info() -> impl IntoView {
                 <td>"Ammaj7, Aismmaj7"</td>
             </tr>
             <tr>
+                <td class="first">"Halbverminderter Septakkord"</td>
+                <td>"Startton + '7b5'"</td>
+                <td>"D7b5, Es7b5"</td>
+            </tr>
+            <tr>
                 <td class="first">"Verminderter Septakkord"</td>
                 <td>"Startton + 'dim7'"</td>
                 <td>"Ddim7, Aisdim7"</td>
@@ -70,13 +75,23 @@ pub fn Info() -> impl IntoView {
                 <td>"Startton + 'aug7'"</td>
                 <td>"Caug7, Esaug7"</td>
             </tr>
+            <tr>
+                <td class="first">"Durdreiklang mit Sixte ajoutee"</td>
+                <td>"Startton + '6'"</td>
+                <td>"A6, Cis6"</td>
+            </tr>
+            <tr>
+                <td class="first">"Molldreiklang mit Sixte ajoutee"</td>
+                <td>"Startton + 'm7'"</td>
+                <td>"Em7, Gesm7"</td>
+            </tr>
         </table>
         <p>"Als Starttöne stehen hierbei " <b class="header">"C, G, D, A, E, H, Fis, Cis, Gis, Dis, Ais, F, B, Es, As, Des, Ges"</b> " zur Verfügung."</p>
         <p>
-            "Verschiedene Akkorde sind durch Leerzeichen zu trennen, hierbei werden ungültige Eingaben ignoriert."
+            "Weiterhin ist es möglich, den Basston eines Akkordes durch Anhängen von '/Basston' manuell festzusetzen, z.B. 'C/E'."
         </p>
         <p>
-            "Weiterhin ist es möglich, den Basston eines Akkordes durch Anhängen von '/Basston' manuell festzusetzen, z.B. 'C/E'."
+            "Verschiedene Akkorde sind durch Leerzeichen zu trennen, hierbei werden ungültige Eingaben ignoriert."
         </p>
 
     }

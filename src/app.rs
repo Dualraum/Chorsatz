@@ -1,6 +1,5 @@
 use itertools::Itertools;
 use leptos::*;
-use web_sys::HtmlImageElement;
 
 use crate::logic;
 
@@ -164,7 +163,7 @@ pub fn App() -> impl IntoView {
                 <b class="header">"Autoren:"</b>
                 " Minona Schäfer & Linus Mußmächer"
                 <br/>
-                "mit freundlicher Unterstützung von Biljana Wittstock"
+                "Mit freundlicher Unterstützung von Biljana Wittstock"
             </p>
             <p>
                 <b class="header"><a href="https://github.com/Dualraum/Chorsatz">"Github-Repository"</a></b>
