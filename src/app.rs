@@ -168,7 +168,7 @@ pub fn App() -> impl IntoView {
         </div>
 
         <div class="storage">
-            <img src="assets/full_staff.svg" id="staff"/>
+            <img src="assets/full_staff.svg" id="full_staff"/>
             <img src="assets/quarter_up.svg" id="quarter_up"/>
             <img src="assets/quarter_down.svg" id="quarter_down"/>
             <img src="assets/staff_lines.svg" id="staff_lines"/>
@@ -198,20 +198,37 @@ fn draw_stuff(result: ReadSignal<Vec<(usize, ScoredResult)>>) {
         // ----------- DRAW STAFF --------------
 
         let staff = document
-            .get_element_by_id("staff")
+            .get_element_by_id("full_staff")
             .unwrap()
             .dyn_into::<web_sys::HtmlImageElement>()
             .unwrap();
 
         // draw staff
         context
-            .draw_image_with_html_image_element_and_dw_and_dh(&staff, 10., 10., 300., 200.)
+            .draw_image_with_html_image_element_and_dw_and_dh(&staff, 0., 0., 60., 140.)
             .unwrap();
+
+        let staff = wasm_bindgen::JsCast::dyn_into::<web_sys::HtmlImageElement>(
+            document.get_element_by_id("staff_lines").unwrap(),
+        )
+        .unwrap();
+
+        for i in 0..blocks.len() {
+            context
+                .draw_image_with_html_image_element_and_dw_and_dh(
+                    &staff,
+                    60. + i as f64 * 40.,
+                    0.,
+                    40.,
+                    140.,
+                )
+                .unwrap();
+        }
 
         // draw notes
 
         for (index, block) in blocks.iter().enumerate() {
-            block.draw(&document, &context, 150. + 40. * index as f64, 10.);
+            block.draw(&document, &context, 80. + 40. * index as f64, 110.);
         }
     }
 }

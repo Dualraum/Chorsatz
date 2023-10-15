@@ -44,9 +44,9 @@ impl OctavedNote {
         ctx.draw_image_with_html_image_element_and_dw_and_dh(
             &staff,
             x,
-            baseline + self.get_value() as f64 * 15.,
-            8.,
-            20.,
+            baseline - (self.get_value() as f64).floor() * 5. - if up { 25. } else { 5. },
+            10.,
+            30.,
         )
         .unwrap();
     }

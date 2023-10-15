@@ -18,18 +18,10 @@ impl SatbBlock {
         x: f64,
         baseline: f64,
     ) {
-        let staff = wasm_bindgen::JsCast::dyn_into::<web_sys::HtmlImageElement>(
-            document.get_element_by_id("staff_lines").unwrap(),
-        )
-        .unwrap();
-
-        ctx.draw_image_with_html_image_element_and_dw_and_dh(&staff, x, baseline, 50., 200.)
-            .unwrap();
-
-        self.0.draw(document, ctx, x, baseline, true);
         self.0.draw(document, ctx, x, baseline, false);
-        self.0.draw(document, ctx, x, baseline, true);
-        self.0.draw(document, ctx, x, baseline, false);
+        self.1.draw(document, ctx, x, baseline, true);
+        self.2.draw(document, ctx, x, baseline, false);
+        self.3.draw(document, ctx, x, baseline, true);
     }
 }
 
