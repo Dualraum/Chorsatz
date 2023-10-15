@@ -17,14 +17,14 @@ pub fn App() -> impl IntoView {
 
     let (result, set_result) = create_signal(Vec::new());
 
-    let (result_amount, set_result_amount) = create_signal(5);
+    let (shown_result, set_shown_result) = create_signal(Vec::new());
 
     let (input, set_input) = create_signal(String::new());
 
     let (options, set_options) = create_signal(false);
     let (accords, set_accords) = create_signal(false);
 
-    view! { //class = styler_class,
+    view! {
         <h1>"Chorsatz"</h1>
         <div class = "outer_block">
             <div>
@@ -56,7 +56,10 @@ pub fn App() -> impl IntoView {
                             });
                             set_options(false);
                             set_accords(false);
-                            set_result_amount(5);
+                            set_shown_result.update(|sr| {
+                                *sr = result();
+                                sr.truncate(5);
+                            });
                             draw_stuff(result);
                         }
 
@@ -76,7 +79,10 @@ pub fn App() -> impl IntoView {
                         .enumerate().collect_vec());
                         set_options(false);
                         set_accords(false);
-                        set_result_amount(5);
+                        set_shown_result.update(|sr| {
+                            *sr = result();
+                            sr.truncate(5);
+                        });
                         draw_stuff(result);
                     }
                 >"Generieren"</button>
@@ -111,41 +117,29 @@ pub fn App() -> impl IntoView {
                 <h2>"Ergebnisse:"</h2>
                 <p class="deemph">"Eine kleinere Bewertung kennzeichnet eine optimalere Lösung. Da eine rein algorithmische Bewertung nicht perfekt ist, werden mehrere Ergebnisse zur Auswahl angezeigt."</p>
                 <Show
-                    when={move || !result().is_empty()}
+                    when={move || result.with(|r| !r.is_empty())}
                     fallback=|| view!{}
                 >
-                    <p>"Es werden die besten " {move || result_amount().min(result().len())} " Ergebnisse aus " {move || result().len()} " berechneten Lösungen angezeigt."</p>
+                    <p>"Es werden die besten " {move || shown_result.with(|sr| sr.len()).min(result.with(|r| r.len()))} " Ergebnisse aus " {move || result.with(|r| r.len())} " berechneten Lösungen angezeigt."</p>
                 </Show>
                 {
-                    // Alternative: Remove inner Show and add take(result_amount()) in the iter chain. Will work!
-                    // Pros: Less <--DynChild> in HTML
-                    // Cons: Needs to recalculate entire vector on every "show-more"-click, and scrolls down to bottom instead of staying.
-                    move || result().into_iter().map(|(index, (res, score))| view!{
-                        <Show when=move || {index < result_amount()} fallback=|| view!{}>
-                            <SatbResultView result=res.clone() res_score=score index=index/>
-                        </Show>
+                    move || shown_result().into_iter().map(|(index, (res, score))| view!{
+                        <SatbResultView result=res.clone() res_score=score index=index/>
                     }).collect_view()
                 }
-                // <For
-                //     each=result
-                //     key=|(_index,(_res, score))| *score as i32
-                //     view=move |(index, (res, score))| {
-                //         view!{
-                //             <div class=move || if index < result_amount() { "col_open" } else { "col_closed" }>
-                //             <SatbResultView result=res res_score=score index=index/>
-                //             </div>
-                //         }
-                //     }
-                // />
                 <Show
-                    when=move || {result_amount() < result().len()}
+                    when=move || {shown_result.with(|sr| sr.len()) < result.with(|r| r.len())}
                     fallback=|| view!{}
                 >
                     <div class = "satbr_outer show_more_outer">
                         <button
                             id="show_more"
                             on:click=move |_| {
-                                set_result_amount.update(|ra| *ra+=5);
+                                set_shown_result.update(|sr|{
+                                    let old_len = sr.len();
+                                    *sr = result();
+                                    sr.truncate(old_len + 5);
+                                });
                                 draw_stuff(result);
                             }
                         >
