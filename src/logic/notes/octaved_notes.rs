@@ -25,6 +25,31 @@ impl OctavedNote {
     pub fn to_hum_note(self) -> String {
         self.note.to_hum_note() + &(self.octave + 2).to_string()
     }
+
+    pub fn draw(
+        &self,
+        document: &web_sys::Document,
+        ctx: &web_sys::CanvasRenderingContext2d,
+        x: f64,
+        baseline: f64,
+        up: bool,
+    ) {
+        let staff = wasm_bindgen::JsCast::dyn_into::<web_sys::HtmlImageElement>(
+            document
+                .get_element_by_id(if up { "quarter_up" } else { "quarter_down" })
+                .unwrap(),
+        )
+        .unwrap();
+
+        ctx.draw_image_with_html_image_element_and_dw_and_dh(
+            &staff,
+            x,
+            baseline + self.get_value() as f64 * 15.,
+            8.,
+            20.,
+        )
+        .unwrap();
+    }
 }
 
 impl FromStr for OctavedNote {

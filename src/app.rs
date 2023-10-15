@@ -169,6 +169,9 @@ pub fn App() -> impl IntoView {
 
         <div class="storage">
             <img src="assets/full_staff.svg" id="staff"/>
+            <img src="assets/quarter_up.svg" id="quarter_up"/>
+            <img src="assets/quarter_down.svg" id="quarter_down"/>
+            <img src="assets/staff_lines.svg" id="staff_lines"/>
         </div>
     }
 }
@@ -178,7 +181,7 @@ use wasm_bindgen::prelude::*;
 fn draw_stuff(result: ReadSignal<Vec<(usize, ScoredResult)>>) {
     let document = web_sys::window().unwrap().document().unwrap();
 
-    for (index, _blocks) in result() {
+    for (index, (blocks, _score)) in result() {
         let canvas = document
             .get_element_by_id(&format!("canvas{}", index))
             .expect("Could not find canvas.")
@@ -200,14 +203,15 @@ fn draw_stuff(result: ReadSignal<Vec<(usize, ScoredResult)>>) {
             .dyn_into::<web_sys::HtmlImageElement>()
             .unwrap();
 
+        // draw staff
         context
-            .draw_image_with_html_image_element_and_dw_and_dh(
-                &staff,
-                10.,
-                10.,
-                600. / 400. * 180.,
-                180.,
-            )
+            .draw_image_with_html_image_element_and_dw_and_dh(&staff, 10., 10., 300., 200.)
             .unwrap();
+
+        // draw notes
+
+        for (index, block) in blocks.iter().enumerate() {
+            block.draw(&document, &context, 150. + 40. * index as f64, 10.);
+        }
     }
 }
