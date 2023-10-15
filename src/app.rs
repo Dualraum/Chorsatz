@@ -157,7 +157,7 @@ pub fn App() -> impl IntoView {
                 <b class="header">"Autoren:"</b>
                 " Minona Schäfer & Linus Mußmächer"
                 <br/>
-                "Mit freundlicher Unterstützung von Biljana Wittstock"
+                "Mit Dank an Biljana Wittstock"
             </p>
             <p>
                 <b class="header"><a href="https://github.com/Dualraum/Chorsatz">"Github-Repository"</a></b>
