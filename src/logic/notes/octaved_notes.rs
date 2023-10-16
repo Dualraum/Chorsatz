@@ -23,8 +23,8 @@ impl OctavedNote {
     }
 
     // Returns, how many full note lines above C0 this note would lie, along with the number of #/b signs in front of it.
-    pub fn to_note_line_and_sign(&self) -> (f32, f32) {
-        let (line, signs) = self.note.to_note_line_and_sign();
+    pub fn get_note_line_and_sign(&self) -> (f32, f32) {
+        let (line, signs) = self.note.get_note_line_and_sign();
         (line + 7. * self.octave as f32, signs)
     }
 

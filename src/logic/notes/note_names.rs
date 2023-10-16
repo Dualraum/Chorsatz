@@ -75,14 +75,14 @@ impl NoteName {
             NoteName::B => 10,
             NoteName::Heses => 9,
             NoteName::H => 11,
-            NoteName::His => 0,
+            NoteName::His => 0, //TODO: Soll hier 0 stehen?
             NoteName::Ceses => 10,
             NoteName::Ces => 11,
         }
     }
 
     // Returns, how many full note lines above a C this note would lie, along with the number of #/b signs in front of it.
-    pub fn to_note_line_and_sign(&self) -> (f32, f32) {
+    pub fn get_note_line_and_sign(&self) -> (f32, f32) {
         match self {
             NoteName::C => (0., 0.),
             NoteName::Cis => (0., 0.5),

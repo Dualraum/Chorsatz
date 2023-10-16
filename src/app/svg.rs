@@ -59,7 +59,7 @@ pub fn FullStaff(width: f32) -> impl IntoView {
 }
 
 #[component]
-pub fn QuarterDown(head_center_x: f32, head_center_y: f32) -> impl IntoView {
+fn QuarterDown(head_center_x: f32, head_center_y: f32) -> impl IntoView {
     view! {
         <g transform={format!("translate({} {})", head_center_x - 7., head_center_y -5.)}>
             <ellipse cx="7.0" cy="5.0" rx="7.0" ry="5.0"/>
@@ -69,7 +69,7 @@ pub fn QuarterDown(head_center_x: f32, head_center_y: f32) -> impl IntoView {
 }
 
 #[component]
-pub fn QuarterUp(head_center_x: f32, head_center_y: f32) -> impl IntoView {
+fn QuarterUp(head_center_x: f32, head_center_y: f32) -> impl IntoView {
     view! {
         <g  transform={format!("translate({} {})", head_center_x - 7., head_center_y - 25.)}>
         <ellipse cx="7.0" cy="25.0" rx="7.0" ry="5.0"/>
@@ -78,25 +78,87 @@ pub fn QuarterUp(head_center_x: f32, head_center_y: f32) -> impl IntoView {
     }
 }
 
+#[component]
+fn Sharp(center_x: f32, center_y: f32) -> impl IntoView {
+    view! {
+        <g transform={format!("translate({} {})", center_x-5., center_y-12.)}>
+        <g transform="scale(1.3)">
+        <g transform="translate(-83, -435)">
+        <path
+        id="path2109"
+        d="M 86.102,447.457 L 86.102,442.753 L 88.102,442.201 L 88.102,446.881 L 86.102,447.457 z M 90.04,446.319 L 88.665,446.713 L 88.665,442.033 L 90.04,441.649 L 90.04,439.705 L 88.665,440.089 L 88.665,435.30723 L 88.102,435.30723 L 88.102,440.234 L 86.102,440.809 L 86.102,436.15923 L 85.571,436.15923 L 85.571,440.986 L 84.196,441.371 L 84.196,443.319 L 85.571,442.935 L 85.571,447.606 L 84.196,447.989 L 84.196,449.929 L 85.571,449.545 L 85.571,454.29977 L 86.102,454.29977 L 86.102,449.375 L 88.102,448.825 L 88.102,453.45077 L 88.665,453.45077 L 88.665,448.651 L 90.04,448.266 L 90.04,446.319 z" />
+        </g></g></g>
+    }
+}
+
+#[component]
+fn Flat(center_x: f32, center_y: f32) -> impl IntoView {
+    view! {
+        <g transform={format!("translate({} {})", center_x-5., center_y-12.)}>
+        <g transform="scale(1.3)">
+        <g transform="translate(-95, -435)">
+            <path
+            d="M 97.359,444.68428 C 96.732435,445.46734 96.205,445.91553 95.51,446.44253 L 95.51,443.848 C 95.668,443.449 95.901,443.126 96.21,442.878 C 96.518,442.631 96.83,442.507 97.146,442.507 C 98.621857,442.72115 98.104999,443.97562 97.359,444.68428 z M 95.51,442.569 L 95.51,435.29733 L 94.947,435.29733 L 94.947,446.91453 C 94.947,447.26653 95.043,447.44253 95.235,447.44253 C 95.346,447.44253 95.483913,447.34953 95.69,447.22653 C 97.091908,446.36314 97.992494,445.6642 98.89183,444.43098 C 99.16986,444.04973 99.366461,443.18512 98.96397,442.5813 C 98.71297,442.20474 98.234661,441.80922 97.621641,441.6923 C 96.828092,441.54095 96.14376,441.93605 95.51,442.569 z "
+            style="fill:#000000"
+            id="path2117" />
+        </g></g></g>
+    }
+}
+
+#[component]
+fn Signs(base_x: f32, base_y: f32, signs: f32) -> impl IntoView {
+    view! {
+        {
+            (signs >= 0.5).then(
+                || view!{<Sharp center_x={base_x+20.} center_y={base_y} />}.into_view()
+            )
+        }
+        {
+            (signs >= 1.0).then(
+                || view!{<Sharp center_x={base_x+5.} center_y={base_y} />}.into_view()
+            )
+        }
+        {
+            (signs <= -0.5).then(
+                || view!{<Flat center_x={base_x+22.} center_y={base_y} />}.into_view()
+            )
+        }
+        {
+            (signs <= -1.0).then(
+                || view!{<Flat center_x={base_x+9.} center_y={base_y} />}.into_view()
+            )
+        }
+    }
+}
+
 pub fn satb_block_svg(
     block: &crate::logic::notes::SatbBlock,
     index: usize,
     x: f32,
 ) -> impl IntoView {
+    let (soprano_line, soprano_signs) = block.0.get_note_line_and_sign();
+    let (alto_line, alto_signs) = block.1.get_note_line_and_sign();
+    let (tenor_line, tenor_signs) = block.2.get_note_line_and_sign();
+    let (bass_line, bass_signs) = block.3.get_note_line_and_sign();
+
     view! {
+        //TODO: Hilfslinien
         <g id={format!("SATB-Block {}", index)}>
             <g id={format!("SATB-Block {} Soprano", index)}>
-                // TODO: Vorzeichen
-                <QuarterUp head_center_x={x} head_center_y={-block.0.to_note_line_and_sign().0*5. + 105.} />
+                <Signs base_x=x base_y={-soprano_line*5. + 105.} signs=soprano_signs />
+                <QuarterUp head_center_x={x+35.} head_center_y={-soprano_line*5. + 105.} />
             </g>
             <g id={format!("SATB-Block {} Alto", index)}>
-                <QuarterDown head_center_x={x} head_center_y={-block.1.to_note_line_and_sign().0*5. + 105.} />
+            <Signs base_x=x base_y={-alto_line*5. + 105.} signs=alto_signs />
+                <QuarterDown head_center_x={x+35.} head_center_y={-alto_line*5. + 105.} />
             </g>
             <g id={format!("SATB-Block {} Tenor", index)}>
-                <QuarterUp head_center_x={x} head_center_y={-block.2.to_note_line_and_sign().0*5. + 165.} />
+            <Signs base_x=x base_y={-tenor_line*5. + 165.} signs=tenor_signs />
+                <QuarterUp head_center_x={x+35.} head_center_y={-tenor_line*5. + 165.} />
             </g>
             <g id={format!("SATB-Block {} Bass", index)}>
-                <QuarterDown head_center_x={x} head_center_y={-block.3.to_note_line_and_sign().0*5. + 165.} />
+            <Signs base_x=x base_y={-bass_line*5. + 165.} signs=bass_signs />
+                <QuarterDown head_center_x={x+35.} head_center_y={-bass_line*5. + 165.} />
             </g>
         </g>
     }
