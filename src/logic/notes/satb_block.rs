@@ -10,21 +10,6 @@ pub struct SatbBlock(
     pub OctavedNote,
 );
 
-impl SatbBlock {
-    pub fn draw(
-        &self,
-        document: &web_sys::Document,
-        ctx: &web_sys::CanvasRenderingContext2d,
-        x: f64,
-        baseline: f64,
-    ) {
-        self.0.draw(document, ctx, x, baseline, true);
-        self.1.draw(document, ctx, x, baseline, false);
-        self.2.draw(document, ctx, x, baseline + 60., true);
-        self.3.draw(document, ctx, x, baseline + 60., false);
-    }
-}
-
 impl std::fmt::Display for SatbBlock {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {}, {}, {})", self.0, self.1, self.2, self.3)

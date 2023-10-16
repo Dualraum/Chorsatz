@@ -3,13 +3,13 @@ use leptos::*;
 
 use crate::logic;
 
+mod svg;
+
 mod note_info;
 mod options;
 
 mod result_view;
 use result_view::SatbResultView;
-
-type ScoredResult = (Vec<logic::notes::SatbBlock>, f32);
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum MenuState {
@@ -62,7 +62,6 @@ pub fn App() -> impl IntoView {
                             });
                             set_menu_state(MenuState::None);
                             set_shown_result(5);
-                            draw_stuff(result);
                         }
 
                     }
@@ -81,7 +80,6 @@ pub fn App() -> impl IntoView {
                         .enumerate().collect_vec());
                         set_menu_state(MenuState::None);
                         set_shown_result(5);
-                        draw_stuff(result);
                     }
                 >"Generieren"</button>
                 <button id="options" class=move || if menu_state() == MenuState::Options { "active" } else { "" }
@@ -142,7 +140,6 @@ pub fn App() -> impl IntoView {
                                 set_shown_result.update(|sr|{
                                     *sr +=5;
                                 });
-                                draw_stuff(result);
                             }
                         >
                             "Mehr Ergebnisse anzeigen..."
@@ -175,62 +172,5 @@ pub fn App() -> impl IntoView {
             <img src="assets/quarter_down.svg" id="quarter_down"/>
             <img src="assets/staff_lines.svg" id="staff_lines"/>
         </div>
-    }
-}
-
-use wasm_bindgen::prelude::*;
-
-fn draw_stuff(result: ReadSignal<Vec<(usize, ScoredResult)>>) {
-    let document = web_sys::window().unwrap().document().unwrap();
-
-    for (index, (blocks, _score)) in result() {
-        let canvas = document
-            .get_element_by_id(&format!("canvas{}", index))
-            .expect("Could not find canvas.")
-            .dyn_into::<web_sys::HtmlCanvasElement>()
-            .expect("Could not cast canvas.");
-
-        let context = canvas
-            .get_context("2d")
-            .expect("Could not unwrap 2d context.")
-            .expect("Could not unwrap 2d context.")
-            .dyn_into::<web_sys::CanvasRenderingContext2d>()
-            .expect("Could not cast 2d context.");
-
-        // ----------- DRAW STAFF --------------
-
-        let staff = document
-            .get_element_by_id("full_staff")
-            .unwrap()
-            .dyn_into::<web_sys::HtmlImageElement>()
-            .unwrap();
-
-        // draw staff
-        context
-            .draw_image_with_html_image_element_and_dw_and_dh(&staff, 0., 0., 60., 200.)
-            .unwrap();
-
-        let staff = wasm_bindgen::JsCast::dyn_into::<web_sys::HtmlImageElement>(
-            document.get_element_by_id("staff_lines").unwrap(),
-        )
-        .unwrap();
-
-        for i in 0..blocks.len() {
-            context
-                .draw_image_with_html_image_element_and_dw_and_dh(
-                    &staff,
-                    60. + i as f64 * 40.,
-                    0.,
-                    40.,
-                    200.,
-                )
-                .unwrap();
-        }
-
-        // draw notes
-
-        for (index, block) in blocks.iter().enumerate() {
-            block.draw(&document, &context, 80. + 40. * index as f64, 110.);
-        }
     }
 }

@@ -22,33 +22,14 @@ impl OctavedNote {
          + (7 * self.octave) as f32
     }
 
-    pub fn to_hum_note(self) -> String {
-        self.note.to_hum_note() + &(self.octave + 2).to_string()
+    // Returns, how many full note lines above C0 this note would lie, along with the number of #/b signs in front of it.
+    pub fn to_note_line_and_sign(&self) -> (f32, f32) {
+        let (line, signs) = self.note.to_note_line_and_sign();
+        (line + 7. * self.octave as f32, signs)
     }
 
-    pub fn draw(
-        &self,
-        document: &web_sys::Document,
-        ctx: &web_sys::CanvasRenderingContext2d,
-        x: f64,
-        baseline: f64,
-        up: bool,
-    ) {
-        let staff = wasm_bindgen::JsCast::dyn_into::<web_sys::HtmlImageElement>(
-            document
-                .get_element_by_id(if up { "quarter_up" } else { "quarter_down" })
-                .unwrap(),
-        )
-        .unwrap();
-
-        ctx.draw_image_with_html_image_element_and_dw_and_dh(
-            &staff,
-            x,
-            baseline - (self.get_value() as f64).floor() * 5. - if up { 25. } else { 5. },
-            10.,
-            30.,
-        )
-        .unwrap();
+    pub fn to_hum_note(self) -> String {
+        self.note.to_hum_note() + &(self.octave + 2).to_string()
     }
 }
 

@@ -81,6 +81,46 @@ impl NoteName {
         }
     }
 
+    // Returns, how many full note lines above a C this note would lie, along with the number of #/b signs in front of it.
+    pub fn to_note_line_and_sign(&self) -> (f32, f32) {
+        match self {
+            NoteName::C => (0., 0.),
+            NoteName::Cis => (0., 0.5),
+            NoteName::Cisis => (0., 1.),
+            NoteName::Deses => (1., -1.),
+            NoteName::Des => (1., -0.5),
+            NoteName::D => (1., 0.),
+            NoteName::Dis => (1., 0.5),
+            NoteName::Disis => (1., 1.),
+            NoteName::Eses => (2., -1.),
+            NoteName::Es => (2., -0.5),
+            NoteName::E => (2., 0.),
+            NoteName::Eis => (2., 0.5),
+            NoteName::Eisis => (2., 1.),
+            NoteName::Feses => (3., -1.),
+            NoteName::Fes => (3., -0.5),
+            NoteName::F => (3., 0.),
+            NoteName::Fis => (3., 0.5),
+            NoteName::Fisis => (3., 1.),
+            NoteName::Geses => (4., -1.),
+            NoteName::Ges => (4., -0.5),
+            NoteName::G => (4., 0.),
+            NoteName::Gis => (4., 0.5),
+            NoteName::Gisis => (4., 1.),
+            NoteName::Asas => (5., -1.),
+            NoteName::As => (5., -0.5),
+            NoteName::A => (5., 0.),
+            NoteName::Ais => (5., 0.5),
+            NoteName::Aisis => (5., 1.),
+            NoteName::Heses => (6., -1.),
+            NoteName::B => (6., -0.5),
+            NoteName::H => (6., 0.),
+            NoteName::His => (6., 0.5),
+            NoteName::Ceses => (0., 1.),
+            NoteName::Ces => (0., -0.5),
+        }
+    }
+
     pub fn to_hum_note(self) -> String {
         match self {
             NoteName::C => "C",
