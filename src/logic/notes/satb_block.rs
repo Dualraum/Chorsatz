@@ -18,10 +18,10 @@ impl SatbBlock {
         x: f64,
         baseline: f64,
     ) {
-        self.0.draw(document, ctx, x, baseline, false);
-        self.1.draw(document, ctx, x, baseline, true);
-        self.2.draw(document, ctx, x, baseline, false);
-        self.3.draw(document, ctx, x, baseline, true);
+        self.0.draw(document, ctx, x, baseline, true);
+        self.1.draw(document, ctx, x, baseline, false);
+        self.2.draw(document, ctx, x, baseline, true);
+        self.3.draw(document, ctx, x, baseline, false);
     }
 }
 

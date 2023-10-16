@@ -3,5 +3,5 @@
   <title>Quarter Down</title>
   <desc>Musical Quarter Note with Stem facing down by Linus Mußmächer</desc>
   <ellipse cx="6.0" cy="5.0" rx="6.0" ry="5.0"/>
-    <line id="stem" vector-effect="non-scaling-stroke" x1="11.0" y1="5.0" x2="11.0" y2="29.0" stroke=" rgb(0,0,0)" stroke-width="2.0" stroke-dasharray=" none" stroke-linecap=" round" stroke-dashoffset="0" stroke-linejoin=" round" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+    <line id="stem" vector-effect="non-scaling-stroke" x1="1.0" y1="5.0" x2="1.0" y2="29.0" stroke=" rgb(0,0,0)" stroke-width="2.0" stroke-dasharray=" none" stroke-linecap=" round" stroke-dashoffset="0" stroke-linejoin=" round" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
 </svg>
