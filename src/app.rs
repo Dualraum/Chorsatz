@@ -205,7 +205,7 @@ fn draw_stuff(result: ReadSignal<Vec<(usize, ScoredResult)>>) {
 
         // draw staff
         context
-            .draw_image_with_html_image_element_and_dw_and_dh(&staff, 0., 0., 60., 140.)
+            .draw_image_with_html_image_element_and_dw_and_dh(&staff, 0., 0., 60., 200.)
             .unwrap();
 
         let staff = wasm_bindgen::JsCast::dyn_into::<web_sys::HtmlImageElement>(
@@ -220,7 +220,7 @@ fn draw_stuff(result: ReadSignal<Vec<(usize, ScoredResult)>>) {
                     60. + i as f64 * 40.,
                     0.,
                     40.,
-                    140.,
+                    200.,
                 )
                 .unwrap();
         }

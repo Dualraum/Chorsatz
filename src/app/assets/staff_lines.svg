@@ -1,4 +1,4 @@
-<svg width="40" height="140" xmlns="http://www.w3.org/2000/svg">
+<svg width="40" height="200" xmlns="http://www.w3.org/2000/svg">
   <title>Staff Lines</title>
   <desc>Musical Note lines by Linus Mußmächer</desc>
 
@@ -11,10 +11,10 @@
   </g>
 
   <g id="svg2">
-    <line id="svg_06" vector-effect="non-scaling-stroke" x1="0.0" y1=" 80.0" x2="40.0" y2=" 80.0" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
-    <line id="svg_07" vector-effect="non-scaling-stroke" x1="0.0" y1=" 90.0" x2="40.0" y2=" 90.0" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
-    <line id="svg_08" vector-effect="non-scaling-stroke" x1="0.0" y1="100.0" x2="40.0" y2="100.0" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
-    <line id="svg_09" vector-effect="non-scaling-stroke" x1="0.0" y1="110.0" x2="40.0" y2="110.0" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
-    <line id="svg_10" vector-effect="non-scaling-stroke" x1="0.0" y1="120.0" x2="40.0" y2="120.0" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+    <line id="svg_06" vector-effect="non-scaling-stroke" x1="0.0" y1="140.0" x2="40.0" y2="140.0" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+    <line id="svg_07" vector-effect="non-scaling-stroke" x1="0.0" y1="150.0" x2="40.0" y2="150.0" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+    <line id="svg_08" vector-effect="non-scaling-stroke" x1="0.0" y1="160.0" x2="40.0" y2="160.0" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+    <line id="svg_09" vector-effect="non-scaling-stroke" x1="0.0" y1="170.0" x2="40.0" y2="170.0" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+    <line id="svg_10" vector-effect="non-scaling-stroke" x1="0.0" y1="180.0" x2="40.0" y2="180.0" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
   </g>
 </svg>

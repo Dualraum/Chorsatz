@@ -179,7 +179,7 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                     set_config.update(|config| config.exposure_threshold_bass = event_target_value(&ev).parse::<crate::logic::notes::OctavedNote>().unwrap_or_default());
                 }
                 /> </td>
-                <td>"Grenzton für hohen Startton im Bass"</td>
+                <td>"Grenzton für hohen Starttonull im Bass"</td>
             </tr>
 
         </table>

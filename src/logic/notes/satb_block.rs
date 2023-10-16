@@ -20,8 +20,8 @@ impl SatbBlock {
     ) {
         self.0.draw(document, ctx, x, baseline, true);
         self.1.draw(document, ctx, x, baseline, false);
-        self.2.draw(document, ctx, x, baseline, true);
-        self.3.draw(document, ctx, x, baseline, false);
+        self.2.draw(document, ctx, x, baseline + 60., true);
+        self.3.draw(document, ctx, x, baseline + 60., false);
     }
 }
 
