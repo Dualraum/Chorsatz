@@ -70,20 +70,6 @@ div.hor{
     width: 100%;
 }
 
-div.col_open{
-    display: block;
-    /* transform: scaleY(1);
-    max-height: 700px;    
-    transition: 120ms transform ease-in-out, 120ms max-height ease-in-out; */
-}
-
-div.col_closed{
-    display: none;
-    /* transform: scaleY(0);
-    max-height: 0;
-    transition: 120ms transform ease-in-out, 120ms max-height ease-in-out; */
-}
-
 div.storage{
     display: none;
 }

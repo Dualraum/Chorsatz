@@ -11,18 +11,24 @@ use result_view::SatbResultView;
 
 type ScoredResult = (Vec<logic::notes::SatbBlock>, f32);
 
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+enum MenuState {
+    None,
+    Options,
+    Help,
+}
+
 #[component]
 pub fn App() -> impl IntoView {
     let (config, set_config) = create_signal(logic::Config::default());
 
     let (result, set_result) = create_signal(Vec::new());
 
-    let (shown_result, set_shown_result) = create_signal(Vec::new());
+    let (shown_result, set_shown_result) = create_signal(5);
 
     let (input, set_input) = create_signal(String::new());
 
-    let (options, set_options) = create_signal(false);
-    let (accords, set_accords) = create_signal(false);
+    let (menu_state, set_menu_state) = create_signal(MenuState::None);
 
     view! {
         <h1>"Chorsatz"</h1>
@@ -54,12 +60,8 @@ pub fn App() -> impl IntoView {
                                     &config(),
                                 ).into_iter().enumerate().collect_vec()
                             });
-                            set_options(false);
-                            set_accords(false);
-                            set_shown_result.update(|sr| {
-                                *sr = result();
-                                sr.truncate(5);
-                            });
+                            set_menu_state(MenuState::None);
+                            set_shown_result(5);
                             draw_stuff(result);
                         }
 
@@ -77,38 +79,40 @@ pub fn App() -> impl IntoView {
                             &config(),
                         ).into_iter()
                         .enumerate().collect_vec());
-                        set_options(false);
-                        set_accords(false);
-                        set_shown_result.update(|sr| {
-                            *sr = result();
-                            sr.truncate(5);
-                        });
+                        set_menu_state(MenuState::None);
+                        set_shown_result(5);
                         draw_stuff(result);
                     }
                 >"Generieren"</button>
-                <button id="options" class=move || if options() { "active" } else { "" }
+                <button id="options" class=move || if menu_state() == MenuState::Options { "active" } else { "" }
                     on:click=move |_|{
-                        set_options.update(|opt| *opt = !*opt);
-                        if options() {
-                            set_accords(false);
-                        }
+                        set_menu_state.update(|opt| {
+                            *opt = match opt {
+                                MenuState::Options => MenuState::None,
+                                MenuState::None | MenuState::Help => MenuState::Options,
+                            }
+                        });
                     }
                 >"Optionen"</button>
-                <button id="accords" class=move || if accords() { "active" } else { "" }
+                <button id="accords" class=move || if menu_state() == MenuState::Help { "active" } else { "" }
                     on:click=move|_|{
-                        set_accords.update(|acc| *acc = !*acc);
-                        if accords() {
-                            set_options(false);
-                        }
+                        set_menu_state.update(|opt| {
+                            *opt = match opt {
+                                MenuState::Help => MenuState::None,
+                                MenuState::None | MenuState::Options => MenuState::Help,
+                            }
+                        });
                     }
                 >"Eingabehilfe"</button>
             </div>
-            <div class=move || if options() { "col_open" } else { "col_closed" }>
-                    <options::Options config=config set_config=set_config/>
-            </div>
-            <div class=move || if accords() { "col_open" } else { "col_closed" }>
-                    <note_info::Info/>
-            </div>
+
+            {
+                move || match menu_state() {
+                    MenuState::None => None,
+                    MenuState::Help => Some(view!{<note_info::Info/>}.into_view()),
+                    MenuState::Options => Some(view!{<options::Options config=config set_config=set_config/>}.into_view())
+                }
+            }
             </div>
         </div>
 
@@ -120,15 +124,15 @@ pub fn App() -> impl IntoView {
                     when={move || result.with(|r| !r.is_empty())}
                     fallback=|| view!{}
                 >
-                    <p>"Es werden die besten " {move || shown_result.with(|sr| sr.len()).min(result.with(|r| r.len()))} " Ergebnisse aus " {move || result.with(|r| r.len())} " berechneten Lösungen angezeigt."</p>
+                    <p>"Es werden die besten " {move || shown_result().min(result.with(|r| r.len()))} " Ergebnisse aus " {move || result.with(|r| r.len())} " berechneten Lösungen angezeigt."</p>
                 </Show>
                 {
-                    move || shown_result().into_iter().map(|(index, (res, score))| view!{
+                    move || result().into_iter().take(shown_result()).map(|(index, (res, score))| view!{
                         <SatbResultView result=res.clone() res_score=score index=index/>
                     }).collect_view()
                 }
                 <Show
-                    when=move || {shown_result.with(|sr| sr.len()) < result.with(|r| r.len())}
+                    when=move || {shown_result() < result.with(|r| r.len())}
                     fallback=|| view!{}
                 >
                     <div class = "satbr_outer show_more_outer">
@@ -136,9 +140,7 @@ pub fn App() -> impl IntoView {
                             id="show_more"
                             on:click=move |_| {
                                 set_shown_result.update(|sr|{
-                                    let old_len = sr.len();
-                                    *sr = result();
-                                    sr.truncate(old_len + 5);
+                                    *sr +=5;
                                 });
                                 draw_stuff(result);
                             }
