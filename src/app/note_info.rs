@@ -76,12 +76,12 @@ pub fn Info() -> impl IntoView {
                 <td>"Caug7, Esaug7"</td>
             </tr>
             <tr>
-                <td class="first">"Durdreiklang mit Sixte ajoutee"</td>
+                <td class="first">"Durdreiklang mit Sixte ajoutée"</td>
                 <td>"Startton + '6'"</td>
                 <td>"A6, Cis6"</td>
             </tr>
             <tr>
-                <td class="first">"Molldreiklang mit Sixte ajoutee"</td>
+                <td class="first">"Molldreiklang mit Sixte ajoutée"</td>
                 <td>"Startton + 'm7'"</td>
                 <td>"Em7, Gesm7"</td>
             </tr>
