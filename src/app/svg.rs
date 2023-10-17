@@ -106,28 +106,66 @@ fn Flat(center_x: f32, center_y: f32) -> impl IntoView {
 }
 
 #[component]
-fn Signs(base_x: f32, base_y: f32, signs: f32) -> impl IntoView {
+fn Note(
+    note: crate::logic::notes::OctavedNote,
+    move_to_lower_lines: bool,
+    up: bool,
+    x: f32,
+    id: &'static str,
+) -> impl IntoView {
+    let (line, sign) = note.get_note_line_and_sign();
+
+    let (correct, lo, hi) = if move_to_lower_lines {
+        (60., 140., 180.)
+    } else {
+        (0., 20., 60.)
+    };
+
+    let y = -line * 5. + correct + 105.;
+
     view! {
-        {
-            (signs >= 0.5).then(
-                || view!{<Sharp center_x={base_x+20.} center_y={base_y} />}.into_view()
-            )
-        }
-        {
-            (signs >= 1.0).then(
-                || view!{<Sharp center_x={base_x+5.} center_y={base_y} />}.into_view()
-            )
-        }
-        {
-            (signs <= -0.5).then(
-                || view!{<Flat center_x={base_x+22.} center_y={base_y} />}.into_view()
-            )
-        }
-        {
-            (signs <= -1.0).then(
-                || view!{<Flat center_x={base_x+9.} center_y={base_y} />}.into_view()
-            )
-        }
+        <g id={format!("{} Note", id)}>
+                // First Sharp
+                {(sign >= 0.5).then(
+                    || view!{<Sharp center_x={x+20.} center_y={y} />}.into_view()
+                )}
+                // Second Sharp
+                {(sign >= 1.0).then(
+                    || view!{<Sharp center_x={x+5.} center_y={y} />}.into_view()
+                )}
+                // First Flat
+                {(sign <= -0.5).then(
+                    || view!{<Flat center_x={x+22.} center_y={y} />}.into_view()
+                )}
+                // Second Flat
+                {(sign <= -1.0).then(
+                    || view!{<Flat center_x={x+9.} center_y={y} />}.into_view()
+                )}
+                // Helping Lines
+                {(y > hi).then(
+                    || ((hi/10.) as i32+1..=(y/10.).floor() as i32).map(|y|
+                        view!{
+                            <line id="helper_line" vector-effect="non-scaling-stroke" x1={x+25.} y1={10 * y} x2={x+45.} y2={10 * y} stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+                        }
+                    ).collect_view()
+                )}
+                {(y < lo).then(
+                    || ((y/10.).ceil() as i32..(lo/10.) as i32).map(|y|
+                        view!{
+                            <line id="helper_line" vector-effect="non-scaling-stroke" x1={x+25.} y1={10 * y} x2={x+45.} y2={10 * y} stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+                        }
+                    ).collect_view()
+                )}
+                // The actual note
+                {
+                    if up {
+                        view!{<QuarterUp head_center_x={x+35.} head_center_y=y />}
+                    } else {
+                        view!{<QuarterDown head_center_x={x+35.} head_center_y=y />}
+                    }
+                }
+
+        </g>
     }
 }
 
@@ -136,30 +174,12 @@ pub fn satb_block_svg(
     index: usize,
     x: f32,
 ) -> impl IntoView {
-    let (soprano_line, soprano_signs) = block.0.get_note_line_and_sign();
-    let (alto_line, alto_signs) = block.1.get_note_line_and_sign();
-    let (tenor_line, tenor_signs) = block.2.get_note_line_and_sign();
-    let (bass_line, bass_signs) = block.3.get_note_line_and_sign();
-
     view! {
-        //TODO: Hilfslinien
         <g id={format!("SATB-Block {}", index)}>
-            <g id={format!("SATB-Block {} Soprano", index)}>
-                <Signs base_x=x base_y={-soprano_line*5. + 105.} signs=soprano_signs />
-                <QuarterUp head_center_x={x+35.} head_center_y={-soprano_line*5. + 105.} />
-            </g>
-            <g id={format!("SATB-Block {} Alto", index)}>
-            <Signs base_x=x base_y={-alto_line*5. + 105.} signs=alto_signs />
-                <QuarterDown head_center_x={x+35.} head_center_y={-alto_line*5. + 105.} />
-            </g>
-            <g id={format!("SATB-Block {} Tenor", index)}>
-            <Signs base_x=x base_y={-tenor_line*5. + 165.} signs=tenor_signs />
-                <QuarterUp head_center_x={x+35.} head_center_y={-tenor_line*5. + 165.} />
-            </g>
-            <g id={format!("SATB-Block {} Bass", index)}>
-            <Signs base_x=x base_y={-bass_line*5. + 165.} signs=bass_signs />
-                <QuarterDown head_center_x={x+35.} head_center_y={-bass_line*5. + 165.} />
-            </g>
+            <Note note=block.0 x=x move_to_lower_lines=false up=true id="Soprano" />
+            <Note note=block.1 x=x move_to_lower_lines=false up=false id="Alto" />
+            <Note note=block.2 x=x move_to_lower_lines=true up=true id="Tenor" />
+            <Note note=block.3 x=x move_to_lower_lines=true up=false id="Bass" />
         </g>
     }
 }
