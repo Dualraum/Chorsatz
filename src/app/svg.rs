@@ -180,6 +180,7 @@ pub fn satb_block_svg(
             <Note note=block.1 x=x move_to_lower_lines=false up=false id="Alto" />
             <Note note=block.2 x=x move_to_lower_lines=true up=true id="Tenor" />
             <Note note=block.3 x=x move_to_lower_lines=true up=false id="Bass" />
+            <line id="left_line" vector-effect="non-scaling-stroke" x1={x+50.} y1="20.0" x2={x+50.} y2="180.0" stroke-width="1.5" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
         </g>
     }
 }
