@@ -38,14 +38,7 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
                     <p class="header">"Bass"</p>
                 </div>
                 {result.iter().enumerate().map(satb_block_view).collect_view()}
-                <svg width={60+50*result.len()} height=200>
-                    <super::svg::FullStaff width=(5+50*result.len()) as f32/>
-                    {
-                        result.iter().enumerate().map(|(index, block)| {
-                                super::svg::satb_block_svg(block, index, 60. + 50. * index as f32)
-                        }).collect_view()
-                    }
-                </svg>
+                {crate::app::svg::result_svg(&result)}
             </div>
         </div>
     }

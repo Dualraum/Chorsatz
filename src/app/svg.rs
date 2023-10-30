@@ -169,11 +169,7 @@ fn Note(
     }
 }
 
-pub fn satb_block_svg(
-    block: &crate::logic::notes::SatbBlock,
-    index: usize,
-    x: f32,
-) -> impl IntoView {
+fn satb_block_svg(block: &crate::logic::notes::SatbBlock, index: usize, x: f32) -> impl IntoView {
     view! {
         <g id={format!("SATB-Block {}", index)}>
             <Note note=block.0 x=x move_to_lower_lines=false up=true id="Soprano" />
@@ -182,5 +178,18 @@ pub fn satb_block_svg(
             <Note note=block.3 x=x move_to_lower_lines=true up=false id="Bass" />
             <line id="left_line" vector-effect="non-scaling-stroke" x1={x+50.} y1="20.0" x2={x+50.} y2="180.0" stroke-width="1.5" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
         </g>
+    }
+}
+
+pub fn result_svg(result: &[crate::logic::notes::SatbBlock]) -> impl IntoView {
+    view! {
+        <svg width={60+50*result.len()} height=200>
+                    <super::svg::FullStaff width=(5+50*result.len()) as f32/>
+                    {
+                        result.iter().enumerate().map(|(index, block)| {
+                                super::svg::satb_block_svg(block, index, 60. + 50. * index as f32)
+                        }).collect_view()
+                    }
+        </svg>
     }
 }
