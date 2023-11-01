@@ -127,9 +127,15 @@ pub fn App() -> impl IntoView {
                 {
                     move || result()
                         .into_iter()
-                        .take(shown_result())
                         .map(|(index, (res, score))|
-                            view!{<SatbResultView result=res.clone() res_score=score index=index/>}
+                            view!{
+                                <Show
+                                    when={move || index < shown_result()}
+                                    fallback=|| view!{}
+                                >
+                                <SatbResultView result=res.clone() res_score=score index=index/>
+                                </Show>
+                            }
                         ).collect_view()
                 }
                 <Show
