@@ -171,8 +171,18 @@ fn Note(
 }
 
 fn satb_block_svg(block: &crate::logic::notes::SatbBlock, index: usize, x: f32) -> impl IntoView {
-    let soprano_signs = block.0.get_note_line_and_sign().1;
-    let tenor_signs = block.2.get_note_line_and_sign().1;
+    let soprano_signs =
+        if (block.0.get_note_line_and_sign().0 - block.1.get_note_line_and_sign().0).abs() < 2.5 {
+            block.0.get_note_line_and_sign().1
+        } else {
+            0.
+        };
+    let tenor_signs =
+        if (block.2.get_note_line_and_sign().0 - block.3.get_note_line_and_sign().0).abs() < 2.5 {
+            block.2.get_note_line_and_sign().1
+        } else {
+            0.
+        };
 
     view! {
         <g id={format!("SATB-Block {}", index)}>
