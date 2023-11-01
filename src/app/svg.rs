@@ -128,19 +128,19 @@ fn Note(
         <g id={format!("{} Note", id)}>
                 // First Sharp
                 {(sign >= 0.5).then(
-                    || view!{<Sharp center_x={x-sign_x+20.} center_y={y} />}.into_view()
+                    || view!{<Sharp center_x={x-sign_x + 2. * SIGN_WIDTH} center_y={y} />}.into_view()
                 )}
                 // Second Sharp
                 {(sign >= 1.0).then(
-                    || view!{<Sharp center_x={x-sign_x+5.} center_y={y} />}.into_view()
+                    || view!{<Sharp center_x={x-sign_x+SIGN_WIDTH} center_y={y} />}.into_view()
                 )}
                 // First Flat
                 {(sign <= -0.5).then(
-                    || view!{<Flat center_x={x-sign_x+22.} center_y={y} />}.into_view()
+                    || view!{<Flat center_x={x-sign_x+2. + 2. * SIGN_WIDTH} center_y={y} />}.into_view()
                 )}
                 // Second Flat
                 {(sign <= -1.0).then(
-                    || view!{<Flat center_x={x-sign_x+9.} center_y={y} />}.into_view()
+                    || view!{<Flat center_x={x-sign_x+2. + 2. * SIGN_WIDTH} center_y={y} />}.into_view()
                 )}
                 // Helping Lines
                 {(y > hi).then(
@@ -160,9 +160,9 @@ fn Note(
                 // The actual note
                 {
                     if up {
-                        view!{<QuarterUp head_center_x={x+35.} head_center_y=y />}
+                        view!{<QuarterUp head_center_x={x+2. * SIGN_WIDTH + 15.} head_center_y=y />}
                     } else {
-                        view!{<QuarterDown head_center_x={x+35.} head_center_y=y />}
+                        view!{<QuarterDown head_center_x={x+2. * SIGN_WIDTH + 15.} head_center_y=y />}
                     }
                 }
 
@@ -170,16 +170,19 @@ fn Note(
     }
 }
 
+const BLOCK_WIDTH: f32 = 50.;
+const SIGN_WIDTH: f32 = 10.;
+
 fn satb_block_svg(block: &crate::logic::notes::SatbBlock, index: usize, x: f32) -> impl IntoView {
     let soprano_signs =
-        if (block.0.get_note_line_and_sign().0 - block.1.get_note_line_and_sign().0).abs() < 2.5 {
-            block.0.get_note_line_and_sign().1
+        if (block.0.get_note_line_and_sign().0 - block.1.get_note_line_and_sign().0).abs() < 6. {
+            block.0.get_note_line_and_sign().1 % 0.75
         } else {
             0.
         };
     let tenor_signs =
-        if (block.2.get_note_line_and_sign().0 - block.3.get_note_line_and_sign().0).abs() < 2.5 {
-            block.2.get_note_line_and_sign().1
+        if (block.2.get_note_line_and_sign().0 - block.3.get_note_line_and_sign().0).abs() < 6. {
+            block.2.get_note_line_and_sign().1 % 0.75
         } else {
             0.
         };
@@ -187,9 +190,9 @@ fn satb_block_svg(block: &crate::logic::notes::SatbBlock, index: usize, x: f32) 
     view! {
         <g id={format!("SATB-Block {}", index)}>
             <Note note=block.0 x=x move_to_lower_lines=false up=true id="Soprano"  />
-            <Note note=block.1 x=x move_to_lower_lines=false up=false id="Alto" sign_x={soprano_signs*25.} />
+            <Note note=block.1 x=x move_to_lower_lines=false up=false id="Alto" sign_x={soprano_signs*2.*SIGN_WIDTH} />
             <Note note=block.2 x=x move_to_lower_lines=true up=true id="Tenor" />
-            <Note note=block.3 x=x move_to_lower_lines=true up=false id="Bass" sign_x={tenor_signs*25.} />
+            <Note note=block.3 x=x move_to_lower_lines=true up=false id="Bass" sign_x={tenor_signs*2.*SIGN_WIDTH} />
             <line id="left_line" vector-effect="non-scaling-stroke" x1={x+50.} y1="20.0" x2={x+50.} y2="180.0" stroke-width="1.5" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
         </g>
     }
@@ -197,11 +200,11 @@ fn satb_block_svg(block: &crate::logic::notes::SatbBlock, index: usize, x: f32) 
 
 pub fn result_svg(result: &[crate::logic::notes::SatbBlock]) -> impl IntoView {
     view! {
-        <svg width={60+50*result.len()} height=200 xmlns="http://www.w3.org/2000/svg">
-            <super::svg::FullStaff width=(5+50*result.len()) as f32/>
+        <svg width={60+(BLOCK_WIDTH as usize)*result.len()} height=200 xmlns="http://www.w3.org/2000/svg">
+            <super::svg::FullStaff width=(5+(BLOCK_WIDTH as usize)*result.len()) as f32/>
             {
                 result.iter().enumerate().map(|(index, block)| {
-                        super::svg::satb_block_svg(block, index, 60. + 50. * index as f32)
+                        super::svg::satb_block_svg(block, index, 60. + BLOCK_WIDTH * index as f32)
                 }).collect_view()
             }
         </svg>
