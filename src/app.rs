@@ -125,9 +125,12 @@ pub fn App() -> impl IntoView {
                     <p>"Es werden die besten " {move || shown_result().min(result.with(|r| r.len()))} " Ergebnisse aus " {move || result.with(|r| r.len())} " berechneten Lösungen angezeigt."</p>
                 </Show>
                 {
-                    move || result().into_iter().take(shown_result()).map(|(index, (res, score))| view!{
-                        <SatbResultView result=res.clone() res_score=score index=index/>
-                    }).collect_view()
+                    move || result()
+                        .into_iter()
+                        .take(shown_result())
+                        .map(|(index, (res, score))|
+                            view!{<SatbResultView result=res.clone() res_score=score index=index/>}
+                        ).collect_view()
                 }
                 <Show
                     when=move || {shown_result() < result.with(|r| r.len())}

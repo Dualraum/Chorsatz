@@ -183,7 +183,7 @@ fn satb_block_svg(block: &crate::logic::notes::SatbBlock, index: usize, x: f32) 
 
 pub fn result_svg(result: &[crate::logic::notes::SatbBlock]) -> impl IntoView {
     view! {
-        <svg width={60+50*result.len()} height=200>
+        <svg width={60+50*result.len()} height=200 xmlns="http://www.w3.org/2000/svg">
                     <super::svg::FullStaff width=(5+50*result.len()) as f32/>
                     {
                         result.iter().enumerate().map(|(index, block)| {
