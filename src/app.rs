@@ -127,6 +127,7 @@ pub fn App() -> impl IntoView {
                 {
                     move || result()
                         .into_iter()
+                        //.take(shown_result())
                         .map(|(index, (res, score))|
                             view!{
                                 <Show
