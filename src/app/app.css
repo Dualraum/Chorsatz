@@ -18,7 +18,7 @@ div {
     border: 1px solid black;
     border-radius: 15px;
     background-color: #FFFFFF;
-    width: 50%;
+    width: 60%;
     min-width: min-content;
     display: flex;
 }
@@ -30,7 +30,7 @@ div.satbr_outer{
 
     padding: 16px;
 
-    width: 90%;
+    
     display: block;
     margin: auto;
     margin-top: 8px;
