@@ -1,6 +1,7 @@
 :root{
     --pri-color:#0e5390;
     --sec-color:#cce4fa;
+    --bg-color:#cce4faaf;
     --acc-color:#1684e3;
 }
 
@@ -235,6 +236,7 @@ button#show_more{
 
 body{
     background-image: url('assets/piano.png');
+    background-color: var(--bg-color);
     background-repeat: no-repeat;
     background-size: cover;
     background-blend-mode: lighten;
