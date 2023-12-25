@@ -7,7 +7,20 @@ use crate::logic::notes::SatbBlock;
 pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> impl IntoView {
     view! {
         <div class = "satbr_outer">
-            <h3>"Ergebnis " {index+1}</h3>
+            <div class="row">
+                <div class="col_lef">
+                    <h3>"Ergebnis " {index+1}</h3>
+                </div>
+                <div class="col_rig">
+                    <button id="sound" class="right"
+                        on:click=move|_|{
+                            if let Ok(sound) = web_sys::HtmlAudioElement::new_with_src("assets/test_sound.mp3"){
+                                sound.play();
+                            }
+                        }
+                    >"Abspielen"</button>
+                </div>
+            </div>
             <p>
                 "Bewertung: "
                 <b class="marked">{res_score as i32}</b>

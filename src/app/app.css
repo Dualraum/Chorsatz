@@ -71,6 +71,22 @@ div.hor{
     width: 100%;
 }
 
+div.col_lef{
+    float: left;
+    width: 50%;
+}
+
+div.col_rig{
+    float: right;
+    width: 50%;
+}
+
+div.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
 div.storage{
     display: none;
 }
@@ -90,6 +106,7 @@ h3{
     margin-top: 4px;
     color: var(--pri-color);
     font-family: Verdana;
+    margin-bottom: 2px;
 }
 
 th{
@@ -209,6 +226,10 @@ button{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+button.right{
+    float: right;
+}
+
 button.active{
     background-color: var(--acc-color);
 }
@@ -227,6 +248,10 @@ button#options{
 
 button#accords{
     background-image: url('assets/help.png');
+}
+
+button#sound{
+    background-image: url('assets/play.png');
 }
 
 button#show_more{
