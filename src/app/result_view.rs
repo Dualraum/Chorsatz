@@ -14,8 +14,8 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
                 <div class="col_rig">
                     <button id="sound" class="right"
                         on:click=move|_|{
-                            if let Ok(sound) = web_sys::HtmlAudioElement::new_with_src("assets/test_sound.mp3"){
-                                sound.play();
+                            if let Ok(sound) = web_sys::HtmlAudioElement::new_with_src("assets/notes/a-4.mp3"){
+                                let _  = sound.play();
                             }
                         }
                     >"Abspielen"</button>
