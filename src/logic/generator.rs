@@ -119,7 +119,7 @@ fn generate_satb_helper(
     }
 }
 
-fn satb_score(solution: &Vec<SatbBlock>, conf: &super::Config) -> f32 {
+fn satb_score(solution: &[SatbBlock], conf: &super::Config) -> f32 {
     let mut score = 0.;
 
     for (SatbBlock(s_pre, a_pre, t_pre, b_pre), SatbBlock(s, a, t, b)) in
