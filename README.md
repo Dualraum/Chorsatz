@@ -11,11 +11,11 @@
 
 ## Credits
 
-**Musikalisches Fachwissen & Vorgehensweise**: Minona Schäfer
+**Gesamtkonzept & Musikalische Ausarbeitung**: Minona Schäfer
 
 **Design & Programmierung**: Linus Mußmächer
 
-**Musikalische Expertise**: Biljana Wittstock
+**Musikalische Fachberatung**: Biljana Wittstock
 
 #### Ressourcen
 
