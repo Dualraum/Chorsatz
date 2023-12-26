@@ -33,7 +33,7 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
                 >
                     ".hum"
                 </a>
-                "  "
+                "    "
                 <a
                     class="dl"
                     href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&crate::logic::generate_hum_file(&result)))}
@@ -41,7 +41,7 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
                 >
                     ".ly (WIP)"
                 </a>
-                "  "
+                "    "
                 <a
                     class="dl"
                     href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", crate::app::svg::result_svg(&result).into_view())))}

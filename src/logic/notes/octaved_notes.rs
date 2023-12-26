@@ -31,6 +31,10 @@ impl OctavedNote {
     pub fn to_hum_note(self) -> String {
         self.note.to_hum_note() + &(self.octave + 2).to_string()
     }
+
+    pub fn to_playable_note(self) -> String {
+        self.note.to_playable_note() + &(self.octave + 2).to_string()
+    }
 }
 
 impl FromStr for OctavedNote {

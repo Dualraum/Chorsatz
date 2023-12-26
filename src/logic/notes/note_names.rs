@@ -160,6 +160,46 @@ impl NoteName {
         }
         .to_string()
     }
+
+    pub fn to_playable_note(self) -> String {
+        match self {
+            NoteName::C => "C",
+            NoteName::Cis => "Cs",
+            NoteName::Cisis => "D",
+            NoteName::Deses => "C",
+            NoteName::Des => "Cs",
+            NoteName::D => "D",
+            NoteName::Dis => "Ds",
+            NoteName::Disis => "E",
+            NoteName::Eses => "D",
+            NoteName::Es => "Ds",
+            NoteName::E => "E",
+            NoteName::Eis => "F",
+            NoteName::Eisis => "Fs",
+            NoteName::Feses => "Ds",
+            NoteName::Fes => "E",
+            NoteName::F => "F",
+            NoteName::Fis => "Fs",
+            NoteName::Fisis => "G",
+            NoteName::Geses => "F",
+            NoteName::Ges => "Fs",
+            NoteName::G => "G",
+            NoteName::Gis => "Gs",
+            NoteName::Gisis => "A",
+            NoteName::Asas => "G",
+            NoteName::As => "Gs",
+            NoteName::A => "A",
+            NoteName::Ais => "As",
+            NoteName::Aisis => "B",
+            NoteName::Heses => "A",
+            NoteName::B => "As",
+            NoteName::H => "B",
+            NoteName::His => "C",
+            NoteName::Ceses => "As",
+            NoteName::Ces => "B",
+        }
+        .to_string()
+    }
 }
 
 impl PartialEq for NoteName {
