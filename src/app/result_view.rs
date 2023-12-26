@@ -1,10 +1,33 @@
+use itertools::Itertools;
 use js_sys::encode_uri_component;
 use leptos::*;
+use web_sys::HtmlAudioElement;
 
 use crate::logic::notes::SatbBlock;
 
 #[component]
 pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> impl IntoView {
+    // map all the notes in the result to their appropriate mp3-files
+    let sound = result
+        .iter()
+        .flat_map(|block| {
+            Ok::<
+                (
+                    HtmlAudioElement,
+                    HtmlAudioElement,
+                    HtmlAudioElement,
+                    HtmlAudioElement,
+                ),
+                wasm_bindgen::JsValue,
+            >((
+                block.0.to_mp3()?,
+                block.1.to_mp3()?,
+                block.2.to_mp3()?,
+                block.3.to_mp3()?,
+            ))
+        })
+        .collect_vec();
+
     view! {
         <div class = "satbr_outer">
             <div class="row">
@@ -14,8 +37,13 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
                 <div class="col_rig">
                     <button id="sound" class="right"
                         on:click=move|_|{
-                            if let Ok(sound) = web_sys::HtmlAudioElement::new_with_src("assets/notes/a-4.mp3"){
-                                let _  = sound.play();
+                            for (index, mp3_block) in sound.iter().cloned().enumerate(){
+                                set_timeout(move || {
+                                    let _ = mp3_block.0.play();
+                                    let _ = mp3_block.1.play();
+                                    let _ = mp3_block.2.play();
+                                    let _ = mp3_block.3.play();
+                                }, std::time::Duration::from_secs_f32(1.0 * index as f32))
                             }
                         }
                     >"Abspielen"</button>
