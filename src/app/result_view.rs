@@ -54,17 +54,10 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
                 <b class="marked">{res_score as i32}</b>
                 <br/>
                 "Downloads:  "
-                <a
-                    class="dl"
-                    href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&crate::logic::generate_hum_file(&result)))}
-                    download={format!("SATB-Result{}.hum", index+1)}
-                >
-                    ".hum"
-                </a>
                 "    "
                 <a
                     class="dl"
-                    href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&crate::logic::generate_hum_file(&result)))}
+                    href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", crate::app::svg::result_svg(&result).into_view())))}
                     download={format!("SATB-Result{}.ly", index+1)}
                 >
                     ".ly (WIP)"

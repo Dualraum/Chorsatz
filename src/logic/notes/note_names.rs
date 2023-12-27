@@ -131,47 +131,6 @@ impl NoteName {
         }
     }
 
-    pub fn to_hum_note(self) -> String {
-        match self {
-            NoteName::C => "C",
-            NoteName::Cis => "Cs",
-            NoteName::Cisis => "D",
-            NoteName::Deses => "C",
-            NoteName::Des => "Cf",
-            NoteName::D => "D",
-            NoteName::Dis => "Cs",
-            NoteName::Disis => "E",
-            NoteName::Eses => "D",
-            NoteName::Es => "Ef",
-            NoteName::E => "E",
-            NoteName::Eis => "Es",
-            NoteName::Eisis => "F",
-            NoteName::Feses => "E",
-            NoteName::Fes => "Ff",
-            NoteName::F => "F",
-            NoteName::Fis => "Fs",
-            NoteName::Fisis => "G",
-            NoteName::Geses => "F",
-            NoteName::Ges => "Gf",
-            NoteName::G => "G",
-            NoteName::Gis => "Gs",
-            NoteName::Gisis => "A",
-            NoteName::Asas => "G",
-            NoteName::As => "Af",
-            NoteName::A => "A",
-            NoteName::Ais => "As",
-            NoteName::Aisis => "B",
-            NoteName::Heses => "A",
-            NoteName::B => "Bf",
-            NoteName::H => "B",
-            NoteName::His => "Bs",
-            NoteName::Hisis => "C",
-            NoteName::Ceses => "B",
-            NoteName::Ces => "Cf",
-        }
-        .to_string()
-    }
-
     pub fn to_playable_note(self) -> String {
         match self {
             NoteName::C => "C",
