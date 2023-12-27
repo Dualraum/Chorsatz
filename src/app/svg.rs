@@ -140,7 +140,7 @@ fn Note(
                 )}
                 // Second Flat
                 {(sign <= -1.0).then(
-                    || view!{<Flat center_x={x-sign_x+2. + 2. * SIGN_WIDTH} center_y={y} />}.into_view()
+                    || view!{<Flat center_x={x-sign_x+2. + SIGN_WIDTH} center_y={y} />}.into_view()
                 )}
                 // Helping Lines
                 {(y > hi).then(
@@ -190,9 +190,9 @@ fn satb_block_svg(block: &crate::logic::notes::SatbBlock, index: usize, x: f32) 
     view! {
         <g id={format!("SATB-Block {}", index)}>
             <Note note=block.0 x=x move_to_lower_lines=false up=true id="Soprano"  />
-            <Note note=block.1 x=x move_to_lower_lines=false up=false id="Alto" sign_x={soprano_signs*2.*SIGN_WIDTH} />
+            <Note note=block.1 x=x move_to_lower_lines=false up=false id="Alto" sign_x={soprano_signs.abs()*2.*SIGN_WIDTH} />
             <Note note=block.2 x=x move_to_lower_lines=true up=true id="Tenor" />
-            <Note note=block.3 x=x move_to_lower_lines=true up=false id="Bass" sign_x={tenor_signs*2.*SIGN_WIDTH} />
+            <Note note=block.3 x=x move_to_lower_lines=true up=false id="Bass" sign_x={tenor_signs.abs()*2.*SIGN_WIDTH} />
             <line id="left_line" vector-effect="non-scaling-stroke" x1={x+50.} y1="20.0" x2={x+50.} y2="180.0" stroke-width="1.5" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
         </g>
     }

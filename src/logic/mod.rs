@@ -1,5 +1,4 @@
 mod generator;
-pub use generator::generate_hum_file;
 pub use generator::generate_satb;
 mod config;
 pub use config::Config;

@@ -39,6 +39,7 @@ pub fn generate_scale(name: &str) -> Scale {
 }
 
 impl Scale {
+    #[allow(dead_code)]
     pub fn note_to_halftone(&self, note: NoteName) -> f32 {
         POSITION_TO_HALFTONES[self
             .notes

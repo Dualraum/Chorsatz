@@ -14,10 +14,10 @@ impl OctavedNote {
     }
 
     pub fn get_value(&self) -> f32 {
+        // get the position in the C-Dur scale and, for some notes with 'overflow' if there is an octave shift
         let (position, shift) = self.note.to_c_dur_position_shift();
+        // use the position to get the half tones and shift by the appropriate amount of octaves
         super::scale::POSITION_TO_HALFTONES[position]
-        // slower but cleaner
-        //super::scale::C_MAJOR.note_to_halftone(self.note)
         // add octave
          + (7 * (self.octave + shift)) as f32
     }
