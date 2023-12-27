@@ -14,12 +14,12 @@ impl OctavedNote {
     }
 
     pub fn get_value(&self) -> f32 {
-        // faster but not as clean
-        //scale::POSITION_TO_HALFTONES[self.note.to_c_dur_position()]
+        let (position, shift) = self.note.to_c_dur_position_shift();
+        super::scale::POSITION_TO_HALFTONES[position]
         // slower but cleaner
-        super::scale::C_MAJOR.note_to_halftone(self.note)
+        //super::scale::C_MAJOR.note_to_halftone(self.note)
         // add octave
-         + (7 * self.octave) as f32
+         + (7 * (self.octave + shift)) as f32
     }
 
     // Returns, how many full note lines above C0 this note would lie, along with the number of #/b signs in front of it.

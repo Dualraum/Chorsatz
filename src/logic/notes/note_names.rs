@@ -37,48 +37,57 @@ pub enum NoteName {
     B,
     H,
     His,
+    Hisis,
     Ceses,
     Ces,
 }
 
 impl NoteName {
-    pub fn to_c_dur_position(self) -> usize {
-        match self {
-            NoteName::C => 0,
-            NoteName::Cis => 1,
-            NoteName::Cisis => 2,
-            NoteName::Deses => 0,
-            NoteName::Des => 1,
-            NoteName::D => 2,
-            NoteName::Dis => 3,
-            NoteName::Disis => 4,
-            NoteName::Eses => 2,
-            NoteName::Es => 3,
-            NoteName::E => 4,
-            NoteName::F => 5,
-            NoteName::Eisis => 6,
-            NoteName::Eis => 5,
-            NoteName::Feses => 3,
-            NoteName::Fes => 4,
-            NoteName::Fis => 6,
-            NoteName::Fisis => 7,
-            NoteName::Geses => 5,
-            NoteName::Ges => 6,
-            NoteName::G => 7,
-            NoteName::Gis => 8,
-            NoteName::Gisis => 9,
-            NoteName::Asas => 7,
-            NoteName::As => 8,
-            NoteName::A => 9,
-            NoteName::Ais => 10,
-            NoteName::Aisis => 11,
-            NoteName::B => 10,
-            NoteName::Heses => 9,
-            NoteName::H => 11,
-            NoteName::His => 0, //TODO: Soll hier 0 stehen?
-            NoteName::Ceses => 10,
-            NoteName::Ces => 11,
-        }
+    pub fn to_c_dur_position_shift(self) -> (usize, i32) {
+        (
+            match self {
+                NoteName::C => 0,
+                NoteName::Cis => 1,
+                NoteName::Cisis => 2,
+                NoteName::Deses => 0,
+                NoteName::Des => 1,
+                NoteName::D => 2,
+                NoteName::Dis => 3,
+                NoteName::Disis => 4,
+                NoteName::Eses => 2,
+                NoteName::Es => 3,
+                NoteName::E => 4,
+                NoteName::Eis => 5,
+                NoteName::Eisis => 6,
+                NoteName::Feses => 3,
+                NoteName::Fes => 4,
+                NoteName::F => 5,
+                NoteName::Fis => 6,
+                NoteName::Fisis => 7,
+                NoteName::Geses => 5,
+                NoteName::Ges => 6,
+                NoteName::G => 7,
+                NoteName::Gis => 8,
+                NoteName::Gisis => 9,
+                NoteName::Asas => 7,
+                NoteName::As => 8,
+                NoteName::A => 9,
+                NoteName::Ais => 10,
+                NoteName::Aisis => 11,
+                NoteName::Heses => 9,
+                NoteName::B => 10,
+                NoteName::H => 11,
+                NoteName::His => 0,
+                NoteName::Hisis => 1,
+                NoteName::Ceses => 10,
+                NoteName::Ces => 11,
+            },
+            match self {
+                NoteName::His | NoteName::Hisis => 1,
+                NoteName::Ces | NoteName::Ceses => -1,
+                _ => 0,
+            },
+        )
     }
 
     // Returns, how many full note lines above a C this note would lie, along with the number of #/b signs in front of it.
@@ -116,7 +125,8 @@ impl NoteName {
             NoteName::B => (6., -0.5),
             NoteName::H => (6., 0.),
             NoteName::His => (6., 0.5),
-            NoteName::Ceses => (0., 1.),
+            NoteName::Hisis => (6., 1.0),
+            NoteName::Ceses => (0., -1.),
             NoteName::Ces => (0., -0.5),
         }
     }
@@ -155,6 +165,7 @@ impl NoteName {
             NoteName::B => "Bf",
             NoteName::H => "B",
             NoteName::His => "Bs",
+            NoteName::Hisis => "C",
             NoteName::Ceses => "B",
             NoteName::Ces => "Cf",
         }
@@ -195,6 +206,7 @@ impl NoteName {
             NoteName::B => "As",
             NoteName::H => "B",
             NoteName::His => "C",
+            NoteName::Hisis => "Cs",
             NoteName::Ceses => "As",
             NoteName::Ces => "B",
         }
@@ -205,7 +217,7 @@ impl NoteName {
 impl PartialEq for NoteName {
     fn eq(&self, other: &Self) -> bool {
         core::mem::discriminant(self) == core::mem::discriminant(other)
-            || self.to_c_dur_position() == other.to_c_dur_position()
+            || self.to_c_dur_position_shift() == other.to_c_dur_position_shift()
     }
 }
 
