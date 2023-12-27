@@ -176,7 +176,7 @@ impl NoteName {
 impl PartialEq for NoteName {
     fn eq(&self, other: &Self) -> bool {
         core::mem::discriminant(self) == core::mem::discriminant(other)
-            || self.to_c_dur_position_shift() == other.to_c_dur_position_shift()
+            || self.to_c_dur_position_shift().0 == other.to_c_dur_position_shift().0
     }
 }
 
