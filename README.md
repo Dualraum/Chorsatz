@@ -13,7 +13,7 @@
 
 **Gesamtkonzept & Musikalische Ausarbeitung**: Minona Schäfer
 
-**Design & Programmierung**: Linus Mußmächer
+**Programmierung & Design**: Linus Mußmächer
 
 **Musikalische Fachberatung**: Biljana Wittstock
 
