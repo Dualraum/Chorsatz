@@ -1,0 +1,16 @@
+- Use sheetcreator.py to create .sheet files for all the notes.
+- Use the following power shell commands
+- install werckmeister from https://www.werckme.org/werckmeister if neccessary
+
+$files = Get-ChildItem -Recurse 
+
+foreach ($file in $files){
+    sheetc $file.FullName
+}
+
+	to convert into midi files.
+
+- use
+	timidity song.mid -Ow -o - | ffmpeg -i - -acodec libmp3lame -ab 64k song.mp3
+	
+  to convert to mp3 files.

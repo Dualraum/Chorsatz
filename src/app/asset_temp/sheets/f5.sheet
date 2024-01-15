@@ -1,0 +1,11 @@
+tempo: 140;
+device: MyDevice midi _usePort=0;
+instrumentDef:lead _onDevice=MyDevice _ch=0 _pc=0;
+
+-- melody track
+[
+instrument: lead;
+{
+f''
+}
+]
