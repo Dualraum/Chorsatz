@@ -43,7 +43,7 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
                                     let _ = mp3_block.1.play();
                                     let _ = mp3_block.2.play();
                                     let _ = mp3_block.3.play();
-                                }, std::time::Duration::from_secs_f32(1.0 * index as f32))
+                                }, std::time::Duration::from_secs_f32(2.0 * index as f32 + 0.3))
                             }
                         }
                     >"Abspielen"</button>
