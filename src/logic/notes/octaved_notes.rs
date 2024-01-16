@@ -34,7 +34,7 @@ impl OctavedNote {
 
     pub fn to_mp3(self) -> Result<web_sys::HtmlAudioElement, leptos::wasm_bindgen::JsValue> {
         web_sys::HtmlAudioElement::new_with_src(&format!(
-            "assets/notes/{}.wav",
+            "assets/notes/{}.mp3",
             self.to_playable_note()
         ))
     }
