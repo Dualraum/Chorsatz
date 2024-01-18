@@ -1,4 +1,5 @@
 use std::{fmt::Display, str::FromStr};
+use wasm_bindgen::JsCast;
 
 use super::NoteName;
 
@@ -37,6 +38,43 @@ impl OctavedNote {
             "assets/notes/{}.mp3",
             self.to_playable_note()
         ))
+    }
+
+    pub async fn to_audio_buffer(
+        self,
+        ctx: &web_sys::AudioContext,
+    ) -> Result<web_sys::AudioBuffer, leptos::wasm_bindgen::JsValue> {
+        // Create window
+        let window =
+            web_sys::window().ok_or_else(|| wasm_bindgen::JsValue::from_str("No window."))?;
+        // Fetch file
+        let response = wasm_bindgen_futures::JsFuture::from(
+            // window.fetch_with_str(&format!("/assets/notes/{}.mp3", self.to_playable_note())),
+            window.fetch_with_str("/assets/notes/a2.mp3"),
+        )
+        .await?
+        .dyn_into::<web_sys::Response>()?;
+
+        // // Check for success
+        // if !response.ok() {
+        //     return Err(wasm_bindgen::JsValue::from_str(&format!(
+        //         "Could not fetch {}.",
+        //         self.to_playable_note()
+        //     )));
+        // }
+
+        // // Convert the response into an array buffer
+        // let array_buffer = wasm_bindgen_futures::JsFuture::from(response.array_buffer()?)
+        //     .await?
+        //     .unchecked_into::<js_sys::ArrayBuffer>();
+        // // Decode the buffer into an AudioBuffer
+        // let audio_buffer =
+        //     wasm_bindgen_futures::JsFuture::from(ctx.decode_audio_data(&array_buffer)?)
+        //         .await?
+        //         .unchecked_into::<web_sys::AudioBuffer>();
+
+        // Ok(audio_buffer)
+        Err(wasm_bindgen::JsValue::from_str("Nope"))
     }
 }
 
