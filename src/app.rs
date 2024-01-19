@@ -82,6 +82,16 @@ pub fn App() -> impl IntoView {
                         set_shown_result(5);
                     }
                 >"Generieren"</button>
+                <button id="test"
+                    on:click=move |_| {
+                        let ctx = web_sys::AudioContext::new().unwrap();
+
+                        let x = crate::logic::notes::OctavedNote::new(crate::logic::notes::NoteName::A, 1);
+                        let m = x.to_audio_buffer(&ctx);
+
+                        let _ = futures::executor::block_on(m);
+                    }
+                >"Test"</button>
                 <button id="options" class=move || if menu_state() == MenuState::Options { "active" } else { "" }
                     on:click=move |_|{
                         set_menu_state.update(|opt| {

@@ -28,12 +28,6 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
         })
         .collect_vec();
 
-    let ctx = web_sys::AudioContext::new().unwrap();
-
-    let x = crate::logic::notes::OctavedNote::new(crate::logic::notes::NoteName::A, 1);
-    let m = x.to_audio_buffer(&ctx);
-    let m = futures::executor::block_on(m);
-
     // let accords = result
     //     .iter()
     //     .flat_map(|block| {
@@ -65,14 +59,14 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
                 <div class="col_rig">
                     <button id="sound" class="right"
                         on:click=move|_|{
-                            // for (index, mp3_block) in sound.iter().cloned().enumerate(){
-                            //     set_timeout(move || {
-                            //         let _ = mp3_block.0.play();
-                            //         let _ = mp3_block.1.play();
-                            //         let _ = mp3_block.2.play();
-                            //         let _ = mp3_block.3.play();
-                            //     }, std::time::Duration::from_secs_f32(2.0 * index as f32 + 0.3))
-                            // }
+                            for (index, mp3_block) in sound.iter().cloned().enumerate(){
+                                set_timeout(move || {
+                                    let _ = mp3_block.0.play();
+                                    let _ = mp3_block.1.play();
+                                    let _ = mp3_block.2.play();
+                                    let _ = mp3_block.3.play();
+                                }, std::time::Duration::from_secs_f32(2.0 * index as f32 + 0.3))
+                            }
                         }
                     >"Abspielen"</button>
                 </div>

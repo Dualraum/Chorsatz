@@ -47,24 +47,15 @@ impl OctavedNote {
         // Create window
         let window =
             web_sys::window().ok_or_else(|| wasm_bindgen::JsValue::from_str("No window."))?;
-        // Fetch file
-        let response = wasm_bindgen_futures::JsFuture::from(
-            // window.fetch_with_str(&format!("/assets/notes/{}.mp3", self.to_playable_note())),
-            window.fetch_with_str("/assets/notes/a2.mp3"),
-        )
-        .await?
-        .dyn_into::<web_sys::Response>()?;
 
-        // // Check for success
-        // if !response.ok() {
-        //     return Err(wasm_bindgen::JsValue::from_str(&format!(
-        //         "Could not fetch {}.",
-        //         self.to_playable_note()
-        //     )));
-        // }
+        let response =
+            reqwasm::http::Request::get("https://api.thecatapi.com/v1/images/search?limit=3")
+                .send()
+                .await
+                .unwrap();
 
         // // Convert the response into an array buffer
-        // let array_buffer = wasm_bindgen_futures::JsFuture::from(response.array_buffer()?)
+        // let array_buffer = wasm_bindgen_futures::JsFuture::from(response.as_raw().array_buffer()?)
         //     .await?
         //     .unchecked_into::<js_sys::ArrayBuffer>();
         // // Decode the buffer into an AudioBuffer

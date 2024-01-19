@@ -26,8 +26,9 @@ web-sys = {version = "0.3.4", features = [
   'AudioContext',
   'AudioBuffer',
   'AudioBufferSourceNode',
-  'Response',
+  'Response'
 ]}
 wasm-bindgen-futures = "0.4.27"
 # futures
 futures = {version = "0.3.30", features = ["thread-pool"]}
+reqwasm = "0.5"
