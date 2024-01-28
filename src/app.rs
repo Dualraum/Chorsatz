@@ -1,4 +1,7 @@
+use std::fmt::Debug;
+
 use itertools::Itertools;
+use js_sys::ArrayBuffer;
 use leptos::*;
 
 use crate::logic;
@@ -8,6 +11,14 @@ mod svg;
 mod note_info;
 mod options;
 
+use logic::notes::*;
+
+use wasm_bindgen::prelude::*;
+use wasm_bindgen_futures::JsFuture;
+use web_sys::{
+    AudioBuffer, AudioBufferSourceNode, AudioContext, Request, RequestInit, RequestMode, Response,
+};
+
 mod result_view;
 use result_view::SatbResultView;
 
@@ -16,6 +27,44 @@ enum MenuState {
     None,
     Options,
     Help,
+}
+
+async fn fetch_src(
+    (note_name, ctx): (OctavedNote, AudioContext),
+) -> Result<AudioBufferSourceNode, JsValue> {
+    let mut opts = RequestInit::new();
+    opts.method("GET");
+    opts.mode(RequestMode::Cors);
+
+    let url = format!("/assets/notes/{}.mp3", note_name.to_playable_note());
+
+    let request = Request::new_with_str_and_init(&url, &opts)?;
+
+    let window = web_sys::window().unwrap();
+    let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
+
+    // `resp_value` is a `Response` object.
+    assert!(resp_value.is_instance_of::<Response>());
+    let resp: Response = resp_value.dyn_into().unwrap();
+
+    // Convert this other `Promise` into a rust `Future`.
+    let value = JsFuture::from(resp.array_buffer()?).await?;
+
+    // Read out the JsValue to an ArrayBuffer
+    let array = ArrayBuffer::from(value);
+
+    // Decode the Array Buffer to an AudioBuffer
+    let audio_buffer: AudioBuffer = JsFuture::from(ctx.decode_audio_data(&array)?)
+        .await?
+        .dyn_into()?;
+
+    // Put the AudioBuffer into an AudioSourceNode
+    let src = ctx.create_buffer_source()?;
+    src.set_buffer(Some(&audio_buffer));
+    src.connect_with_audio_node(&ctx.destination().into())?;
+
+    // Return this AudioSourceNode
+    Ok(src)
 }
 
 #[component]
@@ -30,7 +79,17 @@ pub fn App() -> impl IntoView {
 
     let (menu_state, set_menu_state) = create_signal(MenuState::None);
 
+    let (ctx, _set_ctx) = create_signal::<(OctavedNote, AudioContext)>((
+        OctavedNote::new(NoteName::A, 2),
+        AudioContext::new().unwrap(),
+    ));
+    let audio_buffer_src_node = create_local_resource(ctx, fetch_src);
+
     view! {
+        <div>
+
+            {move || {format!("{:?}", audio_buffer_src_node.get())}}
+        </div>
         <h1>"Chorsatz"</h1>
         <div class = "outer_block">
             <div>
@@ -69,6 +128,7 @@ pub fn App() -> impl IntoView {
                 ></input>
                 <button id="generate"
                     on:click=move |_| {
+                        let _ = audio_buffer_src_node.get().unwrap().unwrap().start();
                         set_result(
                         crate::logic::generate_satb(
                             &input()
@@ -82,16 +142,6 @@ pub fn App() -> impl IntoView {
                         set_shown_result(5);
                     }
                 >"Generieren"</button>
-                <button id="test"
-                    on:click=move |_| {
-                        let ctx = web_sys::AudioContext::new().unwrap();
-
-                        let x = crate::logic::notes::OctavedNote::new(crate::logic::notes::NoteName::A, 1);
-                        let m = x.to_audio_buffer(&ctx);
-
-                        let _ = futures::executor::block_on(m);
-                    }
-                >"Test"</button>
                 <button id="options" class=move || if menu_state() == MenuState::Options { "active" } else { "" }
                     on:click=move |_|{
                         set_menu_state.update(|opt| {

@@ -1,5 +1,4 @@
 use std::{fmt::Display, str::FromStr};
-use wasm_bindgen::JsCast;
 
 use super::NoteName;
 
@@ -38,34 +37,6 @@ impl OctavedNote {
             "assets/notes/{}.mp3",
             self.to_playable_note()
         ))
-    }
-
-    pub async fn to_audio_buffer(
-        self,
-        ctx: &web_sys::AudioContext,
-    ) -> Result<web_sys::AudioBuffer, leptos::wasm_bindgen::JsValue> {
-        // Create window
-        let window =
-            web_sys::window().ok_or_else(|| wasm_bindgen::JsValue::from_str("No window."))?;
-
-        let response =
-            reqwasm::http::Request::get("https://api.thecatapi.com/v1/images/search?limit=3")
-                .send()
-                .await
-                .unwrap();
-
-        // // Convert the response into an array buffer
-        // let array_buffer = wasm_bindgen_futures::JsFuture::from(response.as_raw().array_buffer()?)
-        //     .await?
-        //     .unchecked_into::<js_sys::ArrayBuffer>();
-        // // Decode the buffer into an AudioBuffer
-        // let audio_buffer =
-        //     wasm_bindgen_futures::JsFuture::from(ctx.decode_audio_data(&array_buffer)?)
-        //         .await?
-        //         .unchecked_into::<web_sys::AudioBuffer>();
-
-        // Ok(audio_buffer)
-        Err(wasm_bindgen::JsValue::from_str("Nope"))
     }
 }
 
