@@ -1,7 +1,9 @@
 use strum_macros::Display;
 
 /// Names of notes that can be compared to each other.
-#[derive(Debug, Clone, Copy, Eq, strum_macros::EnumString, Display, Default)]
+#[derive(
+    Debug, Clone, Copy, Eq, strum_macros::EnumString, strum_macros::EnumIter, Display, Default,
+)]
 #[allow(dead_code)]
 pub enum NoteName {
     #[default]

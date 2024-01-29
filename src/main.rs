@@ -5,6 +5,8 @@
 
 mod app;
 use app::App;
+/// Contains the code to fetch mp3-Files for playback.
+mod fetcher;
 /// Contains the underlying logic, note calculation, chorsatz generation, etc.
 mod logic;
 

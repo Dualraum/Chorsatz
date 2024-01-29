@@ -253,6 +253,7 @@ dependencies = [
  "leptos",
  "log",
  "reqwasm",
+ "serde",
  "strum",
  "strum_macros",
  "thiserror",
