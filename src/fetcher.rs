@@ -42,14 +42,6 @@ async fn fetch_buffer(
         .dyn_into()?;
 
     Ok((note, audio_buffer))
-
-    // // Put the AudioBuffer into an AudioSourceNode
-    // let src = ctx.create_buffer_source()?;
-    // src.set_buffer(Some(&audio_buffer));
-    // src.connect_with_audio_node(&ctx.destination().into())?;
-
-    // // Return this AudioSourceNode
-    // Ok(src)
 }
 
 pub async fn fetch_all(ctx: AudioContext) -> HashMap<OctavedNote, AudioBuffer> {
@@ -62,4 +54,17 @@ pub async fn fetch_all(ctx: AudioContext) -> HashMap<OctavedNote, AudioBuffer> {
     }
 
     join_all(futures).await.into_iter().flatten().collect()
+}
+
+pub fn buffer_to_src_node(
+    ctx: AudioContext,
+    buffer: &AudioBuffer,
+) -> Result<AudioBufferSourceNode, JsValue> {
+    // Put the AudioBuffer into an AudioSourceNode
+    let src = ctx.create_buffer_source()?;
+    src.set_buffer(Some(&buffer));
+    src.connect_with_audio_node(&ctx.destination().into())?;
+
+    // Return this AudioSourceNode
+    Ok(src)
 }

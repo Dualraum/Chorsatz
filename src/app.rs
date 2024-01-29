@@ -44,7 +44,6 @@ pub fn App() -> impl IntoView {
                 <p> "Chorsatz ist eine Webapplikation zur automatischen Erstellung von vierstimmigen SATB-Stimmsätzen aus einer Reihenfolge von vorgegebenen Akkorden unter Beachtung der klassischen Stimmführungsregeln." </p>
             </div>
         </div>
-
         <div class="outer_block">
             <div class="ver">
             <div class="hor">
@@ -76,6 +75,18 @@ pub fn App() -> impl IntoView {
                 ></input>
                 <button id="generate"
                     on:click=move |_| {
+
+                        let list = audio_buffers
+                            .get();
+                        let listu = list.unwrap();
+                        let thing = listu
+                            .get(&super::logic::notes::OctavedNote::new(
+                                super::logic::notes::NoteName::C,
+                                2,
+                            ))
+                            .unwrap();
+
+                        let _ = super::fetcher::buffer_to_src_node(ctx.get(), thing).unwrap().start();
                         set_result(
                         crate::logic::generate_satb(
                             &input()
