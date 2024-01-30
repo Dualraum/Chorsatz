@@ -3,7 +3,7 @@ use js_sys::encode_uri_component;
 use leptos::*;
 use web_sys::AudioBuffer;
 
-use crate::fetcher::buffer_to_src_node;
+use super::fetcher::buffer_to_src_node;
 use crate::logic::notes::*;
 
 #[component]
@@ -17,8 +17,7 @@ pub fn SatbResultView(
     >,
     ctx: ReadSignal<web_sys::AudioContext>,
 ) -> impl IntoView {
-    // let _ = super::fetcher::buffer_to_src_node(ctx.get(), thing).unwrap().start();
-    // map all the notes in the result to their appropriate mp3-files
+    // --- First, request some resources for audio playback
 
     // Request the cached audio buffers
     let cached_buffers = audio_buffers().expect("Could not unpack audio buffers.");
@@ -40,6 +39,13 @@ pub fn SatbResultView(
         .collect_vec();
     // This vector is later moved into the closure owned by the 'play' button
 
+    // --- Create a signal to track a highlighted note
+
+    // let (highlight, set_highlight) = create_signal::<usize>(0);
+    // provide_context(highlight);
+
+    // --- Now, create the view itself
+
     view! {
         <div class = "satbr_outer">
             <div class="row">
@@ -55,6 +61,7 @@ pub fn SatbResultView(
                             // now play every note. Every 4 notes form a block, so the 'when'-time is increased every 4 notes
                             for (index, buffer) in sound.iter().enumerate(){
                                     let _ = buffer_to_src_node(&ctx,&buffer).unwrap().start_with_when(time + 1.5 * (index/4) as f64 );
+                                    // set_timeout(move || set_highlight(index/4 + 1), std::time::Duration::from_secs_f32((index/4) as f32 * 1.5));
                             }
                         }
                     >"Abspielen"</button>
@@ -66,14 +73,14 @@ pub fn SatbResultView(
                 <br/>
                 "Downloads:  "
                 "    "
-                <a
-                    class="dl"
-                    href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", crate::app::svg::result_svg(&result).into_view())))}
-                    download={format!("SATB-Result{}.ly", index+1)}
-                >
-                    ".ly (WIP)"
-                </a>
-                "    "
+                // <a
+                //     class="dl"
+                //     href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", crate::app::svg::result_svg(&result).into_view())))}
+                //     download={format!("SATB-Result{}.ly", index+1)}
+                // >
+                //     ".ly (WIP)"
+                // </a>
+                // "    "
                 <a
                     class="dl"
                     href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", crate::app::svg::result_svg(&result).into_view())))}

@@ -1,7 +1,8 @@
 use leptos::*;
 
+/// Creates an svg for a musical staff with bass and violin line, clefs. Is open to the right.
 #[component]
-pub fn FullStaff(width: f32) -> impl IntoView {
+fn FullStaff(width: f32) -> impl IntoView {
     view! {
         <title>Grand Staff</title>
         <desc>Full Musical Staff by Linus Mußmächer, brace and clefs taken from commons.wikimedia.org/wiki/Category:SVG_musical_notation</desc>
@@ -58,6 +59,7 @@ pub fn FullStaff(width: f32) -> impl IntoView {
     }
 }
 
+/// Creates an svg view for a quarter note with the stem facing down.
 #[component]
 fn QuarterDown(head_center_x: f32, head_center_y: f32) -> impl IntoView {
     view! {
@@ -68,6 +70,7 @@ fn QuarterDown(head_center_x: f32, head_center_y: f32) -> impl IntoView {
     }
 }
 
+/// Creates an svg view for a quarter note with the stem facing up.
 #[component]
 fn QuarterUp(head_center_x: f32, head_center_y: f32) -> impl IntoView {
     view! {
@@ -78,6 +81,7 @@ fn QuarterUp(head_center_x: f32, head_center_y: f32) -> impl IntoView {
     }
 }
 
+/// Creates an svg view for a sharp sign (hash symbol).
 #[component]
 fn Sharp(center_x: f32, center_y: f32) -> impl IntoView {
     view! {
@@ -91,6 +95,7 @@ fn Sharp(center_x: f32, center_y: f32) -> impl IntoView {
     }
 }
 
+/// Creates an svg view for a flat sign (b symbol).
 #[component]
 fn Flat(center_x: f32, center_y: f32) -> impl IntoView {
     view! {
@@ -105,13 +110,21 @@ fn Flat(center_x: f32, center_y: f32) -> impl IntoView {
     }
 }
 
+/// Creates an svg file for a note, composed of a quarter note with stem facing up or down and a number of correctly positioned signs (sharps or flats).
 #[component]
 fn Note(
+    /// The octave and note name of the not to be displayed - influences relative y-position.
     note: crate::logic::notes::OctavedNote,
+    /// Wether the note is displayed relative to the bass key in the lower part of the staff or the violin key in the upper part.
     move_to_lower_lines: bool,
+    /// Wether the stem faces up or down.
     up: bool,
+    /// x-position of the note.
     x: f32,
-    #[prop(default = 0.)] sign_x: f32,
+    /// Position of the sign relative to the note.
+    #[prop(default = 0.)]
+    sign_x: f32,
+    /// An id to be attached to the svg.
     id: &'static str,
 ) -> impl IntoView {
     let (line, sign) = note.get_note_line_and_sign();
@@ -170,9 +183,12 @@ fn Note(
     }
 }
 
+/// The size of one tact block, containig one note with signs.
 const BLOCK_WIDTH: f32 = 50.;
+/// The horizontal space to be allocated for the display of a single sign.
 const SIGN_WIDTH: f32 = 10.;
 
+/// Creates an svg view for an SATB block consisting of 4 notes.
 fn satb_block_svg(block: &crate::logic::notes::SatbBlock, index: usize, x: f32) -> impl IntoView {
     let soprano_signs =
         if (block.0.get_note_line_and_sign().0 - block.1.get_note_line_and_sign().0).abs() < 6. {
@@ -198,6 +214,7 @@ fn satb_block_svg(block: &crate::logic::notes::SatbBlock, index: usize, x: f32) 
     }
 }
 
+/// Creates an svg view for an entire result, consisting of a musical staff and multiple SATB blocks.
 pub fn result_svg(result: &[crate::logic::notes::SatbBlock]) -> impl IntoView {
     view! {
         <svg width={60+(BLOCK_WIDTH as usize)*result.len()} height=200 xmlns="http://www.w3.org/2000/svg">
