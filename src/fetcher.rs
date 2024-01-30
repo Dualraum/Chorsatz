@@ -11,22 +11,27 @@ use web_sys::{
     AudioBuffer, AudioBufferSourceNode, AudioContext, Request, RequestInit, RequestMode, Response,
 };
 
+/// Fetches the mp3-File for a single note from the database and converts it into an AudioBuffer using the provided AudioContext.
 async fn fetch_buffer(
     note: OctavedNote,
     ctx: &AudioContext,
 ) -> Result<(OctavedNote, AudioBuffer), JsValue> {
+    // Create a CORS request option
     let mut opts = RequestInit::new();
     opts.method("GET");
     opts.mode(RequestMode::Cors);
 
+    // Buidl the URL
     let url = format!("/assets/notes/{}.mp3", note.to_playable_note());
 
+    // Create the requst
     let request = Request::new_with_str_and_init(&url, &opts)?;
 
+    // Get the window and asynchronously make the request
     let window = web_sys::window().unwrap();
     let resp_value = JsFuture::from(window.fetch_with_request(&request)).await?;
 
-    // `resp_value` is a `Response` object.
+    // Make sure we got a Response back and convert it into its type
     assert!(resp_value.is_instance_of::<Response>());
     let resp: Response = resp_value.dyn_into().unwrap();
 
@@ -44,6 +49,7 @@ async fn fetch_buffer(
     Ok((note, audio_buffer))
 }
 
+/// Fetches the mp3-Files for all notes in the NoteName enum and the octaves [-1, 0, 1, 2] ([2, 3, 4, 5] in American notation) and puts them into a HashMap.
 pub async fn fetch_all(ctx: AudioContext) -> HashMap<OctavedNote, AudioBuffer> {
     let mut futures = Vec::new();
     for note_name in NoteName::iter() {
@@ -56,8 +62,9 @@ pub async fn fetch_all(ctx: AudioContext) -> HashMap<OctavedNote, AudioBuffer> {
     join_all(futures).await.into_iter().flatten().collect()
 }
 
+/// Takes a reference to an AudioBuffer and converts it into an AudioBufferSourceNode that is then connected to the provided AUdioContext and can be started exactly once.
 pub fn buffer_to_src_node(
-    ctx: AudioContext,
+    ctx: &AudioContext,
     buffer: &AudioBuffer,
 ) -> Result<AudioBufferSourceNode, JsValue> {
     // Put the AudioBuffer into an AudioSourceNode

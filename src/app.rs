@@ -76,17 +76,6 @@ pub fn App() -> impl IntoView {
                 <button id="generate"
                     on:click=move |_| {
 
-                        let list = audio_buffers
-                            .get();
-                        let listu = list.unwrap();
-                        let thing = listu
-                            .get(&super::logic::notes::OctavedNote::new(
-                                super::logic::notes::NoteName::C,
-                                2,
-                            ))
-                            .unwrap();
-
-                        let _ = super::fetcher::buffer_to_src_node(ctx.get(), thing).unwrap().start();
                         set_result(
                         crate::logic::generate_satb(
                             &input()
@@ -152,7 +141,7 @@ pub fn App() -> impl IntoView {
                                     when={move || index < shown_result()}
                                     fallback=|| view!{}
                                 >
-                                <SatbResultView result=res.clone() res_score=score index=index/>
+                                <SatbResultView result=res.clone() res_score=score index=index audio_buffers=audio_buffers ctx=ctx/>
                                 </Show>
                             }
                         ).collect_view()

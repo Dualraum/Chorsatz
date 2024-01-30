@@ -1,54 +1,44 @@
 use itertools::Itertools;
 use js_sys::encode_uri_component;
 use leptos::*;
-use web_sys::HtmlAudioElement;
+use web_sys::AudioBuffer;
 
-use crate::logic::notes::SatbBlock;
+use crate::fetcher::buffer_to_src_node;
+use crate::logic::notes::*;
 
 #[component]
-pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> impl IntoView {
+pub fn SatbResultView(
+    result: Vec<SatbBlock>,
+    res_score: f32,
+    index: usize,
+    audio_buffers: Resource<
+        web_sys::AudioContext,
+        std::collections::HashMap<OctavedNote, AudioBuffer>,
+    >,
+    ctx: ReadSignal<web_sys::AudioContext>,
+) -> impl IntoView {
+    // let _ = super::fetcher::buffer_to_src_node(ctx.get(), thing).unwrap().start();
     // map all the notes in the result to their appropriate mp3-files
+
+    // Request the cached audio buffers
+    let cached_buffers = audio_buffers().expect("Could not unpack audio buffers.");
+
+    // Create a vector of quadruptlets of references to the correct buffers for each SATB-block
     let sound = result
         .iter()
-        .flat_map(|block| {
-            Ok::<
-                (
-                    HtmlAudioElement,
-                    HtmlAudioElement,
-                    HtmlAudioElement,
-                    HtmlAudioElement,
-                ),
-                wasm_bindgen::JsValue,
-            >((
-                block.0.to_mp3()?,
-                block.1.to_mp3()?,
-                block.2.to_mp3()?,
-                block.3.to_mp3()?,
-            ))
+        // flatten the map so it contains all notes in order
+        .flat_map(|block| [block.0, block.1, block.2, block.3])
+        // now map every not to an audio buffer
+        .flat_map(|note| {
+            Ok::<AudioBuffer, ChorError>(
+                cached_buffers
+                    .get(&note)
+                    .ok_or(ChorError::NoMp3Error(note))?
+                    .clone(),
+            )
         })
         .collect_vec();
-
-    // let accords = result
-    //     .iter()
-    //     .flat_map(|block| {
-    //         Ok::<web_sys::AudioBufferSourceNode, wasm_bindgen::JsValue>({
-    //             let notes = async {
-    //                 let note0 = block.0.to_audio_buffer(&ctx).await.ok();
-    //                 let note1 = block.1.to_audio_buffer(&ctx).await.ok();
-    //                 let note2 = block.2.to_audio_buffer(&ctx).await.ok();
-    //                 let note3 = block.3.to_audio_buffer(&ctx).await.ok();
-
-    //                 let source = ctx.create_buffer_source().unwrap();
-
-    //                 // source.set_buffer(note0.as_ref());
-
-    //                 source
-    //             };
-
-    //             futures::executor::block_on(notes)
-    //         })
-    //     })
-    //     .collect_vec();
+    // This vector is later moved into the closure owned by the 'play' button
 
     view! {
         <div class = "satbr_outer">
@@ -59,13 +49,12 @@ pub fn SatbResultView(result: Vec<SatbBlock>, res_score: f32, index: usize) -> i
                 <div class="col_rig">
                     <button id="sound" class="right"
                         on:click=move|_|{
-                            for (index, mp3_block) in sound.iter().cloned().enumerate(){
-                                set_timeout(move || {
-                                    let _ = mp3_block.0.play();
-                                    let _ = mp3_block.1.play();
-                                    let _ = mp3_block.2.play();
-                                    let _ = mp3_block.3.play();
-                                }, std::time::Duration::from_secs_f32(2.0 * index as f32 + 0.3))
+                            // save the context and its time
+                            let ctx = ctx();
+                            let time = ctx.current_time();
+                            // now play every note. Every 4 notes form a block, so the 'when'-time is increased every 4 notes
+                            for (index, buffer) in sound.iter().enumerate(){
+                                    let _ = buffer_to_src_node(&ctx,&buffer).unwrap().start_with_when(time + 1.5 * (index/4) as f64 );
                             }
                         }
                     >"Abspielen"</button>
