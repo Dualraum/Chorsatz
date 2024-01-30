@@ -23,6 +23,4 @@
 
 **Hintergrundbild**: Minona Schäfer
 
-**mp3-Töne**: [SingleInfinity](https://www.reddit.com/r/piano/comments/3u6ke7/heres_some_midi_and_mp3_files_for_individual/)
-
-**Technologie**: [Rust](https://www.rust-lang.org/) und WebAssembly mittels des [Leptos](https://leptos.dev/) framework.
+**Tech**: [Rust](https://www.rust-lang.org/) und WebAssembly mittels des [Leptos](https://leptos.dev/) framework.

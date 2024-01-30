@@ -182,12 +182,5 @@ pub fn App() -> impl IntoView {
             </p>
             </div>
         </div>
-
-        <div class="storage">
-            <img src="assets/full_staff.svg" id="full_staff"/>
-            <img src="assets/quarter_up.svg" id="quarter_up"/>
-            <img src="assets/quarter_down.svg" id="quarter_down"/>
-            <img src="assets/staff_lines.svg" id="staff_lines"/>
-        </div>
     }
 }
