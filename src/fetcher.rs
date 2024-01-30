@@ -22,7 +22,7 @@ async fn fetch_buffer(
     opts.mode(RequestMode::Cors);
 
     // Buidl the URL
-    let url = format!("/assets/notes/{}.mp3", note.to_playable_note());
+    let url = format!("./assets/notes/{}.mp3", note.to_playable_note());
 
     // Create the requst
     let request = Request::new_with_str_and_init(&url, &opts)?;
