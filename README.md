@@ -4,6 +4,8 @@
 ![actions](https://img.shields.io/github/actions/workflow/status/Dualraum/Chorsatz/continuous-testing.yml?label=tests&style=flat-square)
 ![actions](https://img.shields.io/github/actions/workflow/status/Dualraum/Chorsatz/continuous-deployment.yml?label=deploy&style=flat-square)
 ![commits](https://img.shields.io/github/commit-activity/m/Dualraum/Chorsatz?style=flat-square)
+[![tech1](https://img.shields.io/badge/-Rust-000000?logo=rust&style=flat-square)](https://www.rust-lang.org/)
+[![tech2](https://img.shields.io/badge/-Leptos-000000?logo=leptos&style=flat-square)](httsp://leptos.dev)
 
 ## Was ist Chorsatz?
 
