@@ -41,8 +41,8 @@ pub fn SatbResultView(
 
     // --- Create a signal to track a highlighted note
 
-    // let (highlight, set_highlight) = create_signal::<usize>(0);
-    // provide_context(highlight);
+    let (highlight, set_highlight) = create_signal::<usize>(result.len());
+    provide_context(highlight);
 
     // --- Now, create the view itself
 
@@ -55,13 +55,16 @@ pub fn SatbResultView(
                 <div class="col_rig">
                     <button id="sound" class="right"
                         on:click=move|_|{
+                            set_highlight(0);
                             // save the context and its time
                             let ctx = ctx();
                             let time = ctx.current_time();
                             // now play every note. Every 4 notes form a block, so the 'when'-time is increased every 4 notes
                             for (index, buffer) in sound.iter().enumerate(){
                                     let _ = buffer_to_src_node(&ctx,&buffer).unwrap().start_with_when(time + 1.5 * (index/4) as f64 );
-                                    // set_timeout(move || set_highlight(index/4 + 1), std::time::Duration::from_secs_f32((index/4) as f32 * 1.5));
+                                    if index % 4 == 0{
+                                        set_timeout(move || set_highlight(index/4 + 1), std::time::Duration::from_secs_f32((index/4 + 1) as f32 * 1.5));
+                                    }
                             }
                         }
                     >"Abspielen"</button>
@@ -83,7 +86,7 @@ pub fn SatbResultView(
                 // "    "
                 <a
                     class="dl"
-                    href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", crate::app::svg::result_svg(&result).into_view())))}
+                    href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", view!{<crate::app::svg::ResultSvg result=result.clone()/>})))}
                     download={format!("SATB-Result{}.svg", index+1)}
                 >
                     ".svg"
@@ -98,7 +101,7 @@ pub fn SatbResultView(
                     <p class="header">"Bass"</p>
                 </div>
                 {result.iter().enumerate().map(satb_block_view).collect_view()}
-                {crate::app::svg::result_svg(&result)}
+                <crate::app::svg::ResultSvg result=result/>
             </div>
         </div>
     }

@@ -61,22 +61,40 @@ fn FullStaff(width: f32) -> impl IntoView {
 
 /// Creates an svg view for a quarter note with the stem facing down.
 #[component]
-fn QuarterDown(head_center_x: f32, head_center_y: f32) -> impl IntoView {
+fn QuarterDown(head_center_x: f32, head_center_y: f32, index: usize) -> impl IntoView {
+    let highlight = use_context::<ReadSignal<usize>>().expect("Could not unwrap highlight.");
+
+    let col = move || {
+        if highlight() == index {
+            "rgb(22,132,227)"
+        } else {
+            "rgb(0,0,0)"
+        }
+    };
     view! {
         <g transform={format!("translate({} {})", head_center_x - 7., head_center_y -5.)}>
-            <ellipse cx="7.0" cy="5.0" rx="7.0" ry="5.0"/>
-            <line id="stem" vector-effect="non-scaling-stroke" x1="1.0" y1="5.0" x2="1.0" y2="29.0" stroke=" rgb(0,0,0)" stroke-width="2.0" stroke-dasharray=" none" stroke-linecap=" round" stroke-dashoffset="0" stroke-linejoin=" round" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+            <ellipse cx="7.0" cy="5.0" rx="7.0" ry="5.0" fill={col}/>
+            <line id="stem" vector-effect="non-scaling-stroke" x1="1.0" y1="5.0" x2="1.0" y2="29.0" stroke={col} stroke-width="2.0" stroke-dasharray=" none" stroke-linecap=" round" stroke-dashoffset="0" stroke-linejoin=" round" stroke-miterlimit="4" />
         </g>
     }
 }
 
 /// Creates an svg view for a quarter note with the stem facing up.
 #[component]
-fn QuarterUp(head_center_x: f32, head_center_y: f32) -> impl IntoView {
+fn QuarterUp(head_center_x: f32, head_center_y: f32, index: usize) -> impl IntoView {
+    let highlight = use_context::<ReadSignal<usize>>().expect("Could not unwrap highlight.");
+
+    let col = move || {
+        if highlight() == index {
+            "rgb(22,132,227)"
+        } else {
+            "rgb(0,0,0)"
+        }
+    };
     view! {
         <g  transform={format!("translate({} {})", head_center_x - 7., head_center_y - 25.)}>
-        <ellipse cx="7.0" cy="25.0" rx="7.0" ry="5.0"/>
-        <line id="stem" vector-effect="non-scaling-stroke" x1="13.0" y1="1.0" x2="13.0" y2="25.0" stroke=" rgb(0,0,0)" stroke-width="2.0" stroke-dasharray=" none" stroke-linecap=" round" stroke-dashoffset="0" stroke-linejoin=" round" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+        <ellipse cx="7.0" cy="25.0" rx="7.0" ry="5.0" fill={col}/>
+        <line id="stem" vector-effect="non-scaling-stroke" x1="13.0" y1="1.0" x2="13.0" y2="25.0" stroke={col} stroke-width="2.0" stroke-dasharray=" none" stroke-linecap=" round" stroke-dashoffset="0" stroke-linejoin=" round" stroke-miterlimit="4"/>
         </g>
     }
 }
@@ -126,6 +144,7 @@ fn Note(
     sign_x: f32,
     /// An id to be attached to the svg.
     id: &'static str,
+    index: usize,
 ) -> impl IntoView {
     let (line, sign) = note.get_note_line_and_sign();
 
@@ -159,23 +178,23 @@ fn Note(
                 {(y > hi).then(
                     || ((hi/10.) as i32+1..=(y/10.).floor() as i32).map(|y|
                         view!{
-                            <line id="helper_line" vector-effect="non-scaling-stroke" x1={x+25.} y1={10 * y} x2={x+45.} y2={10 * y} stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+                            <line id="helper_line" vector-effect="non-scaling-stroke" x1={x+25.} y1={10 * y} x2={x+45.} y2={10 * y} stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" />
                         }
                     ).collect_view()
                 )}
                 {(y < lo).then(
                     || ((y/10.).ceil() as i32..(lo/10.) as i32).map(|y|
                         view!{
-                            <line id="helper_line" vector-effect="non-scaling-stroke" x1={x+25.} y1={10 * y} x2={x+45.} y2={10 * y} stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
+                            <line id="helper_line" vector-effect="non-scaling-stroke" x1={x+25.} y1={10 * y} x2={x+45.} y2={10 * y} stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4"/>
                         }
                     ).collect_view()
                 )}
                 // The actual note
                 {
                     if up {
-                        view!{<QuarterUp head_center_x={x+2. * SIGN_WIDTH + 15.} head_center_y=y />}
+                        view!{<QuarterUp head_center_x={x+2. * SIGN_WIDTH + 15.} head_center_y=y index=index/>}
                     } else {
-                        view!{<QuarterDown head_center_x={x+2. * SIGN_WIDTH + 15.} head_center_y=y />}
+                        view!{<QuarterDown head_center_x={x+2. * SIGN_WIDTH + 15.} head_center_y=y index=index />}
                     }
                 }
 
@@ -189,7 +208,8 @@ const BLOCK_WIDTH: f32 = 50.;
 const SIGN_WIDTH: f32 = 10.;
 
 /// Creates an svg view for an SATB block consisting of 4 notes.
-fn satb_block_svg(block: &crate::logic::notes::SatbBlock, index: usize, x: f32) -> impl IntoView {
+#[component]
+fn SatbBlockSvg(block: crate::logic::notes::SatbBlock, index: usize, x: f32) -> impl IntoView {
     let soprano_signs =
         if (block.0.get_note_line_and_sign().0 - block.1.get_note_line_and_sign().0).abs() < 6. {
             block.0.get_note_line_and_sign().1 % 0.75
@@ -205,24 +225,28 @@ fn satb_block_svg(block: &crate::logic::notes::SatbBlock, index: usize, x: f32) 
 
     view! {
         <g id={format!("SATB-Block {}", index)}>
-            <Note note=block.0 x=x move_to_lower_lines=false up=true id="Soprano"  />
-            <Note note=block.1 x=x move_to_lower_lines=false up=false id="Alto" sign_x={soprano_signs.abs()*2.*SIGN_WIDTH} />
-            <Note note=block.2 x=x move_to_lower_lines=true up=true id="Tenor" />
-            <Note note=block.3 x=x move_to_lower_lines=true up=false id="Bass" sign_x={tenor_signs.abs()*2.*SIGN_WIDTH} />
+        // Soprano and Alto note switched so alto note (which often has helper lines over the soprano note) is drawn earlier and thus the heler lines are below the soprano note.
+            <Note index=index note=block.1 x=x move_to_lower_lines=false up=false id="Alto" sign_x={soprano_signs.abs()*2.*SIGN_WIDTH} />
+            <Note index=index note=block.0 x=x move_to_lower_lines=false up=true id="Soprano"  />
+            <Note index=index note=block.2 x=x move_to_lower_lines=true up=true id="Tenor" />
+            <Note index=index note=block.3 x=x move_to_lower_lines=true up=false id="Bass" sign_x={tenor_signs.abs()*2.*SIGN_WIDTH} />
             <line id="left_line" vector-effect="non-scaling-stroke" x1={x+50.} y1="20.0" x2={x+50.} y2="180.0" stroke-width="1.5" stroke=" rgb(0,0,0)" stroke-dasharray=" none" stroke-linecap=" butt" stroke-dashoffset="0" stroke-linejoin=" butt" stroke-miterlimit="4" fill=" rgb(0,0,0)" fill-rule=" nonzero"/>
         </g>
     }
 }
 
 /// Creates an svg view for an entire result, consisting of a musical staff and multiple SATB blocks.
-pub fn result_svg(result: &[crate::logic::notes::SatbBlock]) -> impl IntoView {
+#[component]
+pub fn ResultSvg(result: Vec<crate::logic::notes::SatbBlock>) -> impl IntoView {
     view! {
         <svg width={60+(BLOCK_WIDTH as usize)*result.len()} height=200 xmlns="http://www.w3.org/2000/svg">
             <super::svg::FullStaff width=(5+(BLOCK_WIDTH as usize)*result.len()) as f32/>
             {
-                result.iter().enumerate().map(|(index, block)| {
-                        super::svg::satb_block_svg(block, index, 60. + BLOCK_WIDTH * index as f32)
-                }).collect_view()
+                result.into_iter().enumerate().map(|(index, block)|
+                    view!{
+                        <super::svg::SatbBlockSvg block=block index=index x=60. + BLOCK_WIDTH * index as f32 />
+                    }
+                ).collect_view()
             }
         </svg>
     }
