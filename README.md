@@ -1,13 +1,13 @@
 # Chorsatz
 
-[![license](https://img.shields.io/badge/license-CC--BY--NC--SA--4.0-blue)](LICENSE)
-![actions](https://img.shields.io/github/actions/workflow/status/Dualraum/Chorsatz/continuous-testing.yml?label=tests)
-![actions](https://img.shields.io/github/actions/workflow/status/Dualraum/Chorsatz/continuous-deployment.yml?label=deploy)
-![commits](https://img.shields.io/github/commit-activity/m/Dualraum/Chorsatz)
+[![license](https://img.shields.io/badge/license-CC--BY--NC--SA--4.0-blue?style=flat-square)](LICENSE)
+![actions](https://img.shields.io/github/actions/workflow/status/Dualraum/Chorsatz/continuous-testing.yml?label=tests&style=flat-square)
+![actions](https://img.shields.io/github/actions/workflow/status/Dualraum/Chorsatz/continuous-deployment.yml?label=deploy&style=flat-square)
+![commits](https://img.shields.io/github/commit-activity/m/Dualraum/Chorsatz?style=flat-square)
 
 ## Was ist Chorsatz?
 
-[Chorsatz](dualraum.github.io/Chorsatz) ist eine Webapplikation zur automatischen Erstellung von vierstimmigen SATB-Stimmsätzen aus einer Reihenfolge von vorgegebenen Akkorden unter Beachtung der klassischen Stimmführungsregeln.
+[Chorsatz](https://dualraum.github.io/Chorsatz) ist eine Webapplikation zur automatischen Erstellung von vierstimmigen SATB-Stimmsätzen aus einer Reihenfolge von vorgegebenen Akkorden unter Beachtung der klassischen Stimmführungsregeln.
 
 ## Credits
 
