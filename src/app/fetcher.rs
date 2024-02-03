@@ -2,6 +2,8 @@ use std::collections::HashMap;
 
 use super::logic::notes::*;
 
+use itertools::Itertools;
+
 use futures::future::join_all;
 use js_sys::ArrayBuffer;
 use strum::IntoEnumIterator;
@@ -75,3 +77,41 @@ pub fn buffer_to_src_node(
     // Return this AudioSourceNode
     Ok(src)
 }
+
+pub fn concat_buffers(ctx: &AudioContext, buffers: &[AudioBuffer]) -> Result<AudioBuffer, JsValue> {
+    let sum_buffer = buffers
+        .iter()
+        .map(|buffer| {
+            let vec = buffer.get_channel_data(0).unwrap();
+            vec
+        })
+        .tuples::<(_, _, _, _)>()
+        .map(|(a, b, c, d)| {
+            a.iter()
+                .zip(b.iter())
+                .zip(c.iter())
+                .zip(d.iter())
+                .map(|(((a, b), c), d)| *a + *b + *c + *d)
+                .collect_vec()
+        })
+        .flatten()
+        .collect_vec();
+
+    let res_buffer = ctx.create_buffer(1, sum_buffer.len() as u32, ctx.sample_rate())?;
+
+    res_buffer.copy_to_channel(&sum_buffer, 0)?;
+
+    Ok(res_buffer)
+}
+
+// pub fn buffer_to_blob(ctx: &AudioContext, buffer: &AudioBuffer) -> Result<web_sys::Blob, JsValue> {
+//     let source = ctx.create_buffer_source()?;
+//     source.set_buffer(Some(buffer));
+//     source.connect_with_audio_node(&ctx.destination())?;
+
+//     let mut encoder = lame::Lame::new().unwrap();
+
+//     let mp3_data = encoder.encode(source.buffer()?)?;
+
+//     Ok(())
+// }

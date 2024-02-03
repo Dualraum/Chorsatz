@@ -3,7 +3,7 @@ use js_sys::encode_uri_component;
 use leptos::*;
 use web_sys::AudioBuffer;
 
-use super::fetcher::buffer_to_src_node;
+use super::fetcher;
 use crate::logic::notes::*;
 
 #[component]
@@ -44,6 +44,10 @@ pub fn SatbResultView(
     let (highlight, set_highlight) = create_signal::<usize>(result.len());
     provide_context(highlight);
 
+    // --- Create the mp3 to download ---
+
+    let concat_buffer = fetcher::concat_buffers(&ctx(), &sound).expect("Could not concat buffers.");
+
     // --- Now, create the view itself
 
     view! {
@@ -61,13 +65,20 @@ pub fn SatbResultView(
                             let time = ctx.current_time();
                             // now play every note. Every 4 notes form a block, so the 'when'-time is increased every 4 notes
                             for (index, buffer) in sound.iter().enumerate(){
-                                    let _ = buffer_to_src_node(&ctx,&buffer).unwrap().start_with_when(time + 1.5 * (index/4) as f64 );
+                                    let _ = fetcher::buffer_to_src_node(&ctx,&buffer).unwrap().start_with_when(time + 1.5 * (index/4) as f64 );
                                     if index % 4 == 0{
                                         set_timeout(move || set_highlight(index/4 + 1), std::time::Duration::from_secs_f32((index/4 + 1) as f32 * 1.5));
                                     }
                             }
                         }
                     >"Abspielen"</button>
+                    <button id="sound" class="right"
+                    on:click=move|_|{
+                        let _= fetcher::buffer_to_src_node(&ctx(), &concat_buffer).unwrap().start();
+                    }
+                    >
+                    "Durchläufig Abspielen"
+                    </button>
                 </div>
             </div>
             <p>
