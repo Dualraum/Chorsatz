@@ -1,4 +1,7 @@
-use std::collections::HashMap;
+use std::{
+    collections::HashMap,
+    io::{BufWriter, Read},
+};
 
 use super::logic::notes::*;
 
@@ -104,14 +107,21 @@ pub fn concat_buffers(ctx: &AudioContext, buffers: &[AudioBuffer]) -> Result<Aud
     Ok(res_buffer)
 }
 
-// pub fn buffer_to_blob(ctx: &AudioContext, buffer: &AudioBuffer) -> Result<web_sys::Blob, JsValue> {
-//     let source = ctx.create_buffer_source()?;
-//     source.set_buffer(Some(buffer));
-//     source.connect_with_audio_node(&ctx.destination())?;
+pub fn buffer_to_blob(ctx: &AudioContext, buffer: &AudioBuffer) -> Result<web_sys::Blob, JsValue> {
+    let source = ctx.create_buffer_source()?;
+    source.set_buffer(Some(buffer));
+    source.connect_with_audio_node(&ctx.destination())?;
 
-//     let mut encoder = lame::Lame::new().unwrap();
+    let pcm = buffer.get_channel_data(0)?;
 
-//     let mp3_data = encoder.encode(source.buffer()?)?;
+    let wav = pcm_to_mp3(&pcm, ctx.sample_rate());
 
-//     Ok(())
-// }
+    web_sys::Blob::new_with_u8_array_sequence_and_options(
+        &JsValue::from(unsafe { js_sys::Uint8Array::view(&wav) }),
+        web_sys::BlobPropertyBag::new().type_("audio/wav"),
+    )
+}
+
+fn pcm_to_mp3(pcm_data: &[f32], sample_rate: f32) -> Vec<u8> {
+    vec![0]
+}

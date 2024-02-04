@@ -48,6 +48,8 @@ pub fn SatbResultView(
 
     let concat_buffer = fetcher::concat_buffers(&ctx(), &sound).expect("Could not concat buffers.");
 
+    let blob = fetcher::buffer_to_blob(&ctx(), &concat_buffer).unwrap();
+
     // --- Now, create the view itself
 
     view! {
@@ -87,20 +89,20 @@ pub fn SatbResultView(
                 <br/>
                 "Downloads:  "
                 "    "
-                // <a
-                //     class="dl"
-                //     href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", crate::app::svg::result_svg(&result).into_view())))}
-                //     download={format!("SATB-Result{}.ly", index+1)}
-                // >
-                //     ".ly (WIP)"
-                // </a>
-                // "    "
                 <a
                     class="dl"
                     href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", view!{<crate::app::svg::ResultSvg result=result.clone()/>})))}
                     download={format!("SATB-Result{}.svg", index+1)}
                 >
                     ".svg"
+                </a>
+                "    "
+                <a
+                    class="dl"
+                    href={web_sys::Url::create_object_url_with_blob(&blob).unwrap()}
+                    download={format!("SATB-Result{}.wav", index+1)}
+                >
+                    ".wav"
                 </a>
             </p>
             <div class = "satbr_inner">
