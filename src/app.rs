@@ -126,7 +126,7 @@ pub fn App() -> impl IntoView {
 
         <div class="outer_block">
             <div>
-                <h2>"Ergebnisse:"</h2>
+                <h2>"Ergebnisse"</h2>
                 <p class="deemph">"Eine kleinere Bewertung kennzeichnet eine optimalere Lösung. Da eine rein algorithmische Bewertung nicht perfekt ist, werden mehrere Ergebnisse zur Auswahl angezeigt."</p>
                 <Show
                     when={move || result.with(|r| !r.is_empty())}

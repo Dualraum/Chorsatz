@@ -140,6 +140,20 @@ p{
 .marked{
     color: var(--acc-color);
 }
+.score{
+    color: var(--acc-color);
+
+    padding: 5px;
+    padding-right: 8px;
+    padding-left: 25px;
+    margin: 4px;
+    height: min-content;
+    
+    background-image: url('assets/star.png');
+    background-position: 4px 4px;
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+}
 
 a.dl{
     font-size: small;
@@ -206,6 +220,39 @@ input[type="checkbox"]::before {
   
 input[type="checkbox"]:checked::before {
     transform: scale(1);
+}
+
+a.dl{
+    padding: 5px;
+    padding-right: 8px;
+    padding-left: 25px;
+    margin: 4px;
+    height: min-content;
+
+    background-position: 4px 4px;
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    background-color: var(--sec-color);
+    background-image: url('assets/download.png');
+    float: right;
+
+    border: 1px solid var(--pri-color);
+    border-radius: 15px;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: inherit;
+}
+
+a.dl:link{
+    text-decoration: none;
+}
+
+a.dl:active{
+    background-color: var(--acc-color);
+}
+
+a.dl:hover{
+    background-color: var(--acc-color);
 }
 
 button{

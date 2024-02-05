@@ -55,9 +55,11 @@ pub fn SatbResultView(
         <div class = "satbr_outer">
             <div class="row">
                 <div class="col_lef">
-                    <h3>"Ergebnis " {index+1}</h3>
+                    // <h3>"Ergebnis " {index+1}</h3>
+                    <b class="score"> {res_score as i32}</b>
                 </div>
                 <div class="col_rig">
+                    // These are in reversed order, as col_rig floats from the right
                     <button id="sound" class="right"
                         on:click=move|_|{
                             set_highlight(0);
@@ -73,37 +75,34 @@ pub fn SatbResultView(
                             }
                         }
                     >"Abspielen"</button>
+                    <a
+                        class="dl"
+                        href={
+                            // Convert concatenated audio buffer to a blob.
+                            let blob = audio_sys::buffer_to_blob(&concat_buffer).expect("Could not convert buffer to blob.");
+                            // Create object URL to download the blob.
+                            web_sys::Url::create_object_url_with_blob(&blob).expect("Could not create object URL for wav file.")
+                        }
+                        download={format!("SATB-Result{}.wav", index+1)}
+                    >
+                        "WAV"
+                    </a>
+                    <a
+                        class="dl"
+                        href={
+                            // create the result svg and provide it as a plaintext download
+                            format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", view!{<crate::app::svg::ResultSvg result=result.clone()/>})))
+                        }
+                        download={format!("SATB-Result{}.svg", index+1)}
+                    >
+                        "SVG"
+                    </a>
                 </div>
             </div>
-            <p>
-                "Bewertung: "
-                <b class="marked">{res_score as i32}</b>
-                <br/>
-                "Downloads:  "
-                "    "
-                <a
-                    class="dl"
-                    href={
-                        format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", view!{<crate::app::svg::ResultSvg result=result.clone()/>})))
-                    }
-                    download={format!("SATB-Result{}.svg", index+1)}
-                >
-                    ".svg"
-                </a>
-                "    "
-                <a
-                    class="dl"
-                    href={
-                        // Convert concatenated audio buffer to a blob.
-                        let blob = audio_sys::buffer_to_blob(&concat_buffer).expect("Could not convert buffer to blob.");
-                        // Create object URL to download the blob.
-                        web_sys::Url::create_object_url_with_blob(&blob).expect("Could not create object URL for wav file.")
-                    }
-                    download={format!("SATB-Result{}.wav", index+1)}
-                >
-                    ".wav"
-                </a>
-            </p>
+            // <p>
+            //     "Bewertung: "
+            //     <b class="marked">{res_score as i32}</b>
+            // </p>
             <div class = "satbr_inner">
                 <div class = "satbb">
                     <p class="header2">"Akkord"</p>
