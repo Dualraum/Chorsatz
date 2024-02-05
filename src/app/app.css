@@ -12,6 +12,37 @@ div {
     align-content: center;
 }
 
+.tooltip {
+  float: middle;
+  position: absolute;
+  display: inline-block;
+  bottom:0 ;
+  /*border-bottom: 0.5px dotted black; /* If you want dots under the hoverable text */
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 250px;
+  background-color: var(--sec-color);
+  border: 1px solid var(--pri-color);
+  text-align: left;
+  padding: 5px;
+  border-radius: 6px;
+  opacity: 100%;
+ 
+  position: absolute;
+  z-index: 1;
+
+  top: -5px;
+  left: 105%;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+}
+
 .outer_block{
     padding: 24px;
     margin-top: 10px;
@@ -74,21 +105,20 @@ div.hor{
 div.col_lef{
     float: left;
     width: 50%;
+    height: 35px;
+    position: relative;
 }
 
 div.col_rig{
     float: right;
     width: 50%;
+    height: 35px;
 }
 
 div.row:after {
     content: "";
     display: table;
     clear: both;
-}
-
-div.storage{
-    display: none;
 }
 
 h1 {
@@ -161,7 +191,7 @@ a.dl{
 
 svg{
     padding-left: 4em;
-    padding-left: 4em;
+    padding-right: 4em;
 }
 
 
@@ -301,10 +331,15 @@ button#sound{
     background-image: url('assets/play.png');
 }
 
+button#table{
+    background-image: url('assets/table.png');
+}
+
 button#show_more{
     padding-left: 8px;
     margin: auto;
 }
+
 
 body{
     background-image: url('assets/piano.png');

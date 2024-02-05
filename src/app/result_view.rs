@@ -49,14 +49,15 @@ pub fn SatbResultView(
     let concat_buffer =
         audio_sys::concat_buffers(&ctx(), &sound).expect("Could not concat buffers.");
 
+    let (show_table, set_show_table) = create_signal(false);
+
     // --- Now, create the view itself
 
     view! {
         <div class = "satbr_outer">
             <div class="row">
                 <div class="col_lef">
-                    // <h3>"Ergebnis " {index+1}</h3>
-                    <b class="score"> {res_score as i32}</b>
+                    <h3>"Ergebnis " {index+1}</h3>
                 </div>
                 <div class="col_rig">
                     // These are in reversed order, as col_rig floats from the right
@@ -99,20 +100,36 @@ pub fn SatbResultView(
                     </a>
                 </div>
             </div>
-            // <p>
-            //     "Bewertung: "
-            //     <b class="marked">{res_score as i32}</b>
-            // </p>
             <div class = "satbr_inner">
-                <div class = "satbb">
-                    <p class="header2">"Akkord"</p>
-                    <p class="header">"Sopran"</p>
-                    <p class="header">"Alt"</p>
-                    <p class="header">"Tenor"</p>
-                    <p class="header">"Bass"</p>
+                <crate::app::svg::ResultSvg result=result.clone()/>
+                <Show
+                    when={show_table}
+                    fallback=|| view!{}
+                >
+                    <div class = "satbb">
+                        <p class="header2">"Akkord"</p>
+                        <p class="header">"Sopran"</p>
+                        <p class="header">"Alt"</p>
+                        <p class="header">"Tenor"</p>
+                        <p class="header">"Bass"</p>
+                    </div>
+                    {result.iter().enumerate().map(satb_block_view).collect_view()}
+                </Show>
+            </div>
+            <div class="row">
+                <div class="col_lef">
+                        <div class="tooltip">
+                            <span class="tooltiptext">"Bewertung dieses Ergebnisses berechnet aus der relativen Notenlage. Kleine Bewertungen kennzeichnen bessere Lösungen."</span>
+                            <b class="score"> {res_score as i32}</b>
+                        </div>
                 </div>
-                {result.iter().enumerate().map(satb_block_view).collect_view()}
-                <crate::app::svg::ResultSvg result=result/>
+                <div class="col_rig">
+                    <button id="table" class="right"
+                        on:click=move |_|{
+                            set_show_table.update(|a| *a = !*a);
+                        }
+                    >"Notentabelle"</button>
+                </div>
             </div>
         </div>
     }
