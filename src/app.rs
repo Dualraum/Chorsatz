@@ -5,8 +5,8 @@ use leptos::*;
 
 use crate::logic;
 
-/// Contains the code to fetch mp3-Files for playback.
-mod fetcher;
+/// Contains the code to interact with the web_sys AudioAPI.
+mod audio_sys;
 /// Contains logic to create svgs from results.
 mod svg;
 
@@ -38,7 +38,7 @@ pub fn App() -> impl IntoView {
     let (ctx, _set_ctx) =
         create_signal::<web_sys::AudioContext>(web_sys::AudioContext::new().unwrap());
 
-    let audio_buffers = create_local_resource(ctx, fetcher::fetch_all);
+    let audio_buffers = create_local_resource(ctx, audio_sys::fetch_all);
 
     view! {
         <h1>"Chorsatz"</h1>

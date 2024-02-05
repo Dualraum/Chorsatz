@@ -199,7 +199,6 @@ name = "chorsatz"
 version = "0.2.0"
 dependencies = [
  "futures",
- "hound",
  "itertools 0.11.0",
  "js-sys",
  "leptos",
@@ -210,6 +209,7 @@ dependencies = [
  "thiserror",
  "wasm-bindgen",
  "wasm-bindgen-futures",
+ "wav_io",
  "web-sys",
 ]
 
@@ -577,12 +577,6 @@ name = "hermit-abi"
 version = "0.3.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d77f7ec81a6d05a3abb01ab6eb7590f6083d08449fe5a1c8b1e620283546ccb7"
-
-[[package]]
-name = "hound"
-version = "3.5.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "62adaabb884c94955b19907d60019f4e145d091c75345379e70d1ee696f7854f"
 
 [[package]]
 name = "html-escape"
@@ -1928,6 +1922,12 @@ name = "wasm-bindgen-shared"
 version = "0.2.87"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ca6ad05a4870b2bf5fe995117d3728437bd27d7cd5f06f13c17443ef369775a1"
+
+[[package]]
+name = "wav_io"
+version = "0.1.12"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "621b906c22ec1611c3d0d7d149842ecedf51971b1e9dc10b3688c4b02235f468"
 
 [[package]]
 name = "web-sys"

@@ -12,6 +12,8 @@ log = "0.4"
 strum = "0.25"
 strum_macros = "0.25"
 thiserror = "1.0"
+# WAV encoding
+wav_io = "0.1"
 # web stuff
 leptos = { version = "0.5.0-rc3", features = ["csr", "nightly"] }
 js-sys = "0.3.64"

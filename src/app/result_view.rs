@@ -3,7 +3,7 @@ use js_sys::encode_uri_component;
 use leptos::*;
 use web_sys::AudioBuffer;
 
-use super::fetcher;
+use super::audio_sys;
 use crate::logic::notes::*;
 
 #[component]
@@ -44,11 +44,10 @@ pub fn SatbResultView(
     let (highlight, set_highlight) = create_signal::<usize>(result.len());
     provide_context(highlight);
 
-    // --- Create the mp3 to download ---
+    // --- Create a concatenated buffer to create the mp3 from ---
 
-    let concat_buffer = fetcher::concat_buffers(&ctx(), &sound).expect("Could not concat buffers.");
-
-    let blob = fetcher::buffer_to_blob(&ctx(), &concat_buffer).unwrap();
+    let concat_buffer =
+        audio_sys::concat_buffers(&ctx(), &sound).expect("Could not concat buffers.");
 
     // --- Now, create the view itself
 
@@ -67,20 +66,13 @@ pub fn SatbResultView(
                             let time = ctx.current_time();
                             // now play every note. Every 4 notes form a block, so the 'when'-time is increased every 4 notes
                             for (index, buffer) in sound.iter().enumerate(){
-                                    let _ = fetcher::buffer_to_src_node(&ctx,&buffer).unwrap().start_with_when(time + 1.5 * (index/4) as f64 );
+                                    let _ = audio_sys::buffer_to_src_node(&ctx,&buffer).expect("Could not convert buffer to source node.").start_with_when(time + 1.5 * (index/4) as f64 );
                                     if index % 4 == 0{
                                         set_timeout(move || set_highlight(index/4 + 1), std::time::Duration::from_secs_f32((index/4 + 1) as f32 * 1.5));
                                     }
                             }
                         }
                     >"Abspielen"</button>
-                    <button id="sound" class="right"
-                    on:click=move|_|{
-                        let _= fetcher::buffer_to_src_node(&ctx(), &concat_buffer).unwrap().start();
-                    }
-                    >
-                    "Durchläufig Abspielen"
-                    </button>
                 </div>
             </div>
             <p>
@@ -91,7 +83,9 @@ pub fn SatbResultView(
                 "    "
                 <a
                     class="dl"
-                    href={format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", view!{<crate::app::svg::ResultSvg result=result.clone()/>})))}
+                    href={
+                        format!("data:text/plain;charset=utf-8,{}", encode_uri_component(&format!("{:?}", view!{<crate::app::svg::ResultSvg result=result.clone()/>})))
+                    }
                     download={format!("SATB-Result{}.svg", index+1)}
                 >
                     ".svg"
@@ -99,7 +93,12 @@ pub fn SatbResultView(
                 "    "
                 <a
                     class="dl"
-                    href={web_sys::Url::create_object_url_with_blob(&blob).unwrap()}
+                    href={
+                        // Convert concatenated audio buffer to a blob.
+                        let blob = audio_sys::buffer_to_blob(&concat_buffer).expect("Could not convert buffer to blob.");
+                        // Create object URL to download the blob.
+                        web_sys::Url::create_object_url_with_blob(&blob).expect("Could not create object URL for wav file.")
+                    }
                     download={format!("SATB-Result{}.wav", index+1)}
                 >
                     ".wav"
