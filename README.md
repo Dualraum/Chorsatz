@@ -4,8 +4,8 @@
 ![actions](https://img.shields.io/github/actions/workflow/status/Dualraum/Chorsatz/continuous-testing.yml?label=tests&style=flat-square)
 ![actions](https://img.shields.io/github/actions/workflow/status/Dualraum/Chorsatz/continuous-deployment.yml?label=deploy&style=flat-square)
 ![commits](https://img.shields.io/github/commit-activity/m/Dualraum/Chorsatz?style=flat-square)
-[![tech1](https://img.shields.io/badge/-Rust-000000?logo=rust&style=flat-square)](https://www.rust-lang.org/)
-[![tech2](https://img.shields.io/badge/-Leptos-000000?logo=leptos&style=flat-square)](httsp://leptos.dev)
+[![tech1](https://img.shields.io/badge/-Rust-f74c00?logo=rust&style=flat-square)](https://www.rust-lang.org/)
+[![tech2](https://img.shields.io/badge/-Leptos-9d283a?logo=leptos&style=flat-square)](httsp://leptos.dev)
 
 [Chorsatz](https://dualraum.github.io/Chorsatz) is a web application to automatically create SATB-sheets from a series of chords.
 
@@ -13,6 +13,7 @@
 
  - [Goals](#goals)
  - [Features](#features)
+ - [Bugs & Issues](#bugs-issues)
  - [Contributors](#contributors)
  - [Resources & Technology](#resources-technology)
 
@@ -35,8 +36,16 @@ In order to retain a human element and allow for some musical elements that cann
  - Provide as downloads both an `.svg` of the sheet music and a `.wav` of the playback.
  - Facilitate all of the above via a universally accessable web application.
 
-For a more in-depth user guide, see [this document](/howto/Chorsatz.pdf) (only available in German).
+For a more in-depth user guide, see [this document](/howto/Chorsatz.pdf) (only available in German) or the [wiki](https://github.com/Dualraum/Chorsatz/wiki) (in English).
 You will find, among other things an explanation of the exclusion and scoring criteria and a list of possible input chords.
+
+## Bugs & Issues
+
+While Chorsatz' underlying algorithm is theoretically sound, you may find results or rankings disagreeing with your intuition.
+Do not hesitate to open an issue if this appears frequently or in isolatable cases - we are always happy to improve our algorithm.
+
+Of course, also submit an issue if you encounter any bugs, glitches or missing features as well as if you have any questions.
+Remember that Chorsatz is a hobby project, but we are always happy to assist.
 
 ## Contributors
 
