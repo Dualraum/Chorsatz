@@ -1,4 +1,4 @@
-# Chorsatz
+# 🎼 Chorsatz
 
 [![license](https://img.shields.io/badge/license-CC--BY--NC--SA--4.0-blue?style=flat-square)](LICENSE)
 ![actions](https://img.shields.io/github/actions/workflow/status/Dualraum/Chorsatz/continuous-testing.yml?label=tests&style=flat-square)
@@ -7,22 +7,47 @@
 [![tech1](https://img.shields.io/badge/-Rust-000000?logo=rust&style=flat-square)](https://www.rust-lang.org/)
 [![tech2](https://img.shields.io/badge/-Leptos-000000?logo=leptos&style=flat-square)](httsp://leptos.dev)
 
-## Was ist Chorsatz?
+[Chorsatz](https://dualraum.github.io/Chorsatz) is a web application to automatically create SATB-sheets from a series of chords.
 
-[Chorsatz](https://dualraum.github.io/Chorsatz) ist eine Webapplikation zur automatischen Erstellung von vierstimmigen SATB-Stimmsätzen aus einer Reihenfolge von vorgegebenen Akkorden unter Beachtung der klassischen Stimmführungsregeln.
+## Contents
 
-## Credits
+ - [Goals](#goals)
+ - [Features](#features)
+ - [Contributors](#contributors)
+ - [Resources & Technology](#resources-technology)
 
-**Gesamtkonzept & Musikalische Ausarbeitung**: Minona Schäfer
+## Goals
 
-**Programmierung & Design**: Linus Mußmächer
+In classical music, SATB-sheets are used to accompany the main singing voice of a musical piece by a choir or similar arrangement.
+These sheets usually only depend on the chord progression of the piece and follow a rigid set of rules and preferences.
 
-**Musikalische Fachberatung**: Biljana Wittstock
+Chorsatz aims to speed up this traditional manual process by algorithmically modelling a set of exclusion and scoring criteria that is used to automatically create, score and rank a list of four-part vocal progressions.
+In order to retain a human element and allow for some musical elements that cannot be mathematically described, the user is then shown multiple of these results and can select, listen to or download them.
 
-#### Ressourcen
+## Features
 
-**Icons**: [The Noun Project](https://thenounproject.com)
+ - Allow the creation of a classical four-part vocal setting from a series of chords.
+ - Include support for wide variety of different chords, as well as fixed initial tone.
+ - Filter these alternatives based on a series of no-go criteria to exclude settings.
+ - Rank the remaining alternatives based on an algorithmic score system, looking to optimize certain properties.
+ - Allow customization of both the exclusion criteria and the relative weights of the ranking.
+ - Output these results as both as sheet music and a list of notes and provide online playback.
+ - Provide as downloads both an `.svg` of the sheet music and a `.wav` of the playback.
+ - Facilitate all of the above via a universally accessable web application.
 
-**Hintergrundbild**: Minona Schäfer
+For a more in-depth user guide, see [this document](/howto/Chorsatz.pdf) (only available in German).
+You will find, among other things an explanation of the exclusion and scoring criteria and a list of possible input chords.
 
-**Tech**: [Rust](https://www.rust-lang.org/) und WebAssembly mittels des [Leptos](https://leptos.dev/) framework.
+## Contributors
+
+ - **Concept & musical direction**: Minona Schäfer
+ - **Programming & design**: Linus Mußmächer
+ - **Musical advice**: Biljana Wittstock
+
+## Resources & Technology
+
+Icons are taken from [The Noun Project](https://thenounproject.com).
+The background image was provided by Minona Schäfer.
+
+Chorsatz is a program in [Rust](https://www.rust-lang.org/) and WebAssembly using the [Leptos](https://leptos.dev/) framework.
+Chorsatz is released under the [CC-BY-NC-SA 4.0](LICENSE) non-commercial share-alike open-source license.
