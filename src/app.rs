@@ -35,8 +35,7 @@ pub fn App() -> impl IntoView {
 
     let (menu_state, set_menu_state) = create_signal(MenuState::None);
 
-    let (ctx, _set_ctx) =
-        create_signal::<web_sys::AudioContext>(web_sys::AudioContext::new().unwrap());
+    let (ctx, set_ctx) = create_signal::<_>(None);
 
     let audio_buffers = create_local_resource(ctx, audio_sys::fetch_all);
 
@@ -56,10 +55,15 @@ pub fn App() -> impl IntoView {
                     placeholder="Akkorde hier eingeben..."
                     on:input=move |ev| {
                         set_input(event_target_value(&ev));
+                            if ctx().is_none(){
+                                set_ctx(web_sys::AudioContext::new().ok());
+
+                            }
                     }
                     on:keypress=move |ev| {
                         // trigger only if enter is pressed
                         if ev.key_code() == 13{
+                            // set result
                             set_result({
                                 crate::logic::generate_satb(
                                     &event_target_value(&ev)
@@ -69,8 +73,15 @@ pub fn App() -> impl IntoView {
                                     &config(),
                                 ).into_iter().enumerate().collect_vec()
                             });
+                            // set menu state
                             set_menu_state(MenuState::None);
                             set_shown_result(5);
+                            // If the audio context does not yet exist, use this user interaction to create it
+                            // (audio context can only be created during user interaction)
+                            if ctx().is_none(){
+                                set_ctx(web_sys::AudioContext::new().ok());
+
+                            }
                         }
 
                     }
@@ -78,18 +89,24 @@ pub fn App() -> impl IntoView {
                 ></input>
                 <button id="generate"
                     on:click=move |_| {
-
-                        set_result(
-                        crate::logic::generate_satb(
-                            &input()
-                            .split(' ')
-                            .filter_map(|note_str| note_str.parse().ok())
-                            .collect_vec(),
-                            &config(),
-                        ).into_iter()
-                        .enumerate().collect_vec());
-                        set_menu_state(MenuState::None);
-                        set_shown_result(5);
+                            // set result
+                            set_result({
+                                crate::logic::generate_satb(
+                                    &input()
+                                    .split(' ')
+                                    .filter_map(|note_str| note_str.parse().ok())
+                                    .collect_vec(),
+                                    &config(),
+                                ).into_iter().enumerate().collect_vec()
+                            });
+                            // set menu state
+                            set_menu_state(MenuState::None);
+                            set_shown_result(5);
+                            // If the audio context does not yet exist, use this user interaction to create it
+                            // (audio context can only be created during user interaction)
+                            if ctx().is_none(){
+                                set_ctx(web_sys::AudioContext::new().ok());
+                            }
                     }
                 >"Generieren"</button>
                 <button id="options" class=move || if menu_state() == MenuState::Options { "active" } else { "" }
@@ -135,19 +152,33 @@ pub fn App() -> impl IntoView {
                     <p>"Es werden die besten " {move || shown_result().min(result.with(|r| r.len()))} " Ergebnisse aus " {move || result.with(|r| r.len())} " berechneten Lösungen angezeigt."</p>
                 </Show>
                 {
-                    move || result()
-                        .into_iter()
-                        .take(shown_result())
-                        .map(|(index, (res, score))|
+                    move || {
+                        // Check if an audio context exists and was created correctly.
+                        if let Some(ctx) = ctx(){
+
+                            let (ctx, _) = leptos::create_signal(ctx);
+
+
+                            result()
+                            .into_iter()
+                            // .take(shown_result())
+                            .map(|(index, (res, score))|
+                                view!{
+                                    <Show
+                                        when={move || index < shown_result()}
+                                        fallback=|| view!{}
+                                    >
+                                    <SatbResultView result=res.clone() res_score=score index=index audio_buffers=audio_buffers ctx=ctx/>
+                                    </Show>
+                                }
+                            ).collect_view()
+
+                        } else {
                             view!{
-                                <Show
-                                    when={move || index < shown_result()}
-                                    fallback=|| view!{}
-                                >
-                                <SatbResultView result=res.clone() res_score=score index=index audio_buffers=audio_buffers ctx=ctx/>
-                                </Show>
-                            }
-                        ).collect_view()
+
+                            }.into_view()
+                        }
+                    }
                 }
                 <Show
                     when=move || {shown_result() < result.with(|r| r.len())}

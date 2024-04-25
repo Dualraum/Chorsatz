@@ -9,8 +9,6 @@ pub enum ChorError {
     NoteOctaveParse(<i32 as std::str::FromStr>::Err),
     /// Error thrown when attempting to create a multinote that does not exist.
     NotAValidMultinote(String),
-    /// Error thrown when the correct mp3-File cannot be retrieved to play this note
-    NoMp3Error(super::OctavedNote),
 }
 
 impl std::fmt::Display for ChorError {
@@ -19,7 +17,6 @@ impl std::fmt::Display for ChorError {
             ChorError::NoteNameParse(e) => e.fmt(f),
             ChorError::NoteOctaveParse(e) => e.fmt(f),
             ChorError::NotAValidMultinote(err) => err.fmt(f),
-            ChorError::NoMp3Error(note) => note.fmt(f),
         }
     }
 }

@@ -52,16 +52,20 @@ async fn fetch_buffer(
 }
 
 /// Fetches the mp3-Files for all notes in the NoteName enum and the octaves [-1, 0, 1, 2] ([2, 3, 4, 5] in American notation) and puts them into a HashMap.
-pub async fn fetch_all(ctx: AudioContext) -> HashMap<OctavedNote, AudioBuffer> {
-    let mut futures = Vec::new();
-    for note_name in NoteName::iter() {
-        for oct in [-1, 0, 1, 2].iter().copied() {
-            let note = OctavedNote::new(note_name, oct);
-            futures.push(fetch_buffer(note, &ctx));
+pub async fn fetch_all(ctx: Option<AudioContext>) -> HashMap<OctavedNote, AudioBuffer> {
+    if let Some(ctx) = ctx {
+        let mut futures = Vec::new();
+        for note_name in NoteName::iter() {
+            for oct in [-1, 0, 1, 2].iter().copied() {
+                let note = OctavedNote::new(note_name, oct);
+                futures.push(fetch_buffer(note, &ctx));
+            }
         }
-    }
 
-    join_all(futures).await.into_iter().flatten().collect()
+        join_all(futures).await.into_iter().flatten().collect()
+    } else {
+        HashMap::new()
+    }
 }
 
 /// Takes a reference to an AudioBuffer and converts it into an AudioBufferSourceNode that is then connected to the provided AUdioContext and can be started exactly once.

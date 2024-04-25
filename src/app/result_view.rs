@@ -12,7 +12,7 @@ pub fn SatbResultView(
     res_score: f32,
     index: usize,
     audio_buffers: Resource<
-        web_sys::AudioContext,
+        Option<web_sys::AudioContext>,
         std::collections::HashMap<OctavedNote, AudioBuffer>,
     >,
     ctx: ReadSignal<web_sys::AudioContext>,
@@ -20,24 +20,18 @@ pub fn SatbResultView(
     // --- First, request some resources for audio playback
 
     // Request the cached audio buffers
-    let cached_buffers = audio_buffers().expect("Could not unpack audio buffers.");
-
-    // Create a vector of quadruptlets of references to the correct buffers for each SATB-block
-    let sound = result
-        .iter()
-        // flatten the map so it contains all notes in order
-        .flat_map(|block| [block.0, block.1, block.2, block.3])
-        // now map every not to an audio buffer
-        .flat_map(|note| {
-            Ok::<AudioBuffer, ChorError>(
-                cached_buffers
-                    .get(&note)
-                    .ok_or(ChorError::NoMp3Error(note))?
-                    .clone(),
-            )
-        })
-        .collect_vec();
-    // This vector is later moved into the closure owned by the 'play' button
+    let sound = audio_buffers().and_then(|buffers| {
+        // Create a vector of quadruptlets of references to the correct buffers for each SATB-block
+        // This vector is later moved into the closure owned by the 'play' button
+        result
+            .iter()
+            // flatten the map so it contains all notes in order
+            .flat_map(|block| [block.0, block.1, block.2, block.3])
+            // now map every not to an audio buffer
+            .map(|note| buffers.get(&note).cloned())
+            // only create a vec if all notes could be found
+            .collect::<Option<Vec<_>>>()
+    });
 
     // --- Create a signal to track a highlighted note
 
@@ -46,8 +40,9 @@ pub fn SatbResultView(
 
     // --- Create a concatenated buffer to create the mp3 from ---
 
-    let concat_buffer =
-        audio_sys::concat_buffers(&ctx(), &sound).expect("Could not concat buffers.");
+    let concat_buffer = sound
+        .as_ref()
+        .and_then(|sound| audio_sys::concat_buffers(&ctx(), sound).ok());
 
     let (show_table, set_show_table) = create_signal(false);
 
@@ -63,31 +58,43 @@ pub fn SatbResultView(
                     // These are in reversed order, as col_rig floats from the right
                     <button id="sound" class="right"
                         on:click=move|_|{
-                            set_highlight(0);
-                            // save the context and its time
-                            let ctx = ctx();
-                            let time = ctx.current_time();
-                            // now play every note. Every 4 notes form a block, so the 'when'-time is increased every 4 notes
-                            for (index, buffer) in sound.iter().enumerate(){
-                                    let _ = audio_sys::buffer_to_src_node(&ctx,&buffer).expect("Could not convert buffer to source node.").start_with_when(time + 1.5 * (index/4) as f64 );
-                                    if index % 4 == 0{
-                                        set_timeout(move || set_highlight(index/4 + 1), std::time::Duration::from_secs_f32((index/4 + 1) as f32 * 1.5));
-                                    }
+                            // check if sounds could be retrieved
+                            if let Some(sound) = &sound{
+                                set_highlight(0);
+                                // save the context and its time
+                                let ctx = ctx();
+                                let time = ctx.current_time();
+                                // now play every note. Every 4 notes form a block, so the 'when'-time is increased every 4 notes
+                                for (index, buffer) in sound.iter().enumerate(){
+                                        let _ = audio_sys::buffer_to_src_node(&ctx,&buffer).expect("Could not convert buffer to source node.").start_with_when(time + 1.5 * (index/4) as f64 );
+                                        if index % 4 == 0{
+                                            set_timeout(move || set_highlight(index/4 + 1), std::time::Duration::from_secs_f32((index/4 + 1) as f32 * 1.5));
+                                        }
+                                }
                             }
                         }
                     >"Abspielen"</button>
-                    <a
-                        class="dl"
-                        href={
-                            // Convert concatenated audio buffer to a blob.
-                            let blob = audio_sys::buffer_to_blob(&concat_buffer).expect("Could not convert buffer to blob.");
-                            // Create object URL to download the blob.
-                            web_sys::Url::create_object_url_with_blob(&blob).expect("Could not create object URL for wav file.")
+                    {
+                        // Provide a download only if a concatenation buffer could be created.
+                        if let Some(concat_buffer) = concat_buffer{
+                            view!{
+                                <a
+                                    class="dl"
+                                    href={
+                                        // Convert concatenated audio buffer to a blob.
+                                        let blob = audio_sys::buffer_to_blob(&concat_buffer).expect("Could not convert buffer to blob.");
+                                        // Create object URL to download the blob.
+                                        web_sys::Url::create_object_url_with_blob(&blob).expect("Could not create object URL for wav file.")
+                                    }
+                                    download={format!("SATB-Result{}.wav", index+1)}
+                                >
+                                    "WAV"
+                                </a>
+                            }.into_view()
+                        } else {
+                            view!{}.into_view()
                         }
-                        download={format!("SATB-Result{}.wav", index+1)}
-                    >
-                        "WAV"
-                    </a>
+                    }
                     <a
                         class="dl"
                         href={
