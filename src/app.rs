@@ -112,7 +112,7 @@ pub fn App() -> impl IntoView {
                                 crate::logic::generate_satb(
                                     &input()
                                     .split(' ')
-                                    .filter_map(|note_str| note_str.parse().ok())
+                                    .filter_map(|note_str| SatbTemplate::from_str_language(note_str, language()).ok() )
                                     .collect_vec(),
                                     &config(),
                                 ).into_iter().enumerate().collect_vec()
