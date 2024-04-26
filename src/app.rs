@@ -160,7 +160,7 @@ pub fn App() -> impl IntoView {
         </div>
 
         <div class="outer_block">
-            <div width="100%">
+            <div class="result_container">
                 <h2>{move || languages::get_string_set(language()).results_title}</h2>
                 <p class="deemph">{move || languages::get_string_set(language()).results_algo_explation}</p>
                 <Show

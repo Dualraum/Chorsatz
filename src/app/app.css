@@ -55,6 +55,10 @@ div {
     display: flex;
 }
 
+div.result_container{
+    width: 95%;
+}
+
 div.satbr_outer{
     border: 4px solid var(--sec-color);
     border-radius: 15px;
