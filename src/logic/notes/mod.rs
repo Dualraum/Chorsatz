@@ -3,6 +3,8 @@ pub use note_names::NoteName;
 
 mod multinotes;
 pub use multinotes::MultiNote;
+mod multinotes_german;
+pub use multinotes_german::MultiNoteGerman;
 
 mod satb_template;
 pub use satb_template::SatbTemplate;

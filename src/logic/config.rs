@@ -66,9 +66,9 @@ impl Default for Config {
             abs_of_sum_weight: 1.0,
             soprano_alt_diff_weight: 0.4,
             exposure_penalty_sopran: 1.2,
-            exposure_threshold_sopran: notes::OctavedNote::new(notes::NoteName::Cis, 2),
+            exposure_threshold_sopran: notes::OctavedNote::new(notes::NoteName::Cs, 2),
             exposure_penalty_bass: 1.2,
-            exposure_threshold_bass: notes::OctavedNote::new(notes::NoteName::Ais, 1),
+            exposure_threshold_bass: notes::OctavedNote::new(notes::NoteName::As, 1),
         }
     }
 }

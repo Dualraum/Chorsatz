@@ -3,12 +3,20 @@ use leptos::*;
 
 use crate::logic::Config;
 
+use crate::app::languages;
+
 #[component]
 pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> impl IntoView {
+    // Get the used language
+    let language = if let Some(language) = (use_context::<ReadSignal<languages::Language>>)() {
+        language()
+    } else {
+        languages::Language::English
+    };
     view! {
         <table>
             <tr>
-                <th colspan="4">"Auswahlkriterien"</th>
+                <th colspan="4">{languages::get_string_set(language).options_content[0]}</th>
             </tr>
             <tr>
                 // Soprano-Alt tone difference
@@ -17,14 +25,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                         set_config.update(|config| config.max_diff_sopran_alt = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                     }
                 /> </td>
-                <td>"Maximale Stimmdifferenz Sopran-Alt"</td>
+                <td>{languages::get_string_set(language).options_content[1]}</td>
                 // Alt-Tenor tone Difference
                 <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_diff_alt_tenor}
                 on:change=move |ev|{
                     set_config.update(|config| config.max_diff_alt_tenor = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
-                <td>"Maximale Stimmdifferenz Alt-Tenor"</td>
+                <td>{languages::get_string_set(language).options_content[2]}</td>
             </tr>
             <tr>
                 // Tenor-Bass tone difference
@@ -33,14 +41,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                     set_config.update(|config| config.max_diff_tenor_bass = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
-                <td>"Maximale Stimmdifferenz Tenor-Bass"</td>
+                <td>{languages::get_string_set(language).options_content[3]}</td>
                 // Soprano-Bass tone Difference
                 <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_diff_sopran_bass}
                 on:change=move |ev|{
                     set_config.update(|config| config.max_diff_sopran_bass = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
-                <td>"Maximale Stimmdifferenz Sopran-Bass"</td>
+                <td>{languages::get_string_set(language).options_content[4]}</td>
             </tr>
             <tr>
                 // Allow Crossings
@@ -49,7 +57,7 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                     set_config.update(|config| config.allow_crossings = event_target_checked(&ev));
                 }
                 /> </td>
-                <td>"Stimmkreuzungen erlauben"</td>
+                <td>{languages::get_string_set(language).options_content[5]}</td>
                 // Allow Equality in Bass/Tenor
                 <Show
                     when=move ||{!config().allow_crossings}
@@ -64,7 +72,7 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                             }
                         />
                     </td>
-                    <td>"Gleiche Töne in Bass & Tenor erlauben"</td>
+                    <td>{languages::get_string_set(language).options_content[6]}</td>
                 </Show>
             </tr>
             <tr>
@@ -74,14 +82,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                     set_config.update(|config| config.force_letting_lie = event_target_checked(&ev));
                 }
                 /> </td>
-                <td>"Aufeinanderfolgende gleiche Töne liegen lassen"</td>
+                <td>{languages::get_string_set(language).options_content[7]}</td>
                 // Force counter movement
                 <td> <input type="checkbox" prop:checked={move || config().force_base_countermovement}
                 on:change=move |ev|{
                     set_config.update(|config| config.force_base_countermovement = event_target_checked(&ev));
                 }
                 /> </td>
-                <td>"Gegenbewegung zum Bass"</td>
+                <td>{languages::get_string_set(language).options_content[8]}</td>
             </tr>
             <tr>
                 <td colspan=2> <input type="text" prop:value="5,8"
@@ -89,7 +97,7 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                         set_config.update(|config| config.forbidden_parallels = event_target_value(&ev).replace(' ', "").split(',').flat_map(str::parse::<f32>).collect_vec());
                     }
                 /> </td>
-                <td colspan=2> <p>"Verbotene Parallelen"</p> </td>
+                <td colspan=2> <p>{languages::get_string_set(language).options_content[9]}</p> </td>
             </tr>
             <tr>
                 // Soprano jump
@@ -98,14 +106,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                     set_config.update(|config| config.max_jump_sopran = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
-                <td>"Maximale Sprungweite im Sopran"</td>
+                <td>{languages::get_string_set(language).options_content[10]}</td>
                 // Alto jump
                 <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_jump_alt}
                 on:change=move |ev|{
                     set_config.update(|config| config.max_jump_alt = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
-                <td>"Maximale Sprungweite im Alt"</td>
+                <td>{languages::get_string_set(language).options_content[11]}</td>
             </tr>
             <tr>
                 // Tenor Jump
@@ -114,17 +122,17 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                     set_config.update(|config| config.max_jump_tenor = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
-                <td>"Maximale Sprungweite im Tenor"</td>
+                <td>{languages::get_string_set(language).options_content[12]}</td>
                 // Bass Jump
                 <td> <input type="number" min="0" step="0.5" prop:value={move || config().max_jump_bass}
                 on:change=move |ev|{
                     set_config.update(|config| config.max_jump_bass = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
-                <td>"Maximale Sprungweite im Bass"</td>
+                <td>{languages::get_string_set(language).options_content[13]}</td>
             </tr>
             <tr>
-                <th colspan="4">"Ordnungskriterien"</th>
+                <th colspan="4">{languages::get_string_set(language).options_content[14]}</th>
             </tr>
             <tr>
                 // Sum of Absolutes weight
@@ -133,14 +141,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                     set_config.update(|config| config.sub_of_abs_weight = event_target_value(&ev).parse::<f32>().unwrap_or(0.));
                 }
                 /> </td>
-                <td>"Relatives Gewicht geringe Bewegungen"</td>
+                <td>{languages::get_string_set(language).options_content[15]}</td>
                 // Absolute of Sums weight
                 <td> <input type="number" step="0.1" prop:value={move || format!("{:.1}", config().abs_of_sum_weight)}
                 on:change=move |ev|{
                     set_config.update(|config| config.abs_of_sum_weight = event_target_value(&ev).parse::<f32>().unwrap_or(0.));
                 }
                 /> </td>
-                <td>"Relatives Gewicht Gegenbewegungen"</td>
+                <td>{languages::get_string_set(language).options_content[16]}</td>
             </tr>
             <tr>
                 // Soprano-Alt-Weigth
@@ -149,7 +157,7 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                     set_config.update(|config| config.soprano_alt_diff_weight = event_target_value(&ev).parse::<f32>().unwrap_or(0.));
                 }
                 /> </td>
-                <td>"Relatives Gewicht enge Lage"</td>
+                <td>{languages::get_string_set(language).options_content[17]}</td>
             </tr>
             <tr>
                 <td> <input type="number" min="0" step="0.1" prop:value={move || format!("{:.1}", config().exposure_penalty_sopran)}
@@ -157,14 +165,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                     set_config.update(|config| config.exposure_penalty_sopran = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
-                <td>"Malus für hohen Startton im Sopran"</td>
+                <td>{languages::get_string_set(language).options_content[18]}</td>
 
                 <td> <input type="text" prop:value={move || config().exposure_threshold_sopran.to_string()}
                 on:change=move |ev|{
                     set_config.update(|config| config.exposure_threshold_sopran = event_target_value(&ev).parse::<crate::logic::notes::OctavedNote>().unwrap_or_default());
                 }
                 /> </td>
-                <td>"Grenzton für hohen Startton im Sopran"</td>
+                <td>{languages::get_string_set(language).options_content[19]}</td>
             </tr>
             <tr>
                 <td> <input type="number" min="0" step="0.1" prop:value={move || format!("{:.1}", config().exposure_penalty_bass)}
@@ -172,14 +180,14 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
                     set_config.update(|config| config.exposure_penalty_bass = event_target_value(&ev).parse::<f32>().unwrap_or(0.).max(0.));
                 }
                 /> </td>
-                <td>"Malus für hohen Startton im Bass"</td>
+                <td>{languages::get_string_set(language).options_content[20]}</td>
 
                 <td> <input type="text" prop:value={move || config().exposure_threshold_bass.to_string()}
                 on:change=move |ev|{
                     set_config.update(|config| config.exposure_threshold_bass = event_target_value(&ev).parse::<crate::logic::notes::OctavedNote>().unwrap_or_default());
                 }
                 /> </td>
-                <td>"Grenzton für hohen Startton im Bass"</td>
+                <td>{languages::get_string_set(language).options_content[21]}</td>
             </tr>
 
         </table>

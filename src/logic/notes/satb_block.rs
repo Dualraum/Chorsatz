@@ -2,6 +2,7 @@ use itertools::Itertools;
 
 use super::{MultiNote, NoteName, OctavedNote};
 
+/// A block of four octaved notes describing one parallel note for all four voices.
 #[derive(Debug, Clone, Copy)]
 pub struct SatbBlock(
     pub OctavedNote,
@@ -53,13 +54,13 @@ pub fn permute(notes: &super::SatbTemplate) -> Vec<SatbBlock> {
             sopran_res.push((OctavedNote::new(s, 1), a, t, b));
 
             match s {
-                NoteName::Gis
-                | NoteName::As
+                NoteName::Gs
+                | NoteName::Af
                 | NoteName::A
-                | NoteName::Ais
+                | NoteName::As
+                | NoteName::Bf
                 | NoteName::B
-                | NoteName::H
-                | NoteName::Ces => {}
+                | NoteName::Cf => {}
                 _ => sopran_res.push((OctavedNote::new(s, 2), a, t, b)),
             }
 
@@ -71,16 +72,16 @@ pub fn permute(notes: &super::SatbTemplate) -> Vec<SatbBlock> {
             alto_res.push((s, OctavedNote::new(a, 1), t, b));
 
             match a {
-                NoteName::Cis
-                | NoteName::Des
+                NoteName::Cs
+                | NoteName::Df
                 | NoteName::D
-                | NoteName::Dis
-                | NoteName::Es
+                | NoteName::Ds
+                | NoteName::Ef
                 | NoteName::E
                 | NoteName::F
-                | NoteName::Eis
-                | NoteName::Fis
-                | NoteName::Ges => {}
+                | NoteName::Es
+                | NoteName::Fs
+                | NoteName::Gf => {}
                 NoteName::C => alto_res.push((s, OctavedNote::new(a, 2), t, b)),
                 _ => alto_res.push((s, OctavedNote::new(a, 0), t, b)),
             }
@@ -93,13 +94,13 @@ pub fn permute(notes: &super::SatbTemplate) -> Vec<SatbBlock> {
             tenor_res.push((s, a, OctavedNote::new(t, 0), b));
 
             match t {
-                NoteName::Gis
-                | NoteName::As
+                NoteName::Gs
+                | NoteName::Af
                 | NoteName::A
-                | NoteName::Ais
+                | NoteName::As
+                | NoteName::Bf
                 | NoteName::B
-                | NoteName::H
-                | NoteName::Ces => {}
+                | NoteName::Cf => {}
                 _ => tenor_res.push((s, a, OctavedNote::new(t, 1), b)),
             }
 
@@ -111,16 +112,16 @@ pub fn permute(notes: &super::SatbTemplate) -> Vec<SatbBlock> {
             bass_res.push((s, a, t, OctavedNote::new(b, 0)));
 
             match b {
-                NoteName::Cis
-                | NoteName::Des
+                NoteName::Cs
+                | NoteName::Df
                 | NoteName::D
-                | NoteName::Dis
-                | NoteName::Es
+                | NoteName::Ds
+                | NoteName::Ef
                 | NoteName::E
                 | NoteName::F
-                | NoteName::Eis
-                | NoteName::Fis
-                | NoteName::Ges => {}
+                | NoteName::Es
+                | NoteName::Fs
+                | NoteName::Gf => {}
                 NoteName::C => bass_res.push((s, a, t, OctavedNote::new(b, 1))),
                 _ => bass_res.push((s, a, t, OctavedNote::new(b, -1))),
             }
@@ -135,8 +136,8 @@ pub fn permute(notes: &super::SatbTemplate) -> Vec<SatbBlock> {
 fn test_permutes() {
     assert_eq!(
         permute(&crate::logic::notes::SatbTemplate {
-            accord: MultiNote::Triad(NoteName::Cis, NoteName::D, NoteName::F),
-            bass: NoteName::Cis
+            accord: MultiNote::Triad(NoteName::Cs, NoteName::D, NoteName::F),
+            bass: NoteName::Cs
         })
         .len(),
         24,

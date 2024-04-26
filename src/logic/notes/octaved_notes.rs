@@ -15,7 +15,7 @@ impl OctavedNote {
 
     pub fn get_value(&self) -> f32 {
         // get the position in the C-Dur scale and, for some notes with 'overflow' if there is an octave shift
-        let (position, shift) = self.note.to_c_dur_position_shift();
+        let (position, shift) = self.note.to_c_major_position_shift();
         // use the position to get the half tones and shift by the appropriate amount of octaves
         super::scale::POSITION_TO_HALFTONES[position]
         // add octave
@@ -30,6 +30,10 @@ impl OctavedNote {
 
     pub fn to_playable_note(self) -> String {
         self.note.to_playable_note() + &(self.octave + 3).to_string()
+    }
+
+    pub fn to_german_name(self) -> String {
+        format!("{}{}", self.note.to_german_note(), self.octave)
     }
 }
 
@@ -77,7 +81,7 @@ fn diff_test() {
     );
 
     assert_eq!(
-        OctavedNote::new(NoteName::A, 0) - OctavedNote::new(NoteName::H, 0),
+        OctavedNote::new(NoteName::A, 0) - OctavedNote::new(NoteName::B, 0),
         -2.
     );
 
@@ -87,7 +91,7 @@ fn diff_test() {
     );
 
     assert_eq!(
-        OctavedNote::new(NoteName::Ais, 1) - OctavedNote::new(NoteName::Gis, 1),
+        OctavedNote::new(NoteName::As, 1) - OctavedNote::new(NoteName::Gs, 1),
         2.
     );
 
@@ -98,7 +102,7 @@ fn diff_test() {
 
     assert_eq!(OctavedNote::new(NoteName::C, 1), "C1".parse().unwrap());
 
-    assert_eq!(OctavedNote::new(NoteName::As, -1), "As-1".parse().unwrap());
+    assert_eq!(OctavedNote::new(NoteName::Af, -1), "As-1".parse().unwrap());
     assert!("Abc1".parse::<OctavedNote>().is_err());
     assert!("gde".parse::<OctavedNote>().is_err());
 }

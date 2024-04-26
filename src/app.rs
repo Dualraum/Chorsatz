@@ -3,7 +3,7 @@ use std::fmt::Debug;
 use itertools::Itertools;
 use leptos::*;
 
-use crate::logic;
+use crate::logic::{self, notes::SatbTemplate};
 
 /// Contains the code to interact with the web_sys AudioAPI.
 mod audio_sys;
@@ -15,6 +15,8 @@ mod options;
 
 mod result_view;
 use result_view::SatbResultView;
+
+pub mod languages;
 
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 enum MenuState {
@@ -39,11 +41,15 @@ pub fn App() -> impl IntoView {
 
     let audio_buffers = create_local_resource(ctx, audio_sys::fetch_all);
 
+    let (language, set_language) = create_signal(languages::Language::English);
+
+    provide_context(language);
+
     view! {
         <h1>"Chorsatz"</h1>
         <div class = "outer_block">
             <div>
-                <p> "Chorsatz ist eine Webapplikation zur automatischen Erstellung von vierstimmigen SATB-Stimmsätzen aus einer Reihenfolge von vorgegebenen Akkorden unter Beachtung der klassischen Stimmführungsregeln." </p>
+                <p> {languages::get_string_set(language()).intro} </p>
             </div>
         </div>
         <div class="outer_block">
@@ -52,7 +58,7 @@ pub fn App() -> impl IntoView {
                 <input
                     type="text"
                     class = "main_input"
-                    placeholder="Akkorde hier eingeben..."
+                    placeholder={languages::get_string_set(language()).input_default}
                     on:input=move |ev| {
                         set_input(event_target_value(&ev));
                             if ctx().is_none(){
@@ -68,7 +74,7 @@ pub fn App() -> impl IntoView {
                                 crate::logic::generate_satb(
                                     &event_target_value(&ev)
                                     .split(' ')
-                                    .filter_map(|note_str| note_str.parse().ok())
+                                    .filter_map(|note_str| SatbTemplate::from_str_language(note_str, language()).ok() )
                                     .collect_vec(),
                                     &config(),
                                 ).into_iter().enumerate().collect_vec()
@@ -108,7 +114,7 @@ pub fn App() -> impl IntoView {
                                 set_ctx(web_sys::AudioContext::new().ok());
                             }
                     }
-                >"Generieren"</button>
+                >{languages::get_string_set(language()).generate}</button>
                 <button id="options" class=move || if menu_state() == MenuState::Options { "active" } else { "" }
                     on:click=move |_|{
                         set_menu_state.update(|opt| {
@@ -118,7 +124,7 @@ pub fn App() -> impl IntoView {
                             }
                         });
                     }
-                >"Optionen"</button>
+                >{languages::get_string_set(language()).options}</button>
                 <button id="accords" class=move || if menu_state() == MenuState::Help { "active" } else { "" }
                     on:click=move|_|{
                         set_menu_state.update(|opt| {
@@ -128,7 +134,7 @@ pub fn App() -> impl IntoView {
                             }
                         });
                     }
-                >"Eingabehilfe"</button>
+                >{languages::get_string_set(language()).help}</button>
             </div>
 
             {
@@ -142,14 +148,19 @@ pub fn App() -> impl IntoView {
         </div>
 
         <div class="outer_block">
-            <div>
-                <h2>"Ergebnisse"</h2>
-                <p class="deemph">"Eine kleinere Bewertung kennzeichnet eine optimalere Lösung. Da eine rein algorithmische Bewertung nicht perfekt ist, werden mehrere Ergebnisse zur Auswahl angezeigt."</p>
+            <div width="100%">
+                <h2>{languages::get_string_set(language()).results_title}</h2>
+                <p class="deemph">{languages::get_string_set(language()).results_algo_explation}</p>
                 <Show
                     when={move || result.with(|r| !r.is_empty())}
                     fallback=|| view!{}
                 >
-                    <p>"Es werden die besten " {move || shown_result().min(result.with(|r| r.len()))} " Ergebnisse aus " {move || result.with(|r| r.len())} " berechneten Lösungen angezeigt."</p>
+                    <p>{
+                        {(languages::get_string_set(language()).results_total)(
+                            shown_result().min(result.with(|r| r.len())),
+                            result.with(|r| r.len())
+                        )}
+                    }</p>
                 </Show>
                 {
                     move || {
@@ -193,7 +204,7 @@ pub fn App() -> impl IntoView {
                                 });
                             }
                         >
-                            "Mehr Ergebnisse anzeigen..."
+                            {languages::get_string_set(language()).more}
                         </button>
                     </div>
                 </Show>
@@ -204,15 +215,16 @@ pub fn App() -> impl IntoView {
         <div class="outer_block">
             <div>
             <p>
-                <b class="header">"Autoren:"</b>
-                " Minona Schäfer & Linus Mußmächer"
+                <b class="header">{languages::get_string_set(language()).authors}</b>
+                ": Minona Schäfer & Linus Mußmächer"
                 <br/>
-                "Mit Dank an Biljana Wittstock"
+                {languages::get_string_set(language()).thanks}
+                " Biljana Wittstock".
             </p>
             <p>
-                <b class="header"><a href="https://github.com/Dualraum/Chorsatz">"Github-Repository"</a></b>
+                <b class="header"><a href="https://github.com/Dualraum/Chorsatz">"Repository"</a></b>
                 " - "
-                <b class="header"><a class="header" href="https://github.com/Dualraum/Chorsatz/blob/main/howto/Chorsatz.pdf">"Bedienungshinweise"</a></b>
+                <b class="header"><a class="header" href="https://github.com/Dualraum/Chorsatz/wiki">"Wiki"</a></b>
             </p>
             </div>
         </div>
