@@ -285,6 +285,28 @@ a.dl:hover{
     background-color: var(--acc-color);
 }
 
+select{
+    padding: 5px;
+    padding-right: 8px;
+    padding-left: 25px;
+    margin: 4px;
+    height: min-content;
+
+    background-position: 4px 4px;
+    background-size: 18px 18px;
+    background-repeat: no-repeat;
+    background-color: var(--sec-color);
+
+    border: 1px solid var(--pri-color);
+    border-radius: 15px;
+
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+select#language{
+    background-image: url('assets/world.png');
+}
+
 button{
     padding: 5px;
     padding-right: 8px;

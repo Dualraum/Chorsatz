@@ -17,11 +17,8 @@ pub fn SatbResultView(
     ctx: ReadSignal<web_sys::AudioContext>,
 ) -> impl IntoView {
     // Get the used language
-    let language = if let Some(language) = (use_context::<ReadSignal<languages::Language>>)() {
-        language()
-    } else {
-        languages::Language::English
-    };
+    let language = use_context::<ReadSignal<languages::Language>>()
+        .unwrap_or_else(|| create_signal(languages::Language::English).0);
 
     // --- First, request some resources for audio playback
 
@@ -58,7 +55,7 @@ pub fn SatbResultView(
         <div class = "satbr_outer">
             <div class="row">
                 <div class="col_lef">
-                    <h3>{languages::get_string_set(language).result_title} " " {index+1}</h3>
+                    <h3>{move || languages::get_string_set(language()).result_title} " " {index+1}</h3>
                 </div>
                 <div class="col_rig">
                     // These are in reversed order, as col_rig floats from the right
@@ -79,7 +76,7 @@ pub fn SatbResultView(
                                 }
                             }
                         }
-                    >{languages::get_string_set(language).result_play}</button>
+                    >{move || languages::get_string_set(language()).result_play}</button>
                     {
                         // Provide a download only if a concatenation buffer could be created.
                         if let Some(concat_buffer) = concat_buffer{
@@ -120,11 +117,11 @@ pub fn SatbResultView(
                     fallback=|| view!{}
                 >
                     <div class = "satbb">
-                        <p class="header2">{languages::get_string_set(language).table_chord}</p>
-                        <p class="header">{languages::get_string_set(language).table_voices[0]}</p>
-                        <p class="header">{languages::get_string_set(language).table_voices[1]}</p>
-                        <p class="header">{languages::get_string_set(language).table_voices[2]}</p>
-                        <p class="header">{languages::get_string_set(language).table_voices[3]}</p>
+                        <p class="header2">{move || languages::get_string_set(language()).table_chord}</p>
+                        <p class="header">{move || languages::get_string_set(language()).table_voices[0]}</p>
+                        <p class="header">{move || languages::get_string_set(language()).table_voices[1]}</p>
+                        <p class="header">{move || languages::get_string_set(language()).table_voices[2]}</p>
+                        <p class="header">{move || languages::get_string_set(language()).table_voices[3]}</p>
                     </div>
                     {result.iter().enumerate().map(satb_block_view).collect_view()}
                 </Show>
@@ -132,7 +129,7 @@ pub fn SatbResultView(
             <div class="row">
                 <div class="col_lef">
                         <div class="tooltip">
-                            <span class="tooltiptext">{languages::get_string_set(language).score_tooltip}</span>
+                            <span class="tooltiptext">{move || languages::get_string_set(language()).score_tooltip}</span>
                             <b class="score"> {res_score as i32}</b>
                         </div>
                 </div>
@@ -141,7 +138,7 @@ pub fn SatbResultView(
                         on:click=move |_|{
                             set_show_table.update(|a| *a = !*a);
                         }
-                    >{languages::get_string_set(language).result_table}</button>
+                    >{move || languages::get_string_set(language()).result_table}</button>
                 </div>
             </div>
         </div>
@@ -149,13 +146,11 @@ pub fn SatbResultView(
 }
 
 fn satb_block_view(block: (usize, &SatbBlock)) -> impl IntoView {
-    let language = if let Some(language) = (use_context::<ReadSignal<languages::Language>>)() {
-        language()
-    } else {
-        languages::Language::English
-    };
+    // Get the used language
+    let language = use_context::<ReadSignal<languages::Language>>()
+        .unwrap_or_else(|| create_signal(languages::Language::English).0);
 
-    let formatter = |o_note: OctavedNote| match language {
+    let formatter = |o_note: OctavedNote| match language() {
         languages::Language::English => o_note.to_string(),
         languages::Language::German => o_note.to_german_name(),
     };

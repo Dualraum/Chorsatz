@@ -4,15 +4,12 @@ use leptos::*;
 #[component]
 pub fn Info() -> impl IntoView {
     // Get the used language
-    let language = if let Some(language) = (use_context::<ReadSignal<languages::Language>>)() {
-        language()
-    } else {
-        languages::Language::English
-    };
+    let language = use_context::<ReadSignal<languages::Language>>()
+        .unwrap_or_else(|| create_signal(languages::Language::English).0);
 
     view! {
         <Show
-            when={move || language==languages::Language::German}
+            when={move || language()==languages::Language::German}
             fallback=|| view!{
                 <p>
                 "This section is currently only available in German. "

@@ -49,8 +49,20 @@ pub fn App() -> impl IntoView {
         <h1>"Chorsatz"</h1>
         <div class = "outer_block">
             <div>
-                <p> {languages::get_string_set(language()).intro} </p>
+                <p> {move || languages::get_string_set(language()).intro} </p>
             </div>
+            // Language selector
+            <select name="language" id="language"
+                on:change=move |ev|{
+                    match event_target_value(&ev).as_str(){
+                       "German" =>{set_language(languages::Language::German);}
+                        _ =>{set_language(languages::Language::English);}
+                    }
+                }
+            >
+                <option value="English">English</option>
+                <option value="German">Deutsch</option>
+            </select>
         </div>
         <div class="outer_block">
             <div class="ver">
@@ -58,7 +70,7 @@ pub fn App() -> impl IntoView {
                 <input
                     type="text"
                     class = "main_input"
-                    placeholder={languages::get_string_set(language()).input_default}
+                    placeholder={move || languages::get_string_set(language()).input_default}
                     on:input=move |ev| {
                         set_input(event_target_value(&ev));
                             if ctx().is_none(){
@@ -114,7 +126,7 @@ pub fn App() -> impl IntoView {
                                 set_ctx(web_sys::AudioContext::new().ok());
                             }
                     }
-                >{languages::get_string_set(language()).generate}</button>
+                >{move || languages::get_string_set(language()).generate}</button>
                 <button id="options" class=move || if menu_state() == MenuState::Options { "active" } else { "" }
                     on:click=move |_|{
                         set_menu_state.update(|opt| {
@@ -124,7 +136,7 @@ pub fn App() -> impl IntoView {
                             }
                         });
                     }
-                >{languages::get_string_set(language()).options}</button>
+                >{move || languages::get_string_set(language()).options}</button>
                 <button id="accords" class=move || if menu_state() == MenuState::Help { "active" } else { "" }
                     on:click=move|_|{
                         set_menu_state.update(|opt| {
@@ -134,7 +146,7 @@ pub fn App() -> impl IntoView {
                             }
                         });
                     }
-                >{languages::get_string_set(language()).help}</button>
+                >{move || languages::get_string_set(language()).help}</button>
             </div>
 
             {
@@ -149,14 +161,15 @@ pub fn App() -> impl IntoView {
 
         <div class="outer_block">
             <div width="100%">
-                <h2>{languages::get_string_set(language()).results_title}</h2>
-                <p class="deemph">{languages::get_string_set(language()).results_algo_explation}</p>
+                <h2>{move || languages::get_string_set(language()).results_title}</h2>
+                <p class="deemph">{move || languages::get_string_set(language()).results_algo_explation}</p>
                 <Show
                     when={move || result.with(|r| !r.is_empty())}
                     fallback=|| view!{}
                 >
                     <p>{
-                        {(languages::get_string_set(language()).results_total)(
+                        move ||
+                        {( languages::get_string_set(language()).results_total)(
                             shown_result().min(result.with(|r| r.len())),
                             result.with(|r| r.len())
                         )}
@@ -204,7 +217,7 @@ pub fn App() -> impl IntoView {
                                 });
                             }
                         >
-                            {languages::get_string_set(language()).more}
+                            {move || languages::get_string_set(language()).more}
                         </button>
                     </div>
                 </Show>
@@ -215,10 +228,10 @@ pub fn App() -> impl IntoView {
         <div class="outer_block">
             <div>
             <p>
-                <b class="header">{languages::get_string_set(language()).authors}</b>
+                <b class="header">{move || languages::get_string_set(language()).authors}</b>
                 ": Minona Schäfer & Linus Mußmächer"
                 <br/>
-                {languages::get_string_set(language()).thanks}
+                {move || languages::get_string_set(language()).thanks}
                 " Biljana Wittstock".
             </p>
             <p>
