@@ -1,8 +1,27 @@
+use super::languages;
 use leptos::*;
 
 #[component]
 pub fn Info() -> impl IntoView {
+    // Get the used language
+    let language = if let Some(language) = (use_context::<ReadSignal<languages::Language>>)() {
+        language()
+    } else {
+        languages::Language::English
+    };
+
     view! {
+        <Show
+            when={move || language==languages::Language::German}
+            fallback=|| view!{
+                <p>
+                "This section is currently only available in German. "
+                "See the "
+                <b class="header"><a class="header" href="https://github.com/Dualraum/Chorsatz/wiki" target="_blank">"Wiki"</a></b>
+                " (English) for further help."
+                </p>
+            }.into_view()
+        >
         <p>"Es stehen die folgenden Akkorde zur Eingabe zur Verfügung:"</p>
         <table>
             <tr>
@@ -93,5 +112,6 @@ pub fn Info() -> impl IntoView {
         <p>
             "Verschiedene Akkorde sind durch Leerzeichen zu trennen, hierbei werden ungültige Eingaben ignoriert."
         </p>
+        </Show>
     }
 }
