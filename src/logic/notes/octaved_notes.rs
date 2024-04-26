@@ -102,7 +102,7 @@ fn diff_test() {
 
     assert_eq!(OctavedNote::new(NoteName::C, 1), "C1".parse().unwrap());
 
-    assert_eq!(OctavedNote::new(NoteName::Af, -1), "As-1".parse().unwrap());
+    assert_eq!(OctavedNote::new(NoteName::Af, -1), "Af-1".parse().unwrap());
     assert!("Abc1".parse::<OctavedNote>().is_err());
     assert!("gde".parse::<OctavedNote>().is_err());
 }
