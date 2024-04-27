@@ -42,7 +42,7 @@ You will find, among other things an explanation of the exclusion and scoring cr
 ## Bugs & Issues
 
 While Chorsatz' underlying algorithm is theoretically sound, you may find results or rankings disagreeing with your intuition.
-Do not hesitate to open an issue if this appears frequently or in isolatable cases - we are always happy to improve our algorithm.
+Do not hesitate to [open an issue](https://github.com/Dualraum/Chorsatz/issues/new) if this appears frequently or in isolatable cases - we are always happy to improve our algorithm.
 
 Of course, also submit an issue if you encounter any bugs, glitches or missing features as well as if you have any questions.
 Remember that Chorsatz is a hobby project, but we are always happy to assist.
