@@ -150,9 +150,9 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
             </tr>
             <tr>
                 // Soprano-Alt-Weigth
-                <td> <input type="number" step="0.1" prop:value={move || format!("{:.1}", config().soprano_alt_diff_weight)}
+                <td> <input type="number" step="0.1" prop:value={move || format!("{:.1}", config().soprano_bass_diff_weight)}
                 on:change=move |ev|{
-                    set_config.update(|config| config.soprano_alt_diff_weight = event_target_value(&ev).parse::<f32>().unwrap_or(0.));
+                    set_config.update(|config| config.soprano_bass_diff_weight = event_target_value(&ev).parse::<f32>().unwrap_or(0.));
                 }
                 /> </td>
                 <td>{move || languages::get_string_set(language()).options_content[17]}</td>
@@ -182,10 +182,7 @@ pub fn Options(config: ReadSignal<Config>, set_config: WriteSignal<Config>) -> i
 
                 <td> <input type="text" prop:value={move || config().exposure_threshold_bass.to_string()}
                 on:change=move |ev|{
-                    set_config.update(|config| config.exposure_threshold_bass = match language(){
-                        languages::Language::German => event_target_value(&ev).parse::<crate::logic::notes::MultiNoteGerman>().unwrap_or_default().to_multinote().into(),
-                        languages::Language::English =>event_target_value(&ev).parse::<crate::logic::notes::OctavedNote>().unwrap_or_default(),
-                    });
+                    set_config.update(|config| config.exposure_threshold_bass = event_target_value(&ev).parse::<crate::logic::notes::OctavedNote>().unwrap_or_default());
                 }
                 /> </td>
                 <td>{move || languages::get_string_set(language()).options_content[21]}</td>

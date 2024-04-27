@@ -138,7 +138,7 @@ fn satb_score(solution: &[SatbBlock], conf: &super::Config) -> f32 {
 
         score += conf.sub_of_abs_weight * sum_abs
             + conf.abs_of_sum_weight * sum.abs()
-            + conf.soprano_alt_diff_weight * (s - b).abs();
+            + conf.soprano_bass_diff_weight * (s - b).abs();
     }
 
     if conf.exposure_threshold_sopran - solution[0].0 < 0. {

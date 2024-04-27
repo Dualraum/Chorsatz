@@ -35,7 +35,7 @@ pub struct Config {
     /// Describes the relative weight of the absolute value of the sum of the tone jumps in each voice to the total score.
     pub abs_of_sum_weight: f32,
     /// Describes the relative weight of the soprano-alt-difference on the total score.
-    pub soprano_alt_diff_weight: f32,
+    pub soprano_bass_diff_weight: f32,
     /// Describes the relative penalty to the score if the initial soprano note is above the threshold.
     pub exposure_penalty_sopran: f32,
     /// The highest note possible for the initial soprano note without being penalized.
@@ -64,7 +64,7 @@ impl Default for Config {
             max_jump_bass: 8.,
             sub_of_abs_weight: 0.8,
             abs_of_sum_weight: 1.0,
-            soprano_alt_diff_weight: 0.4,
+            soprano_bass_diff_weight: 0.4,
             exposure_penalty_sopran: 1.2,
             exposure_threshold_sopran: notes::OctavedNote::new(notes::NoteName::Cs, 2),
             exposure_penalty_bass: 1.2,
