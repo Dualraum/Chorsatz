@@ -235,7 +235,7 @@ pub fn App() -> impl IntoView {
                 " Biljana Wittstock".
             </p>
             <p>
-                <b class="header"><a href="https://github.com/Dualraum/Chorsatz">"Repository"</a></b>
+                <b class="header"><a class="header" href="https://github.com/Dualraum/Chorsatz">"Repository"</a></b>
                 " - "
                 <b class="header"><a class="header" href="https://github.com/Dualraum/Chorsatz/wiki">"Wiki"</a></b>
             </p>
