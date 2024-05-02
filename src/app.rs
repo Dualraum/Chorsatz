@@ -85,7 +85,7 @@ pub fn App() -> impl IntoView {
                             set_result({
                                 crate::logic::generate_satb(
                                     &event_target_value(&ev)
-                                    .split(' ')
+                                    .split([' ', ',', ';'])
                                     .filter_map(|note_str| SatbTemplate::from_str_language(note_str, language()).ok() )
                                     .collect_vec(),
                                     &config(),
@@ -111,7 +111,7 @@ pub fn App() -> impl IntoView {
                             set_result({
                                 crate::logic::generate_satb(
                                     &input()
-                                    .split(' ')
+                                    .split([' ', ',', ';'])
                                     .filter_map(|note_str| SatbTemplate::from_str_language(note_str, language()).ok() )
                                     .collect_vec(),
                                     &config(),
